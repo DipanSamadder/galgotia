@@ -14,7 +14,7 @@ class ProgramController extends Controller
         }
         $page['title'] = 'Program List';
         $page['name'] = 'Program';
-        return view('backend.modules.programs.show', compact('page'));
+        return view('backend.modules.institutes.programs.show', compact('page'));
     }
 
 
@@ -49,7 +49,7 @@ class ProgramController extends Controller
             }
         }
         $data = $data->skip($start)->paginate(25);
-        return view('backend.modules.programs.ajax_programs', compact('data'));
+        return view('backend.modules.institutes.programs.ajax_programs', compact('data'));
     }
 
     public function store(Request $request){
@@ -102,7 +102,7 @@ class ProgramController extends Controller
         }
 
         $data = Program::where('id', $request->id)->where('user_id', $request->user_id)->first();
-        return view('backend.modules.programs.edit', compact('data'));
+        return view('backend.modules.institutes.programs.edit', compact('data'));
     }
 
 

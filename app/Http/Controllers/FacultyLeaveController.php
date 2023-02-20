@@ -3,27 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\ProgramSession;
+use App\Models\ProgramSemester;
 use Validator;
 
-class ProgramSessionController extends Controller
+class FacultyLeaveController extends Controller
 {
     public function index(){
-        if(dsld_have_user_permission('program-session') == 0){
+        if(dsld_have_user_permission('program-semester') == 0){
             return redirect()->route('backend.admin')->with('error', 'You have no permission');
         }
-        $page['title'] = 'Program Session List';
-        $page['name'] = 'Program Session';
-        return view('backend.modules.institutes.programs.sessions.show', compact('page'));
+        $page['title'] = 'Semester List';
+        $page['name'] = 'Semester';
+        return view('backend.modules.programs.semesters.show', compact('page'));
     }
 
 
-    public function get_ajax_program_session(Request $request){
+    public function get_ajax_program_semesters(Request $request){
         if($request->page != 1){$start = $request->page * 25;}else{$start = 0;}
         $search = $request->search;
         $sort = $request->sort;
 
-        $data = ProgramSession::where('title','!=', '');
+        $data = ProgramSemester::where('title','!=', '');
 
         if($search != ''){
             $data->where('title', 'like', '%'.$search.'%');
@@ -49,11 +49,11 @@ class ProgramSessionController extends Controller
             }
         }
         $data = $data->skip($start)->paginate(25);
-        return view('backend.modules.institutes.programs.sessions.ajax_sessions', compact('data'));
+        return view('backend.modules.programs.semesters.ajax_semesters', compact('data'));
     }
 
     public function store(Request $request){
-        if(dsld_have_user_permission('program-session_add') == 0){
+        if(dsld_have_user_permission('program-semester_add') == 0){
             return response()->json(['status' => 'error', 'message'=> "You have no permission."]);
         }
         $slug = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', $request->title));
@@ -61,7 +61,6 @@ class ProgramSessionController extends Controller
 
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:50',
-            'institutes_id' => 'required|integer',
             'user_id' => 'required|integer',
             'status' => 'required|integer'
         ]);
@@ -71,14 +70,14 @@ class ProgramSessionController extends Controller
             return response()->json(['status' => 'error', 'message' => $validator->errors()->all()]);
         }
 
-        $session = new ProgramSession;
-        $session->title = $request->title;
-        $session->institutes_id =  $request->institutes_id;
-        $session->user_id =  $request->user_id;
-        $session->order = $request->order;;
-        $session->status = $request->status;
+        $semester = new ProgramSemester;
+        $semester->title = $request->title;
+        $semester->year =  $request->year;
+        $semester->user_id =  $request->user_id;
+        $semester->order = $request->order;;
+        $semester->status = $request->status;
         
-        if($session->save()){
+        if($semester->save()){
             return response()->json(['status' => 'success', 'message'=> 'Data insert success.']);
         }else{
             return response()->json(['status' => 'error', 'message'=> 'Data insert failed.']);
@@ -87,24 +86,23 @@ class ProgramSessionController extends Controller
     }
 
     public function edit(Request $request){
-        if(dsld_have_user_permission('program-session_edit') == 0){
+        if(dsld_have_user_permission('program-semester_edit') == 0){
             return redirect()->route('backend.admin')->with('error', 'You have no permission');
         }
 
-        $data = ProgramSession::where('id', $request->id)->where('user_id', $request->user_id)->first();
-        return view('backend.modules.institutes.programs.sessions.edit', compact('data'));
+        $data = ProgramSemester::where('id', $request->id)->where('user_id', $request->user_id)->first();
+        return view('backend.modules.programs.semesters.edit', compact('data'));
     }
 
 
     public function update(Request $request){
-        if(dsld_have_user_permission('program-session_edit') == 0){
+        if(dsld_have_user_permission('program-semester_edit') == 0){
             return response()->json(['status' => 'error', 'message'=> "You have no permission."]);
         }
         
 
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:50',
-            'institutes_id' => 'required|integer',
             'status' => 'required|integer'
         ]);
 
@@ -113,13 +111,13 @@ class ProgramSessionController extends Controller
             return response()->json(['status' => 'error', 'message' => $validator->errors()->all()]);
         }
              
-        $institute =  ProgramSession::findOrFail($request->id);
-        $institute->institutes_id = $request->institutes_id;
-        $institute->title = $request->title;
-        $institute->order = $request->order;
-        $institute->status = $request->status;
+        $semester =  ProgramSemester::findOrFail($request->id);
+        $semester->title = $request->title;
+        $semester->year =  $request->year;
+        $semester->order = $request->order;
+        $semester->status = $request->status;
         
-        if($institute->save()){
+        if($semester->save()){
             return response()->json(['status' => 'success', 'message'=> 'Data update success.']);
         }else{
             return response()->json(['status' => 'error', 'message'=> 'Data update failed.']);
@@ -129,12 +127,12 @@ class ProgramSessionController extends Controller
 
 
     public function destory(Request $request){
-        if(dsld_have_user_permission('program-session_delete') == 0){
+        if(dsld_have_user_permission('program-semester_delete') == 0){
             return response()->json(['status' => 'error', 'message'=> "You have no permission."]);
         }
-        $session = ProgramSession::findOrFail($request->id);
-        if($session != ''){
-            if($session->delete()){
+        $semester = ProgramSemester::findOrFail($request->id);
+        if($semester != ''){
+            if($semester->delete()){
                 return response()->json(['status' => 'success', 'message' => 'Data deleted successully.']);
             }else{
                 return response()->json(['status' => 'error', 'message' => 'Data deleted failed.']);
@@ -147,15 +145,15 @@ class ProgramSessionController extends Controller
 
 
     public function status(Request $request){
-        if(dsld_have_user_permission('program-session_edit') == 0){
+        if(dsld_have_user_permission('program-semester_edit') == 0){
             return response()->json(['status' => 'error', 'message'=> "You have no permission."]);
         }
         
-        $session = ProgramSession::findOrFail($request->id);
-        if($session != ''){
-            if($session->status != $request->status){
-                $session->status = $request->status;
-                $session->save();
+        $semester = ProgramSemester::findOrFail($request->id);
+        if($semester != ''){
+            if($semester->status != $request->status){
+                $semester->status = $request->status;
+                $semester->save();
                 return response()->json(['status' => 'success', 'message' => 'Status update successully.']);
             }else{
                 return response()->json(['status' => 'error', 'message' => 'Status update failed.']);

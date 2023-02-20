@@ -14,7 +14,7 @@ class ProgramSemesterController extends Controller
         }
         $page['title'] = 'Semester List';
         $page['name'] = 'Semester';
-        return view('backend.modules.programs.semesters.show', compact('page'));
+        return view('backend.modules.institutes.programs.semesters.show', compact('page'));
     }
 
 
@@ -49,7 +49,7 @@ class ProgramSemesterController extends Controller
             }
         }
         $data = $data->skip($start)->paginate(25);
-        return view('backend.modules.programs.semesters.ajax_semesters', compact('data'));
+        return view('backend.modules.institutes.programs.semesters.ajax_semesters', compact('data'));
     }
 
     public function store(Request $request){
@@ -91,7 +91,7 @@ class ProgramSemesterController extends Controller
         }
 
         $data = ProgramSemester::where('id', $request->id)->where('user_id', $request->user_id)->first();
-        return view('backend.modules.programs.semesters.edit', compact('data'));
+        return view('backend.modules.institutes.programs.semesters.edit', compact('data'));
     }
 
 

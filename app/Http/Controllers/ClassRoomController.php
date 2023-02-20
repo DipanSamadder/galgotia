@@ -14,7 +14,7 @@ class ClassRoomController extends Controller
         }
         $page['title'] = 'Class List';
         $page['name'] = 'Class';
-        return view('backend.modules.classes.show', compact('page'));
+        return view('backend.modules.institutes.classes.show', compact('page'));
     }
 
 
@@ -49,7 +49,7 @@ class ClassRoomController extends Controller
             }
         }
         $data = $data->skip($start)->paginate(25);
-        return view('backend.modules.classes.ajax_classes', compact('data'));
+        return view('backend.modules.institutes.classes.ajax_classes', compact('data'));
     }
 
     public function store(Request $request){
@@ -93,7 +93,7 @@ class ClassRoomController extends Controller
         }
 
         $data = ClassRoom::where('id', $request->id)->where('user_id', $request->user_id)->first();
-        return view('backend.modules.classes.edit', compact('data'));
+        return view('backend.modules.institutes.classes.edit', compact('data'));
     }
 
 
