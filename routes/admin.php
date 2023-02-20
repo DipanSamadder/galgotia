@@ -17,6 +17,8 @@ use App\Http\Controllers\TimelineController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\ProductContorller;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\InstituteController;
+use App\Http\Controllers\InstituteTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +38,27 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
     Route::get('clear-cache', [HomeController::class, 'clear_cache'])->name('clear.cache');
     Route::get('send-test-mail', [MailController::class, 'testmail'])->name('testmail');
  
+
+    //Institute
+    Route::get('institutes', [InstituteController::class, 'index'])->name('institutes.index');
+    Route::post('institute/edit', [InstituteController::class, 'edit'])->name('institutes.edit');
+    Route::post('institute/store', [InstituteController::class, 'store'])->name('institutes.store');
+    Route::post('get-all-institutes', [InstituteController::class, 'get_ajax_institutes'])->name('ajax_institutes');
+    Route::post('institute/destory', [InstituteController::class, 'destory'])->name('institutes.destory');
+    Route::post('institute/status', [InstituteController::class, 'status'])->name('institutes.status');
+    Route::post('institute/update', [InstituteController::class, 'update'])->name('institutes.update');
+
+
+    //Institute Type
+    Route::get('institute-types', [InstituteTypeController::class, 'index'])->name('institute_types.index');
+    Route::post('institute-types/edit', [InstituteTypeController::class, 'edit'])->name('institute_types.edit');
+    Route::post('institute-types/store', [InstituteTypeController::class, 'store'])->name('institute_types.store');
+    Route::post('get-all-institute-types', [InstituteTypeController::class, 'get_ajax_institute_types'])->name('ajax_institute_types');
+    Route::post('institute-types/destory', [InstituteTypeController::class, 'destory'])->name('institute_types.destory');
+    Route::post('institute-types/status', [InstituteTypeController::class, 'status'])->name('institute_types.status');
+    Route::post('institute-types/update', [InstituteTypeController::class, 'update'])->name('institute_types.update');
+
+
     //Media library
     Route::get('media-library-admin', [UploadsMediaController::class, 'media_library_admin'])->name('media.library.admin');
     Route::post('media-uploads', [UploadsMediaController::class, 'uploads'])->name('media.uploads');

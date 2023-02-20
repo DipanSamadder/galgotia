@@ -59,7 +59,22 @@
             <li class="{{ dsld_is_route_active(['media.library.admin'], 'active open') }}"><a href="{{ route('media.library.admin') }}"><i class="zmdi zmdi-folder"></i><span>Media</span></a></li>
             @endif
 
-            
+            @if(dsld_have_user_permission('media') == 1 || dsld_have_user_permission('media') == 1)
+            <li class="{{ dsld_is_route_active(['institutes.index', 'institute_types.index'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i><span>Institute</span></a>
+                <ul class="ml-menu">
+                    @if(dsld_have_user_permission('institute') == 1)
+                    <li class="{{ dsld_is_route_active(['institutes.index']) }}"><a href="{{ route('institutes.index') }}">All Institutes</a>
+                    
+                    </li>
+                    @endif
+                    @if(dsld_have_user_permission('institute-types') == 1)
+                    <li class="{{ dsld_is_route_active(['institute_types.index']) }}"><a href="{{ route('institute_types.index') }}">All Institutes Type</a></li>
+                    @endif  
+                </ul>
+            </li> 
+            @endif
+
+
             @if(dsld_have_user_permission('backend-setting') || dsld_have_user_permission('frontend-setting'))  
             <li class="{{ dsld_is_route_active(['backend.setting', 'backend.header', 'backend.footer', 'frontend.setting'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-apps"></i><span>Settings</span></a>
                 <ul class="ml-menu">
