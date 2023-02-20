@@ -19,6 +19,10 @@ use App\Http\Controllers\ProductContorller;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\InstituteController;
 use App\Http\Controllers\InstituteTypeController;
+use App\Http\Controllers\ProgramSessionController;
+use App\Http\Controllers\ProgramSemesterController;
+use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\ClassRoomController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +61,45 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
     Route::post('institute-types/destory', [InstituteTypeController::class, 'destory'])->name('institute_types.destory');
     Route::post('institute-types/status', [InstituteTypeController::class, 'status'])->name('institute_types.status');
     Route::post('institute-types/update', [InstituteTypeController::class, 'update'])->name('institute_types.update');
+ 
+
+    //Program session
+    Route::get('program-session', [ProgramSessionController::class, 'index'])->name('program_session.index');
+    Route::post('program-settion/edit', [ProgramSessionController::class, 'edit'])->name('program_session.edit');
+    Route::post('program-settion/store', [ProgramSessionController::class, 'store'])->name('program_session.store');
+    Route::post('get-all-program_session', [ProgramSessionController::class, 'get_ajax_program_session'])->name('ajax_program_session');
+    Route::post('program-settion/destory', [ProgramSessionController::class, 'destory'])->name('program_session.destory');
+    Route::post('program-settion/status', [ProgramSessionController::class, 'status'])->name('program_session.status');
+    Route::post('program-settion/update', [ProgramSessionController::class, 'update'])->name('program_session.update');
+
+
+    //Program Semester
+    Route::get('program-semesters', [ProgramSemesterController::class, 'index'])->name('program_semesters.index');
+    Route::post('program-semester/edit', [ProgramSemesterController::class, 'edit'])->name('program_semesters.edit');
+    Route::post('program-semester/store', [ProgramSemesterController::class, 'store'])->name('program_semesters.store');
+    Route::post('get-all-program_semesters', [ProgramSemesterController::class, 'get_ajax_program_semesters'])->name('ajax_program_semesters');
+    Route::post('program-semester/destory', [ProgramSemesterController::class, 'destory'])->name('program_semesters.destory');
+    Route::post('program-semester/status', [ProgramSemesterController::class, 'status'])->name('program_semesters.status');
+    Route::post('program-semester/update', [ProgramSemesterController::class, 'update'])->name('program_semesters.update');
+
+
+    //Program 
+    Route::get('programs', [ProgramController::class, 'index'])->name('programs.index');
+    Route::post('programs/edit', [ProgramController::class, 'edit'])->name('programs.edit');
+    Route::post('programs/store', [ProgramController::class, 'store'])->name('programs.store');
+    Route::post('get-all-programs', [ProgramController::class, 'get_ajax_programs'])->name('ajax_programs');
+    Route::post('programs/destory', [ProgramController::class, 'destory'])->name('programs.destory');
+    Route::post('programs/status', [ProgramController::class, 'status'])->name('programs.status');
+    Route::post('programs/update', [ProgramController::class, 'update'])->name('programs.update');
+
+    //Program 
+    Route::get('class-room', [ClassRoomController::class, 'index'])->name('classes.index');
+    Route::post('class-room/edit', [ClassRoomController::class, 'edit'])->name('classes.edit');
+    Route::post('class-room/store', [ClassRoomController::class, 'store'])->name('classes.store');
+    Route::post('get-all-class-room', [ClassRoomController::class, 'get_ajax_classes'])->name('ajax_classes');
+    Route::post('class-room/destory', [ClassRoomController::class, 'destory'])->name('classes.destory');
+    Route::post('class-room/status', [ClassRoomController::class, 'status'])->name('classes.status');
+    Route::post('class-room/update', [ClassRoomController::class, 'update'])->name('classes.update');
 
 
     //Media library
