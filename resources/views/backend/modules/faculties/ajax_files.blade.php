@@ -1,48 +1,52 @@
 
 <table class="table table-bordered table-striped table-hover dataTable">
+
     <thead>
-            <tr class="text-center">
-                <th>Sr</th>
-                <th>Title</th>
-                <th>Parent</th>
-                <th>Order</th>
+        <tr class="text-center">
+            <th>Sr</th>
+            <th>Title</th>
+            <th>Department</th>
+            <th>Institues</th>
+            <th>Order</th>
 
-                @if(dsld_have_user_permission('faculty_edit') == 1)
-                <th>Status</th>
-                @endif
+            @if(dsld_have_user_permission('faculty_edit') == 1)
+            <th>Status</th>
+            @endif
 
-                @if(dsld_have_user_permission('faculty_delete') == 1 || dsld_have_user_permission('faculty_edit') == 1)
-                <th>Action</th>
-                @endif
-            </tr>
-        </thead>
-        <tfoot>
-            <tr class="text-center">
-                <th>Sr</th>
-                <th>Title</th>
-                <th>Parent</th>
-                <th>Order</th>
+            @if(dsld_have_user_permission('faculty_delete') == 1 || dsld_have_user_permission('faculty_edit') == 1)
+            <th>Action</th>
+            @endif
+        </tr>
+    </thead>
 
-                @if(dsld_have_user_permission('faculty_edit') == 1)
-                <th>Status</th>
-                @endif
+    <tfoot>
+        <tr class="text-center">
+            <th>Sr</th>
+            <th>Title</th>
+            <th>Department</th>
+            <th>Institues</th>
+            <th>Order</th>
 
-                @if(dsld_have_user_permission('faculty_delete') == 1 || dsld_have_user_permission('institute_type_edit') == 1)
-                <th>Action</th>
-                @endif
-            </tr>
-        </tfoot>
+            @if(dsld_have_user_permission('faculty_edit') == 1)
+            <th>Status</th>
+            @endif
+
+            @if(dsld_have_user_permission('faculty_delete') == 1 || dsld_have_user_permission('institute_type_edit') == 1)
+            <th>Action</th>
+            @endif
+        </tr>
+    </tfoot>
+
     <tbody>
         @if(is_array($data) || count($data) > 0 )
             @foreach($data as $key => $value)
         
                 <tr>
                     <th scope="row">{{ $key+1 }}</th>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        {{ $value->order }}
-                    </td>
+                    <td>{{ $value->user->name }}</td>
+                    <td>{{ $value->department->title }}</td>
+                    <td>{{ $value->institutes->title }}</td>
+                    <td>{{ $value->order }}</td>
                     @if(dsld_have_user_permission('faculty_edit') == 1)
                     <td>
 

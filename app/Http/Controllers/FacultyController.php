@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Faculty;
 use App\Models\User;
 use Validator;
-
+use Hash;
 class FacultyController extends Controller
 {
     public function index(){
@@ -24,10 +24,17 @@ class FacultyController extends Controller
         $search = $request->search;
         $sort = $request->sort;
 
-        $data = Faculty::where('status', 1);
+        $data = Faculty::where('user_id','!=', 0);
 
         if($search != ''){
-            $data->where('title', 'like', '%'.$search.'%');
+            $user = User::where('name', 'like', '%'.$search.'%')->first();
+    
+            if($user != ''){
+                $data->where('user_id', $user->id);
+            }else{
+                $data->where('about', 'like', '%'.$search.'%');
+            }
+            
         }
        
         if($sort != ''){
@@ -54,15 +61,16 @@ class FacultyController extends Controller
     }
 
     public function store(Request $request){
+        
         if(dsld_have_user_permission('program-semester_add') == 0){
             return response()->json(['status' => 'error', 'message'=> "You have no permission."]);
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:50',
-            'email' => 'required|email|max:255',
-            'password' => 'required|max:50',
-            'phone' => 'required|integer',
+            'user_id' => 'required|integer',
+            'institutes_id' => 'required|integer',
+            'departments_id' => 'required|integer',
+            'faculty_types_id' => 'required|integer',
             'created_by' => 'required|integer',
             'status' => 'required|integer'
         ]);
@@ -77,27 +85,18 @@ class FacultyController extends Controller
             array_push($social_link, array($value => $request[$value]));
         }
 
-        if(User::where('email', $request->email)->first() == null){
-            $user =  new User;
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password =  Hash::make($request->password);
-            $user->phone =  $request->phone;
-            $user->user_type = 'staff';
-            $user->avatar_original = $request->avatar_original;
-            $user->banned = 0;
-            $user->save();
+        if(Faculty::where('user_id', $request->user_id)->first() == null){
 
             $action = new Faculty;
             $action->about = $request->about;
-            $action->user_id =  $user->id;
-            $action->social_link =  $social_link;
-            $action->departments_id =  $user->departments_id;
-            $action->institutes_id =  $user->institutes_id;
+            $action->user_id =  $request->user_id;
+            $action->social_link =  json_encode($social_link);
+            $action->faculty_types_id =  $request->faculty_types_id;
+            $action->departments_id =  $request->departments_id;
+            $action->institutes_id =  $request->institutes_id;
             $action->created_by =  $request->created_by;
-            $action->order = $request->order;;
+            $action->order = $request->order;
             $action->status = $request->status;
-            $action->save();
 
             if($action->save()){
                 return response()->json(['status' => 'success', 'message'=> 'Data insert success.']);
@@ -105,7 +104,7 @@ class FacultyController extends Controller
                 return response()->json(['status' => 'error', 'message'=> 'Data insert failed.']);
             }
         }else{
-            return response()->json(['status' => 'warning', 'message'=> 'Details already exist! please try agin.']);
+            return response()->json(['status' => 'warning', 'message'=> 'Details already exist! please try again.']);
         }        
     }
 
@@ -123,10 +122,13 @@ class FacultyController extends Controller
         if(dsld_have_user_permission('program-semester_edit') == 0){
             return response()->json(['status' => 'error', 'message'=> "You have no permission."]);
         }
-        
 
         $validator = Validator::make($request->all(), [
-            'title' => 'required|max:50',
+            'user_id' => 'required|integer',
+            'faculty_types_id' => 'required|integer',
+            'institutes_id' => 'required|integer',
+            'departments_id' => 'required|integer',
+            'created_by' => 'required|integer',
             'status' => 'required|integer'
         ]);
 
@@ -134,17 +136,30 @@ class FacultyController extends Controller
         if($validator->fails()) {
             return response()->json(['status' => 'error', 'message' => $validator->errors()->all()]);
         }
-             
-        $action =  Faculty::findOrFail($request->id);
-        $action->title = $request->title;
+
+        $social_link = array();
+        foreach($request->socials as $key => $value){
+            array_push($social_link, array($value => $request[$value]));
+        }
+
+
+        $action = Faculty::findOrFail($request->id);
+        $action->about = $request->about;
+        $action->user_id =  $request->user_id;
+        $action->social_link =  json_encode($social_link);
+        $action->departments_id =  $request->departments_id;
+        $action->faculty_types_id =  $request->faculty_types_id;
+        $action->institutes_id =  $request->institutes_id;
+        $action->created_by =  $request->created_by;
         $action->order = $request->order;
         $action->status = $request->status;
-        
+
         if($action->save()){
-            return response()->json(['status' => 'success', 'message'=> 'Data update success.']);
+            return response()->json(['status' => 'success', 'message'=> 'Data insert success.']);
         }else{
-            return response()->json(['status' => 'error', 'message'=> 'Data update failed.']);
+            return response()->json(['status' => 'error', 'message'=> 'Data insert failed.']);
         }
+        
         
     }
 

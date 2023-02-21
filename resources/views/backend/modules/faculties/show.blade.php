@@ -19,7 +19,7 @@ if(isset($page) && !empty($page['name'])){
  <!-- Exportable Table -->
  <div class="row clearfix">
     
-    <div class="col-lg-7">
+    <div class="col-lg-12">
         <div class="card">
             <div class="header">
                 <h2><strong>All</strong> {{ $name }}s </h2>
@@ -27,6 +27,9 @@ if(isset($page) && !empty($page['name'])){
             <div class="body">
                 <div class="row">
                     <div class="col-lg-4">
+                        @if(dsld_have_user_permission('faculty_add') == 1)
+                            <button class="btn btn-success btn-round mb-4" title="Add New" onclick="add_new_lg_modal_form()"><i class="zmdi zmdi-hc-fw"></i> Add New</button>
+                        @endif
                         <button class="btn btn-info btn-round mb-4" onclick="get_pages();"><i class="zmdi zmdi-hc-fw"></i> Reload</button>
                     </div>
                     <div class="col-lg-8">
@@ -51,58 +54,11 @@ if(isset($page) && !empty($page['name'])){
             </div>
         </div>
     </div>
-    <div class="col-lg-5">
-        <div class="card">
-            <div class="header">
-                <h2><strong>Add New</strong> {{ $name }}s </h2>
-            </div>
-            <div class="body">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <form id="add_new_form" action="{{ route('faculty.store') }}" method="POST" enctype="multipart/form-data" >
-                            <input type="hidden" name="created_by" value="{{ Auth::user()->id }}">
-                            @csrf 
-                            <div class="modal-body">
-                                <div class="row clearfix">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="form-label">{{ $name }}<small class="text-danger">*</small></label>                                 
-                                            <input type="text" name="title" class="form-control" placeholder="{{ $name }}" />                                   
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="form-label">Order </label>                                 
-                                            <input type="text" name="order" class="form-control" placeholder="Order" value="0" />                                   
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="form-label">Status <small class="text-danger">*</small></label>                                 
-                                            <select class="form-control w-100  ms select2 mr-2" name="status" id="status">
-                                                <option value="">-- Please select --</option>
-                                                <option value="1" selected>Active</option>
-                                                <option value="0">Deactive</option>
-                                            </select>                             
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="swal-button-container">
-                                            <button type="submit" class="btn btn-success btn-round waves-effect dsld-btn-loader">SUBMIT</button>
-                                        </div>
-                                    </div>
-                                </div>  
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 @endsection
 
 @section('footer')
+    @include('backend.modules.faculties.add')
     <!--Edit Section-->
     <div class="modal fade" id="edit_larger_modals" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
@@ -132,6 +88,10 @@ if(isset($page) && !empty($page['name'])){
     <input type="hidden" name="page_no" id="page_no" value="1">
 <script>
 
+    function add_new_lg_modal_form(){
+        $('#add_new_larger_modals').modal('show');
+        $('#add_new_larger_modals_tile').text('Add New {{ $name }}');
+    }
 
     function edit_lg_modal_form(id){
         $('#edit_larger_modals_body').html('');
@@ -200,9 +160,6 @@ if(isset($page) && !empty($page['name'])){
         });
     });
    
-
-    
-
     function get_pages(){
         var search = $('input[name=search]').val();
         var sort = $('select[name=sort]').val();

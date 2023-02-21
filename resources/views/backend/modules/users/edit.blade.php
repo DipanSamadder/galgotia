@@ -72,8 +72,9 @@
                             <div class="form-group">
                             <select class="form-control" name="user_type" id="user_type" onchange="is_edited()">
                                 <option value="">-- Please select --</option>
-                                <option value="user" @if($data->user_type == 'user') selected @endif>User</option>
-                                <option value="seller" @if($data->user_type == 'seller') selected @endif>Seller</option>
+                                <option value="student" @if($data->user_type == 'student') selected @endif>Student</option>
+                                <option value="staff" @if($data->user_type == 'staff') selected @endif>Staff</option>
+                                <option value="parent" @if($data->user_type == 'parent') selected @endif>Parent</option>
                                 <option value="subadmin" @if($data->user_type == 'subadmin') selected @endif>Admin</option>
                             </select> 
                             </div>

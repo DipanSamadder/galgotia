@@ -51,8 +51,9 @@
                                     <label class="form-label">User Type</label>                                 
                                     <select class="form-control w-100  ms select2 mr-2" name="user_type" id="user_type">
                                         <option value="">-- Please select --</option>
-                                        <option value="user" selected>User</option>
-                                        <option value="seller">Seller</option>
+                                        <option value="student" selected>Student</option>
+                                        <option value="parent">Parent</option>
+                                        <option value="staff">Staff</option>
                                         <option value="subadmin">Admin</option>
                                     </select>                             
                                 </div>
