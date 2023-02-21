@@ -23,6 +23,9 @@ use App\Http\Controllers\ProgramSessionController;
 use App\Http\Controllers\ProgramSemesterController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ClassRoomController;
+use App\Http\Controllers\FacultyTypeController;
+use App\Http\Controllers\FacultyController;
+use App\Http\Controllers\DepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,7 +95,8 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
     Route::post('programs/status', [ProgramController::class, 'status'])->name('programs.status');
     Route::post('programs/update', [ProgramController::class, 'update'])->name('programs.update');
 
-    //Program 
+
+    //Class Room 
     Route::get('class-room', [ClassRoomController::class, 'index'])->name('classes.index');
     Route::post('class-room/edit', [ClassRoomController::class, 'edit'])->name('classes.edit');
     Route::post('class-room/store', [ClassRoomController::class, 'store'])->name('classes.store');
@@ -100,6 +104,34 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
     Route::post('class-room/destory', [ClassRoomController::class, 'destory'])->name('classes.destory');
     Route::post('class-room/status', [ClassRoomController::class, 'status'])->name('classes.status');
     Route::post('class-room/update', [ClassRoomController::class, 'update'])->name('classes.update');
+
+    //Faculty Type 
+    Route::get('faculty-type', [FacultyTypeController::class, 'index'])->name('faculty_type.index');
+    Route::post('faculty-type/edit', [FacultyTypeController::class, 'edit'])->name('faculty_type.edit');
+    Route::post('faculty-type/store', [FacultyTypeController::class, 'store'])->name('faculty_type.store');
+    Route::post('get-all-faculty-type', [FacultyTypeController::class, 'get_ajax_faculty_type'])->name('ajax_faculty.type');
+    Route::post('faculty-type/destory', [FacultyTypeController::class, 'destory'])->name('faculty_type.destory');
+    Route::post('faculty-type/status', [FacultyTypeController::class, 'status'])->name('faculty_type.status');
+    Route::post('faculty-type/update', [FacultyTypeController::class, 'update'])->name('faculty_type.update');
+
+    //Faculty 
+    Route::get('faculty', [FacultyController::class, 'index'])->name('faculty.index');
+    Route::post('faculty/edit', [FacultyController::class, 'edit'])->name('faculty.edit');
+    Route::post('faculty/store', [FacultyController::class, 'store'])->name('faculty.store');
+    Route::post('get-all-faculty', [FacultyController::class, 'get_ajax_faculty'])->name('ajax_faculty');
+    Route::post('faculty/destory', [FacultyController::class, 'destory'])->name('faculty.destory');
+    Route::post('faculty/status', [FacultyController::class, 'status'])->name('faculty.status');
+    Route::post('faculty/update', [FacultyController::class, 'update'])->name('faculty.update');
+
+
+    //Department
+    Route::get('departments', [DepartmentController::class, 'index'])->name('departments.index');
+    Route::post('departments/edit', [DepartmentController::class, 'edit'])->name('departments.edit');
+    Route::post('departments/store', [DepartmentController::class, 'store'])->name('departments.store');
+    Route::post('get-all-departments', [DepartmentController::class, 'get_ajax_departments'])->name('ajax_departments');
+    Route::post('departments/destory', [DepartmentController::class, 'destory'])->name('departments.destory');
+    Route::post('departments/status', [DepartmentController::class, 'status'])->name('departments.status');
+    Route::post('departments/update', [DepartmentController::class, 'update'])->name('departments.update');
 
 
     //Media library

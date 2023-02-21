@@ -20,7 +20,6 @@ return new class extends Migration
             $table->integer('days')->default(0);
             $table->integer('user_id')->default(0);
             $table->integer('created_by')->default(0);
-            $table->integer('institutes_id')->default(0);
             $table->integer('order')->default(0);
             $table->integer('status')->default(0);
             $table->timestamps();

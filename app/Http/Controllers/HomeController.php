@@ -24,9 +24,8 @@ class HomeController extends Controller
         return response()->json(['status' => 'success', 'message' => 'Cache cleared successfully.']);
     }
     function index(){
-        $header_menu = Menu::where('type', 'header_menu')->where('status', 0)->orderBy('order', 'asc')->get();
-        $page = Page::where('id', 3)->first();
-        return view('frontend.index', compact('page', 'header_menu'));
+        
+        return redirect()->route('backend.admin');
     }
 
 }

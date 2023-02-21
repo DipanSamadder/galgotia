@@ -1,29 +1,28 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\FacultyType;
+use App\Models\Department;
 use Validator;
 
-class FacultyTypeController extends Controller
+class DepartmentController extends Controller
 {
     public function index(){
         if(dsld_have_user_permission('program-semester') == 0){
             return redirect()->route('backend.admin')->with('error', 'You have no permission');
         }
-        $page['title'] = 'Faculty Type List';
-        $page['name'] = 'Faculty Type';
-        return view('backend.modules.faculties.types.show', compact('page'));
+        $page['title'] = 'Department List';
+        $page['name'] = 'Department';
+        return view('backend.modules.institutes.departments.show', compact('page'));
     }
 
 
-    public function get_ajax_faculty_type(Request $request){
+    public function get_ajax_departments(Request $request){
         if($request->page != 1){$start = $request->page * 25;}else{$start = 0;}
         $search = $request->search;
         $sort = $request->sort;
 
-        $data = FacultyType::where('title','!=', '');
+        $data = Department::where('title','!=', '');
 
         if($search != ''){
             $data->where('title', 'like', '%'.$search.'%');
@@ -49,7 +48,7 @@ class FacultyTypeController extends Controller
             }
         }
         $data = $data->skip($start)->paginate(25);
-        return view('backend.modules.faculties.types.ajax_files', compact('data'));
+        return view('backend.modules.institutes.departments.ajax_files', compact('data'));
     }
 
     public function store(Request $request){
@@ -70,7 +69,7 @@ class FacultyTypeController extends Controller
             return response()->json(['status' => 'error', 'message' => $validator->errors()->all()]);
         }
 
-        $action = new FacultyType;
+        $action = new Department;
         $action->title = $request->title;
         $action->created_by =  $request->created_by;
         $action->order = $request->order;;
@@ -89,8 +88,8 @@ class FacultyTypeController extends Controller
             return redirect()->route('backend.admin')->with('error', 'You have no permission');
         }
 
-        $data = FacultyType::where('id', $request->id)->where('created_by', $request->created_by)->first();
-        return view('backend.modules.faculties.types.edit', compact('data'));
+        $data = Department::where('id', $request->id)->where('created_by', $request->created_by)->first();
+        return view('backend.modules.institutes.departments.edit', compact('data'));
     }
 
 
@@ -110,7 +109,7 @@ class FacultyTypeController extends Controller
             return response()->json(['status' => 'error', 'message' => $validator->errors()->all()]);
         }
              
-        $action =  FacultyType::findOrFail($request->id);
+        $action =  Department::findOrFail($request->id);
         $action->title = $request->title;
         $action->order = $request->order;
         $action->status = $request->status;
@@ -128,7 +127,7 @@ class FacultyTypeController extends Controller
         if(dsld_have_user_permission('program-semester_delete') == 0){
             return response()->json(['status' => 'error', 'message'=> "You have no permission."]);
         }
-        $action = FacultyType::findOrFail($request->id);
+        $action = Department::findOrFail($request->id);
         if($action != ''){
             if($action->delete()){
                 return response()->json(['status' => 'success', 'message' => 'Data deleted successully.']);
@@ -147,7 +146,7 @@ class FacultyTypeController extends Controller
             return response()->json(['status' => 'error', 'message'=> "You have no permission."]);
         }
         
-        $action = FacultyType::findOrFail($request->id);
+        $action = Department::findOrFail($request->id);
         if($action != ''){
             if($action->status != $request->status){
                 $action->status = $request->status;

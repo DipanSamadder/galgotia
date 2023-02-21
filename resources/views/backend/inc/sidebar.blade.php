@@ -60,18 +60,28 @@
             @endif
 
             @if(dsld_have_user_permission('institute') == 1 || dsld_have_user_permission('institute') == 1)
-            <li class="{{ dsld_is_route_active(['institutes.index', 'classes.index', 'institute_types.index', 'program_session.index', 'program_semesters.index', 'programs.index'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i><span>Institute</span></a>
+            <li class="{{ dsld_is_route_active(['institutes.index', 'classes.index', 'institute_types.index', 'program_session.index', 'program_semesters.index', 'programs.index', 'departments.index', 'faculty.index', 'faculty_type.index'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i><span>Organization</span></a>
                 <ul class="ml-menu">
-                    @if(dsld_have_user_permission('institute') == 1)
-                    <li class="{{ dsld_is_route_active(['institutes.index']) }}"><a href="{{ route('institutes.index') }}">All Institutes</a>
                     
-                    </li>
-                    @endif
-                    @if(dsld_have_user_permission('institute-types') == 1)
-                    <li class="{{ dsld_is_route_active(['institute_types.index']) }}"><a href="{{ route('institute_types.index') }}">All Institutes Type</a></li>
+                    @if(dsld_have_user_permission('institute') == 1 || dsld_have_user_permission('institute-types') == 1)
+                        <li class="{{ dsld_is_route_active(['institutes.index', 'institute_types.index'], 'active open') }} level-2"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i> <span>Institutes</span></a>
+                            <ul class="ml-menu">
+                                @if(dsld_have_user_permission('institute') == 1)
+                                <li class="{{ dsld_is_route_active(['institutes.index']) }}"><a href="{{ route('institutes.index') }}">All Institutes</a>
+                                
+                                </li>
+                                @endif
+                                @if(dsld_have_user_permission('institute-types') == 1)
+                                <li class="{{ dsld_is_route_active(['institute_types.index']) }}"><a href="{{ route('institute_types.index') }}">Type</a>
+                                
+                                </li>
+                                @endif  
+                            </ul>
+                        </li> 
                     @endif 
+
                     @if(dsld_have_user_permission('programs') == 1 || dsld_have_user_permission('programs') == 1)
-                        <li class="{{ dsld_is_route_active(['program_session.index', 'program_semesters.index', 'programs.index'], 'active open') }} level-2"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i> <span>Program</span></a>
+                        <li class="{{ dsld_is_route_active(['program_session.index', 'program_semesters.index', 'programs.index'], 'active open') }} level-2"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i> <span>Program</span></a>
                             <ul class="ml-menu">
                                 @if(dsld_have_user_permission('programs') == 1)
                                 <li class="{{ dsld_is_route_active(['programs.index']) }}"><a href="{{ route('programs.index') }}">All Programs</a>
@@ -89,11 +99,50 @@
                             </ul>
                         </li> 
                     @endif 
-                    @if(dsld_have_user_permission('class-room') == 1)
-                    <li class="{{ dsld_is_route_active(['classes.index']) }}"><a href="{{ route('classes.index') }}">All Classes</a>
                     
-                    </li>
+
+                    @if(dsld_have_user_permission('class-room') == 1)
+                        <li class="{{ dsld_is_route_active(['classes.index'], 'active open') }} level-2"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i> <span>Classes</span></a>
+                            <ul class="ml-menu">
+
+                                @if(dsld_have_user_permission('class-room') == 1)
+                                    <li class="{{ dsld_is_route_active(['classes.index']) }}"><a href="{{ route('classes.index') }}">All Classes</a>
+                                </li>
+                                @endif
+                                 
+                            </ul>
+                        </li> 
+                    @endif 
+
+                    @if(dsld_have_user_permission('class-room') == 1)
+                        <li class="{{ dsld_is_route_active(['departments.index'], 'active open') }} level-2"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i> <span>Departments</span></a>
+                            <ul class="ml-menu">
+
+                                @if(dsld_have_user_permission('class-room') == 1)
+                                    <li class="{{ dsld_is_route_active(['departments.index']) }}"><a href="{{ route('departments.index') }}">All Departments</a>
+                                    </li>
+                                @endif
+                                 
+                            </ul>
+                        </li> 
+                    @endif 
+
+                    @if(dsld_have_user_permission('faculty') == 1 || dsld_have_user_permission('faculty-type') == 1)
+                        <li class="{{ dsld_is_route_active(['faculty.index', 'faculty_type.index'], 'active open') }} level-2"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i> <span>Faculty</span></a>
+                            <ul class="ml-menu">
+
+                                @if(dsld_have_user_permission('faculty') == 1)
+                                <li class="{{ dsld_is_route_active(['faculty.index']) }}"><a href="{{ route('faculty.index') }}">All Faculties</a></li>
+                                @endif
+
+                                @if(dsld_have_user_permission('faculty-type') == 1)
+                                <li class="{{ dsld_is_route_active(['faculty_type.index']) }}"><a href="{{ route('faculty_type.index') }}">Type</a></li>
+                                @endif 
+  
+                            </ul>
+                        </li> 
                     @endif
+                    
                 </ul>
             </li> 
             @endif
