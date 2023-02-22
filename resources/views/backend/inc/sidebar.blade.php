@@ -180,7 +180,7 @@
             </li> 
             @endif
             
-            <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i><span> Website</span></a>
+            <li><a href="javascript:void(0);" class="menu-toggle {{ dsld_is_route_active(['contact_form.index', 'contact_form.leads','posts.index', 'posts.edit', 'posts.store', 'posts_cat.index', 'posts_cat.store', 'posts_cat.edit', 'pages.index', 'pages.edit', 'pages.store', 'pages_section.index',   'pages_section_fields.edit','office.index',   'office.edit', 'history.timeline.index','cities.index','states.index','countries.index'], 'toggled') }}"><i class="zmdi zmdi-hc-fw"></i><span> Website</span></a>
                 <ul class="ml-menu">
                 @if(dsld_have_user_permission('contact-forms') == 1 || dsld_have_user_permission('contact-form-leads') == 1)  
                     <li class="level-2 {{ dsld_is_route_active(['contact_form.index', 'contact_form.leads'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i><span>Forms</span></a>
@@ -215,7 +215,17 @@
                                 @endif  
                             </ul>
                         </li> 
-                        @endif
+                    @endif
+                    
+                    @if(dsld_have_user_permission('city') || dsld_have_user_permission('state') || dsld_have_user_permission('country'))
+                        <li class="level-2 {{ dsld_is_route_active(['cities.index','states.index','countries.index'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i> <span>Address</span></a>
+                            <ul class="ml-menu">
+                                <li class="{{ dsld_is_route_active(['cities.index']) }}"><a href="{{ route('cities.index') }}">City</a></li>
+                                <li class="{{ dsld_is_route_active(['states.index']) }}"><a href="{{ route('states.index') }}">State</a></li>
+                                <li class="{{ dsld_is_route_active(['countries.index']) }}"><a href="{{ route('countries.index') }}">Country</a></li>
+                            </ul>
+                        </li> 
+                    @endif   
                 </ul>
             </li>
             @if(dsld_have_user_permission('users'))

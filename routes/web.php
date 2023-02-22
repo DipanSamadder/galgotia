@@ -8,6 +8,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\AddressController;
 
 
 /*
@@ -23,8 +24,10 @@ use App\Http\Controllers\MailController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('contact-form/submit-data', [ContactFormController::class, 'ajax_submit_data'])->name('contact_form.submit_data');
 
+
 //loading
 Route::post('ajax-get-program-by-institute', [HomeController::class, 'ajax_get_program_by_institute'])->name('ajax_get_program_by_institute');
+Route::post('ajax-get-state-by-country', [HomeController::class, 'ajax_get_state_by_country'])->name('ajax_get_state_by_country');
 
 
 Route::get('/p/{slug}', [PagesController::class, 'show_custom_page'])->name('custom-pages.show_custom_page');

@@ -21,6 +21,7 @@ function ajax_get_program_by_institute(){
 
 
 $(document).ready(function(){
+
     $("select.select2.need_program[name=institutes_id]").on("change", function (e) { 
         $('.dropdown-loading').html('<div class="lds-ring"><div></div><div></div><div></div><div></div></div>');
         jQuery('select.select2.get_program[name=programs_id] option:not(:first)').remove();
@@ -32,7 +33,16 @@ $(document).ready(function(){
         });
     });
 
-
+    $("select.select2.need_state[name=state_id]").on("change", function (e) { 
+        $('.dropdown-loading').html('<div class="lds-ring"><div></div><div></div><div></div><div></div></div>');
+        jQuery('select.select2.get_state[name=state_id] option:not(:first)').remove();
+        var id = $(e.currentTarget).val();
+        $.post( "{{ route('ajax_get_state_by_country') }}", {'_token':'{{ csrf_token() }}', 'id':id }).done(function( data ) {
+            
+            $('select.select2.get_state[name=state_id]').append(data);
+            $('.dropdown-loading').html('');
+        });
+    });
 
     $('#upload_form').on('submit', function(event){
     event.preventDefault();

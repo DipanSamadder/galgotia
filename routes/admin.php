@@ -27,6 +27,7 @@ use App\Http\Controllers\FacultyTypeController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\AddressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,33 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
     Route::get('clear-cache', [HomeController::class, 'clear_cache'])->name('clear.cache');
     Route::get('send-test-mail', [MailController::class, 'testmail'])->name('testmail');
  
+    //AddressController City
+    Route::get('cities', [AddressController::class, 'cities_index'])->name('cities.index');
+    Route::post('cities/edit', [AddressController::class, 'cities_edit'])->name('cities.edit');
+    Route::post('cities/store', [AddressController::class, 'cities_store'])->name('cities.store');
+    Route::post('get-all-cities', [AddressController::class, 'get_ajax_cities'])->name('ajax_cities');
+    Route::post('cities/destory', [AddressController::class, 'cities_destory'])->name('cities.destory');
+    Route::post('cities/status', [AddressController::class, 'cities_status'])->name('cities.status');
+    Route::post('cities/update', [AddressController::class, 'cities_update'])->name('cities.update');
+
+    //AddressController Country
+    Route::get('countries', [AddressController::class, 'countries_index'])->name('countries.index');
+    Route::post('countries/edit', [AddressController::class, 'countries_edit'])->name('countries.edit');
+    Route::post('countries/store', [AddressController::class, 'countries_store'])->name('countries.store');
+    Route::post('get-all-countries', [AddressController::class, 'get_ajax_countries'])->name('ajax_countries');
+    Route::post('countries/destory', [AddressController::class, 'countries_destory'])->name('countries.destory');
+    Route::post('countries/status', [AddressController::class, 'countries_status'])->name('countries.status');
+    Route::post('countries/update', [AddressController::class, 'countries_update'])->name('countries.update');
+
+
+    //AddressController States
+    Route::get('states', [AddressController::class, 'states_index'])->name('states.index');
+    Route::post('states/edit', [AddressController::class, 'states_edit'])->name('states.edit');
+    Route::post('states/store', [AddressController::class, 'states_store'])->name('states.store');
+    Route::post('get-all-states', [AddressController::class, 'get_ajax_states'])->name('ajax_states');
+    Route::post('states/destory', [AddressController::class, 'states_destory'])->name('states.destory');
+    Route::post('states/status', [AddressController::class, 'states_status'])->name('states.status');
+    Route::post('states/update', [AddressController::class, 'states_update'])->name('states.update');
 
     //Institute
     Route::get('institutes', [InstituteController::class, 'index'])->name('institutes.index');
@@ -69,12 +97,12 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
 
     //Program session
     Route::get('program-session', [ProgramSessionController::class, 'index'])->name('program_session.index');
-    Route::post('program-settion/edit', [ProgramSessionController::class, 'edit'])->name('program_session.edit');
-    Route::post('program-settion/store', [ProgramSessionController::class, 'store'])->name('program_session.store');
+    Route::post('program-session/edit', [ProgramSessionController::class, 'edit'])->name('program_session.edit');
+    Route::post('program-session/store', [ProgramSessionController::class, 'store'])->name('program_session.store');
     Route::post('get-all-program_session', [ProgramSessionController::class, 'get_ajax_program_session'])->name('ajax_program_session');
-    Route::post('program-settion/destory', [ProgramSessionController::class, 'destory'])->name('program_session.destory');
-    Route::post('program-settion/status', [ProgramSessionController::class, 'status'])->name('program_session.status');
-    Route::post('program-settion/update', [ProgramSessionController::class, 'update'])->name('program_session.update');
+    Route::post('program-session/destory', [ProgramSessionController::class, 'destory'])->name('program_session.destory');
+    Route::post('program-session/status', [ProgramSessionController::class, 'status'])->name('program_session.status');
+    Route::post('program-session/update', [ProgramSessionController::class, 'update'])->name('program_session.update');
 
 
     //Program Semester
