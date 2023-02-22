@@ -148,6 +148,18 @@
             @endif
 
           
+            @if(dsld_have_user_permission('student') == 1 || dsld_have_user_permission('student') == 1)
+            <li class="{{ dsld_is_route_active(['students.index'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i> <span>Students</span></a>
+                <ul class="ml-menu">
+                    
+                    
+                    @if(dsld_have_user_permission('students') == 1)
+                        <li class="{{ dsld_is_route_active(['students.index']) }}"><a href="{{ route('students.index') }}">All Students</a></li>
+                    @endif
+
+                </ul>
+            </li> 
+            @endif
             
             @if(dsld_have_user_permission('backend-setting') || dsld_have_user_permission('frontend-setting'))  
             <li class="{{ dsld_is_route_active(['backend.setting', 'backend.header', 'backend.footer', 'frontend.setting'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-apps"></i><span>Settings</span></a>

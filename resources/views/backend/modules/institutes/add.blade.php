@@ -1,5 +1,5 @@
 
-<div class="modal fade" id="add_new_larger_modals_user" tabindex="-1" role="dialog">
+<div class="modal fade" id="add_new_larger_modals" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,7 +9,7 @@
             @csrf 
             <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
             <div class="modal-body">
-                <div id="add_new_larger_modals_user_body">
+                <div id="add_new_larger_modals_body">
                     <div class="body">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs p-0 mb-3 nav-tabs-success" role="tablist">

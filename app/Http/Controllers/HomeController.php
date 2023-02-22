@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Artisan;
 use App\Models\Menu;
 use App\Models\Page;
 use App\Models\User;
+use App\Models\Institute;
+use App\Models\Program;
 use Auth;
 
 class HomeController extends Controller
@@ -28,4 +30,10 @@ class HomeController extends Controller
         return redirect()->route('backend.admin');
     }
 
+
+    function ajax_get_program_by_institute(Request $request){
+        $data = Program::where('institutes_id', $request->id)->get();
+        return view('backend.partials.ajax_get_program_by_institute', compact('data'));
+
+    }
 }

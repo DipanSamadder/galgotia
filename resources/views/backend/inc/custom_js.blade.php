@@ -13,7 +13,27 @@ function clear_cache(){
     DSLDAjaxSubmitFullLoader('{{ route("clear.cache") }}', '', 'GET', '1');
 }
 
+function ajax_get_program_by_institute(){
+    var data = $(this).select2('data'); 
+    alert(data);
+}
+
+
+
 $(document).ready(function(){
+    $("select.select2.need_program[name=institutes_id]").on("change", function (e) { 
+        $('.dropdown-loading').html('<div class="lds-ring"><div></div><div></div><div></div><div></div></div>');
+        jQuery('select.select2.get_program[name=programs_id] option:not(:first)').remove();
+        var id = $(e.currentTarget).val();
+        $.post( "{{ route('ajax_get_program_by_institute') }}", {'_token':'{{ csrf_token() }}', 'id':id }).done(function( data ) {
+            
+            $('select.select2.get_program[name=programs_id]').append(data);
+            $('.dropdown-loading').html('');
+        });
+    });
+
+
+
     $('#upload_form').on('submit', function(event){
     event.preventDefault();
         var images = $('#upload_images').val();

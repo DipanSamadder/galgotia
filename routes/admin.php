@@ -25,6 +25,7 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ClassRoomController;
 use App\Http\Controllers\FacultyTypeController;
 use App\Http\Controllers\FacultyController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\DepartmentController;
 
 /*
@@ -122,6 +123,15 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
     Route::post('faculty/destory', [FacultyController::class, 'destory'])->name('faculty.destory');
     Route::post('faculty/status', [FacultyController::class, 'status'])->name('faculty.status');
     Route::post('faculty/update', [FacultyController::class, 'update'])->name('faculty.update');
+
+    //Student 
+    Route::get('students', [StudentController::class, 'index'])->name('students.index');
+    Route::post('students/edit', [StudentController::class, 'edit'])->name('students.edit');
+    Route::post('students/store', [StudentController::class, 'store'])->name('students.store');
+    Route::post('get-all-students', [StudentController::class, 'get_ajax_students'])->name('ajax_students');
+    Route::post('students/destory', [StudentController::class, 'destory'])->name('students.destory');
+    Route::post('students/status', [StudentController::class, 'status'])->name('students.status');
+    Route::post('students/update', [StudentController::class, 'update'])->name('students.update');
 
 
     //Department

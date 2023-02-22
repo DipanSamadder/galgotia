@@ -9,11 +9,11 @@
             <th>Institues</th>
             <th>Order</th>
 
-            @if(dsld_have_user_permission('faculty_edit') == 1)
+            @if(dsld_have_user_permission('student_edit') == 1)
             <th>Status</th>
             @endif
 
-            @if(dsld_have_user_permission('faculty_delete') == 1 || dsld_have_user_permission('faculty_edit') == 1)
+            @if(dsld_have_user_permission('student_delete') == 1 || dsld_have_user_permission('student_edit') == 1)
             <th>Action</th>
             @endif
         </tr>
@@ -27,11 +27,11 @@
             <th>Institues</th>
             <th>Order</th>
 
-            @if(dsld_have_user_permission('faculty_edit') == 1)
+            @if(dsld_have_user_permission('student_edit') == 1)
             <th>Status</th>
             @endif
 
-            @if(dsld_have_user_permission('faculty_delete') == 1 || dsld_have_user_permission('institute_type_edit') == 1)
+            @if(dsld_have_user_permission('student_delete') == 1 || dsld_have_user_permission('student_edit') == 1)
             <th>Action</th>
             @endif
         </tr>
@@ -43,30 +43,27 @@
         
                 <tr>
                     <th scope="row">{{ $key+1 }}</th>
-                    <td>{{ $value->user->name }}</td>
-                    <td>{{ $value->department->title }}</td>
-                    <td>{{ $value->institutes->title }}</td>
                     <td>{{ $value->order }}</td>
-                    @if(dsld_have_user_permission('faculty_edit') == 1)
+                    @if(dsld_have_user_permission('student_edit') == 1)
                     <td>
 
                     <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="status_institute_type{{$value->id }}" onchange="DSLDStatusUpdate('{{ $value->id }}','{{ $value->status == 1 ? 0 : 1  }}', '{{ route('faculty.status') }}','{{ csrf_token() }}')" @if($value->status == 1) checked @endif >
-                        <label class="custom-control-label" for="status_institute_type{{$value->id }}"></label>
+                        <input type="checkbox" class="custom-control-input" id="status_student{{$value->id }}" onchange="DSLDStatusUpdate('{{ $value->id }}','{{ $value->status == 1 ? 0 : 1  }}', '{{ route('student.status') }}','{{ csrf_token() }}')" @if($value->status == 1) checked @endif >
+                        <label class="custom-control-label" for="status_student{{$value->id }}"></label>
                     </div>
 
                     </td>
                     @endif
 
-                    @if(dsld_have_user_permission('faculty_delete') == 1 || dsld_have_user_permission('faculty_edit') == 1)
+                    @if(dsld_have_user_permission('student_delete') == 1 || dsld_have_user_permission('student_edit') == 1)
                     <td>
-                            @if(dsld_have_user_permission('faculty_edit') == 1)
+                            @if(dsld_have_user_permission('student_edit') == 1)
                             <a href="javascript:void(0)"  onclick="edit_lg_modal_form({{ $value->id }});" class="btn btn-default waves-effect waves-float btn-sm waves-red bg-primary">
                                 <i class="zmdi zmdi-edit"></i>
                             </a>
                             @endif
-                            @if(dsld_have_user_permission('faculty_delete') == 1)
-                            <a href="javascript:void(0);" class="btn btn-default waves-effect waves-float btn-sm waves-red bg-danger" onclick="DSLDDeleteAlert('{{ $value->id }}','{{ route('faculty.destory') }}','{{ csrf_token() }}')">
+                            @if(dsld_have_user_permission('student_delete') == 1)
+                            <a href="javascript:void(0);" class="btn btn-default waves-effect waves-float btn-sm waves-red bg-danger" onclick="DSLDDeleteAlert('{{ $value->id }}','{{ route('student.destory') }}','{{ csrf_token() }}')">
                                     <i class="zmdi zmdi-delete"></i>
                             </a>
                             @endif
