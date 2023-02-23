@@ -192,16 +192,20 @@ if(isset($page) && !empty($page['name'])){
         });
     }
 
+    
     $(document).ready(function(){
         $('#page_no').val(1);
         get_pages();
     });
+
+
     function filter(){
         $('#page_no').val(1);
         get_pages();
     }
-    $(document).ready(function()
-{
+
+
+    $(document).ready(function(){
         $(document).on('click', '.pagination a',function(event)
         {
             $('li').removeClass('active');

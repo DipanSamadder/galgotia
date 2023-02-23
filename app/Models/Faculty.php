@@ -9,7 +9,7 @@ class Faculty extends Model
 {
     use HasFactory;
     
-    public function user(){
+    public function faculty(){
         return $this->belongsTo(User::class, 'user_id');
     }
 
