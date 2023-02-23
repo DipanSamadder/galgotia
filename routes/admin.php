@@ -1,33 +1,35 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BusinessSettingsController;
+use App\Http\Controllers\Setting\BusinessSettingsController;
 use App\Http\Controllers\UploadsMediaController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PagesController;
-use App\Http\Controllers\UsersController;
-use App\Http\Controllers\RolesController;
-use App\Http\Controllers\RolePermissionsController;
-use App\Http\Controllers\MenuController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\PostCategoryController;
-use App\Http\Controllers\PageSectionController;
-use App\Http\Controllers\OfficeController;
-use App\Http\Controllers\TimelineController;
-use App\Http\Controllers\ContactFormController;
-use App\Http\Controllers\ProductContorller;
+use App\Http\Controllers\Page\PagesController;
+use App\Http\Controllers\User\UsersController;
+use App\Http\Controllers\Setting\RolesController;
+use App\Http\Controllers\Setting\RolePermissionsController;
+use App\Http\Controllers\Setting\MenuController;
+use App\Http\Controllers\Post\PostController;
+use App\Http\Controllers\Post\PostCategoryController;
+use App\Http\Controllers\Page\PageSectionController;
+use App\Http\Controllers\Setting\ContactFormController;
 use App\Http\Controllers\MailController;
-use App\Http\Controllers\InstituteController;
-use App\Http\Controllers\InstituteTypeController;
-use App\Http\Controllers\ProgramSessionController;
-use App\Http\Controllers\ProgramSemesterController;
-use App\Http\Controllers\ProgramController;
-use App\Http\Controllers\ClassRoomController;
-use App\Http\Controllers\FacultyTypeController;
-use App\Http\Controllers\FacultyController;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\AddressController;
+use App\Http\Controllers\Institute\InstituteController;
+use App\Http\Controllers\Institute\InstituteTypeController;
+use App\Http\Controllers\Program\ProgramSessionController;
+use App\Http\Controllers\Program\ProgramSemesterController;
+use App\Http\Controllers\Program\ProgramController;
+use App\Http\Controllers\Institute\ClassRoomController;
+use App\Http\Controllers\Faculty\FacultyTypeController;
+use App\Http\Controllers\Faculty\FacultyController;
+use App\Http\Controllers\Student\StudentController;
+use App\Http\Controllers\Institute\DepartmentController;
+use App\Http\Controllers\Setting\AddressController;
+use App\Http\Controllers\Library\LibraryAuthorController;
+use App\Http\Controllers\Library\LibraryBookController;
+use App\Http\Controllers\Library\LibraryBookIssueController;
+use App\Http\Controllers\Library\LibraryCategoryController;
+use App\Http\Controllers\Library\LibraryPublisherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +49,20 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
     Route::get('clear-cache', [HomeController::class, 'clear_cache'])->name('clear.cache');
     Route::get('send-test-mail', [MailController::class, 'testmail'])->name('testmail');
  
+
+    //Library
+
+    //Library Author
+    Route::get('library-authors', [AddressController::class, 'index'])->name('library.authors.index');
+    Route::post('library-authors/edit', [AddressController::class, 'edit'])->name('library.authors.edit');
+    Route::post('library-authors/store', [AddressController::class, 'store'])->name('library.authors.store');
+    Route::post('get-all-library-authors', [AddressController::class, 'get_ajax_library-authors'])->name('ajax_library-authors');
+    Route::post('library-authors/destory', [AddressController::class, 'destory'])->name('library.authors.destory');
+    Route::post('library-authors/status', [AddressController::class, 'status'])->name('library.authors.status');
+    Route::post('library-authors/update', [AddressController::class, 'update'])->name('library.authors.update');
+
+
+
     //AddressController City
     Route::get('cities', [AddressController::class, 'cities_index'])->name('cities.index');
     Route::post('cities/edit', [AddressController::class, 'cities_edit'])->name('cities.edit');
@@ -208,21 +224,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
     Route::post('contact-form-leads/destory', [ContactFormController::class, 'leads_destory'])->name('contact_form_leads.destory');
     Route::get('contact-form/leads-export/{id}',[ContactFormController::class, 'exportCfLeads'])->name('cf-export-leads');
 
-    //Office Listing
-    Route::get('offices', [OfficeController::class, 'index'])->name('office.index');
-    Route::post('office/edit', [OfficeController::class, 'edit'])->name('office.edit');
-    Route::post('office/store', [OfficeController::class, 'store'])->name('office.store');
-    Route::post('get-all-office', [OfficeController::class, 'get_ajax_offices'])->name('ajax_offices');
-    Route::post('office/update', [OfficeController::class, 'update'])->name('office.update');
 
-    
-    //History of YKK
-    Route::get('history-of-timeline', [TimelineController::class, 'index'])->name('history.timeline.index');
-    Route::post('history-of-timeline/edit', [TimelineController::class, 'edit'])->name('history.timeline.edit');
-    Route::post('history-of-timeline/store', [TimelineController::class, 'store'])->name('history.timeline.store');
-    Route::post('get-all-history-of-timeline', [TimelineController::class, 'get_ajax_history_of_timeline'])->name('ajax_history_of_timelines');
-    Route::post('history-of-timeline/update', [TimelineController::class, 'update'])->name('history.timeline.update');
-    
 
     //Page Section
     Route::get('page-sections', [PageSectionController::class, 'index'])->name('pages_section.index');
@@ -285,15 +287,6 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
     Route::post('post/destory', [PostController::class, 'destory'])->name('posts.destory');
     Route::post('post/status', [PostController::class, 'status'])->name('posts.status');
     Route::post('post/update', [PostController::class, 'update'])->name('posts.update');
-
-    //Product
-    Route::get('products', [ProductContorller::class, 'index'])->name('products.index');
-    Route::get('product/edit/{id}', [ProductContorller::class, 'edit'])->name('products.edit');
-    Route::post('product/store', [ProductContorller::class, 'store'])->name('products.store');
-    Route::post('get-all-products', [ProductContorller::class, 'get_ajax_products'])->name('ajax_products');
-    Route::post('product/destory', [ProductContorller::class, 'destory'])->name('products.destory');
-    Route::post('product/status', [ProductContorller::class, 'status'])->name('products.status');
-    Route::post('product/update', [ProductContorller::class, 'update'])->name('products.update');
 
    //Post Category
    Route::get('posts-cat', [PostCategoryController::class, 'index'])->name('posts_cat.index');

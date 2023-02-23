@@ -1,14 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PagesController;
+use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\Page\PagesController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\ContactFormController;
-use App\Http\Controllers\StudentController;
+use App\Http\Controllers\Post\PostController;
+use App\Http\Controllers\Setting\ContactFormController;
+use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\MailController;
-use App\Http\Controllers\AddressController;
+use App\Http\Controllers\Setting\AddressController;
 
 
 /*
