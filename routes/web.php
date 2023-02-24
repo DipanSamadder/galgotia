@@ -28,6 +28,7 @@ Route::post('contact-form/submit-data', [ContactFormController::class, 'ajax_sub
 //loading
 Route::post('ajax-get-program-by-institute', [HomeController::class, 'ajax_get_program_by_institute'])->name('ajax_get_program_by_institute');
 Route::post('ajax-get-state-by-country', [HomeController::class, 'ajax_get_state_by_country'])->name('ajax_get_state_by_country');
+Route::post('ajax-get-book-list-by-category', [HomeController::class, 'ajax_get_book_list_by_category'])->name('ajax_get_book_list_by_category');
 
 
 Route::get('/p/{slug}', [PagesController::class, 'show_custom_page'])->name('custom-pages.show_custom_page');

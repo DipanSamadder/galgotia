@@ -44,6 +44,17 @@ $(document).ready(function(){
         });
     });
 
+    $("select.select2.need_book_list[name=library_cat_id]").on("change", function (e) { 
+        $('.dropdown-loading').html('<div class="lds-ring"><div></div><div></div><div></div><div></div></div>');
+        jQuery('select.select2.get_book_list[name=library_books_id] option:not(:first)').remove();
+        var id = $(e.currentTarget).val();
+        $.post( "{{ route('ajax_get_book_list_by_category') }}", {'_token':'{{ csrf_token() }}', 'id':id }).done(function( data ) {
+            
+            $('select.select2.get_book_list[name=library_books_id]').append(data);
+            $('.dropdown-loading').html('');
+        });
+    });
+
     $('#upload_form').on('submit', function(event){
     event.preventDefault();
         var images = $('#upload_images').val();

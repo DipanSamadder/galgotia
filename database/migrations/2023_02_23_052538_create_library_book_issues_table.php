@@ -19,9 +19,11 @@ return new class extends Migration
             $table->integer('library_books_id')->default(0);
             $table->string('issue')->nullable();
             $table->string('return')->nullable();
+            $table->integer('is_faculty')->default(0);
             $table->integer('fine')->default(0);
             $table->integer('created_by')->default(0);
             $table->integer('status')->default(0);
+            $table->integer('institutes_id')->default(0);
             $table->timestamps();
         });
     }

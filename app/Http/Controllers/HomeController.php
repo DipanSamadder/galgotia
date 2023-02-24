@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Institute;
 use App\Models\Program;
 use App\Models\State;
+use App\Models\LibraryBook;
 use Auth;
 
 class HomeController extends Controller
@@ -41,6 +42,16 @@ class HomeController extends Controller
     function ajax_get_state_by_country(Request $request){
         $data = State::where('country_id', $request->id)->get();
         return view('backend.partials.ajax_get_state_by_country', compact('data'));
+
+    }
+    function ajax_get_book_list_by_category(Request $request){
+        if($request->id !=''){
+            $data = LibraryBook::where('library_categories_id', $request->id)->where('status', 1)->get();
+        }else{
+            $data = LibraryBook::where('status', 1)->get();
+        }
+        
+        return view('backend.partials.ajax_get_option_title', compact('data'));
 
     }
 }

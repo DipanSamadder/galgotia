@@ -53,15 +53,53 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
     //Library
 
     //Library Author
-    Route::get('library-authors', [AddressController::class, 'index'])->name('library.authors.index');
-    Route::post('library-authors/edit', [AddressController::class, 'edit'])->name('library.authors.edit');
-    Route::post('library-authors/store', [AddressController::class, 'store'])->name('library.authors.store');
-    Route::post('get-all-library-authors', [AddressController::class, 'get_ajax_library-authors'])->name('ajax_library-authors');
-    Route::post('library-authors/destory', [AddressController::class, 'destory'])->name('library.authors.destory');
-    Route::post('library-authors/status', [AddressController::class, 'status'])->name('library.authors.status');
-    Route::post('library-authors/update', [AddressController::class, 'update'])->name('library.authors.update');
+    Route::get('library-authors', [LibraryAuthorController::class, 'index'])->name('library.authors.index');
+    Route::post('library-authors/edit', [LibraryAuthorController::class, 'edit'])->name('library.authors.edit');
+    Route::post('library-authors/store', [LibraryAuthorController::class, 'store'])->name('library.authors.store');
+    Route::post('get-all-library-authors', [LibraryAuthorController::class, 'get_ajax_library_authors'])->name('ajax_library_authors');
+    Route::post('library-authors/destory', [LibraryAuthorController::class, 'destory'])->name('library.authors.destory');
+    Route::post('library-authors/status', [LibraryAuthorController::class, 'status'])->name('library.authors.status');
+    Route::post('library-authors/update', [LibraryAuthorController::class, 'update'])->name('library.authors.update');
 
 
+    //Library Category
+    Route::get('library-categories', [LibraryCategoryController::class, 'index'])->name('library.categories.index');
+    Route::post('library-categories/edit', [LibraryCategoryController::class, 'edit'])->name('library.categories.edit');
+    Route::post('library-categories/store', [LibraryCategoryController::class, 'store'])->name('library.categories.store');
+    Route::post('get-all-library-categories', [LibraryCategoryController::class, 'get_ajax_library_categories'])->name('ajax_library_categories');
+    Route::post('library-categories/destory', [LibraryCategoryController::class, 'destory'])->name('library.categories.destory');
+    Route::post('library-categories/status', [LibraryCategoryController::class, 'status'])->name('library.categories.status');
+    Route::post('library-categories/update', [LibraryCategoryController::class, 'update'])->name('library.categories.update');
+
+
+
+    //Library Publisher
+    Route::get('library-publisher', [LibraryPublisherController::class, 'index'])->name('library.publisher.index');
+    Route::post('library-publisher/edit', [LibraryPublisherController::class, 'edit'])->name('library.publisher.edit');
+    Route::post('library-publisher/store', [LibraryPublisherController::class, 'store'])->name('library.publisher.store');
+    Route::post('get-all-library-publisher', [LibraryPublisherController::class, 'get_ajax_library_publisher'])->name('ajax_library_publisher');
+    Route::post('library-publisher/destory', [LibraryPublisherController::class, 'destory'])->name('library.publisher.destory');
+    Route::post('library-publisher/status', [LibraryPublisherController::class, 'status'])->name('library.publisher.status');
+    Route::post('library-publisher/update', [LibraryPublisherController::class, 'update'])->name('library.publisher.update');
+
+
+    //Library Issue
+    Route::get('library-issues', [LibraryBookIssueController::class, 'index'])->name('library.issues.index');
+    Route::post('library-issues/edit', [LibraryBookIssueController::class, 'edit'])->name('library.issues.edit');
+    Route::post('library-issues/store', [LibraryBookIssueController::class, 'store'])->name('library.issues.store');
+    Route::post('get-all-library-issues', [LibraryBookIssueController::class, 'get_ajax_library_issues'])->name('ajax_library_issues');
+    Route::post('library-issues/destory', [LibraryBookIssueController::class, 'destory'])->name('library.issues.destory');
+   Route::post('library-issues/update', [LibraryBookIssueController::class, 'update'])->name('library.issues.update');
+
+    
+    //Library Book
+    Route::get('library-books', [LibraryBookController::class, 'index'])->name('library.books.index');
+    Route::post('library-books/edit', [LibraryBookController::class, 'edit'])->name('library.books.edit');
+    Route::post('library-books/store', [LibraryBookController::class, 'store'])->name('library.books.store');
+    Route::post('get-all-library-books', [LibraryBookController::class, 'get_ajax_library_books'])->name('ajax_library_books');
+    Route::post('library-books/destory', [LibraryBookController::class, 'destory'])->name('library.books.destory');
+    Route::post('library-books/status', [LibraryBookController::class, 'status'])->name('library.books.status');
+    Route::post('library-books/update', [LibraryBookController::class, 'update'])->name('library.books.update');
 
     //AddressController City
     Route::get('cities', [AddressController::class, 'cities_index'])->name('cities.index');

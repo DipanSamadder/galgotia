@@ -18,12 +18,14 @@ return new class extends Migration
             $table->string('title');
             $table->string('code')->nullable();
             $table->integer('stock')->default(0);
+            $table->integer('issued')->default(0);
             $table->integer('library_categories_id')->default(0);
             $table->integer('library_authors_id')->default(0);
             $table->integer('library_publishers_id')->default(0);
             $table->integer('created_by')->default(0);
             $table->integer('order')->default(0);
             $table->integer('status')->default(0);
+            $table->integer('institutes_id')->default(0);
             $table->timestamps();
         });
     }

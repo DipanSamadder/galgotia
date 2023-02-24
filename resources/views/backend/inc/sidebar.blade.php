@@ -160,6 +160,41 @@
                 </ul>
             </li> 
             @endif
+
+            @if(dsld_have_user_permission('library') == 1 || dsld_have_user_permission('library') == 1)
+            <li class="{{ dsld_is_route_active(['library.books.index', 'library.categories.index','library.authors.index','library.publisher.index', 'library.issues.index'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i> <span>Library</span></a>
+                <ul class="ml-menu">
+                    
+                    @if(dsld_have_user_permission('library-issue') == 1)
+                        <li class="{{ dsld_is_route_active(['library.issues.index']) }}"><a href="{{ route('library.issues.index') }}">Issues List</a></li>
+                    @endif
+                    
+                    @if(dsld_have_user_permission('library-book') == 1)
+       
+                        <li class="level-2 {{ dsld_is_route_active(['library.books.index', 'library.books.index'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i><span>Books List</span></a>
+                        <ul class="ml-menu">
+                            <li class="{{ dsld_is_route_active(['library.books.index']) }}"><a href="{{ route('library.books.index') }}">All Books</a></li>
+
+                            @if(dsld_have_user_permission('library-category') == 1)
+                                <li class="{{ dsld_is_route_active(['library.categories.index']) }}"><a href="{{ route('library.categories.index') }}">Category List</a></li>
+                            @endif
+
+                            @if(dsld_have_user_permission('library-author') == 1)
+                                <li class="{{ dsld_is_route_active(['library.authors.index']) }}"><a href="{{ route('library.authors.index') }}">Author List</a></li>
+                            @endif
+
+                            @if(dsld_have_user_permission('library-publisher') == 1)
+                                <li class="{{ dsld_is_route_active(['library.publisher.index']) }}"><a href="{{ route('library.publisher.index') }}">Publisher List</a></li>
+                            @endif
+                        </ul>
+                    </li> 
+                    @endif
+
+
+
+                </ul>
+            </li> 
+            @endif
             
             @if(dsld_have_user_permission('backend-setting') || dsld_have_user_permission('frontend-setting'))  
             <li class="{{ dsld_is_route_active(['backend.setting', 'backend.header', 'backend.footer', 'frontend.setting'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-apps"></i><span>Settings</span></a>
@@ -228,6 +263,7 @@
                     @endif   
                 </ul>
             </li>
+
             @if(dsld_have_user_permission('users'))
             <li class="{{ dsld_is_route_active(['users.index', 'users.edit', 'users.store'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i><span>Users</span></a>
                 <ul class="ml-menu">
