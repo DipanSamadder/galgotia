@@ -30,6 +30,7 @@ use App\Http\Controllers\Library\LibraryBookController;
 use App\Http\Controllers\Library\LibraryBookIssueController;
 use App\Http\Controllers\Library\LibraryCategoryController;
 use App\Http\Controllers\Library\LibraryPublisherController;
+use App\Http\Controllers\Library\LibrarySetupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,6 +101,19 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
     Route::post('library-books/destory', [LibraryBookController::class, 'destory'])->name('library.books.destory');
     Route::post('library-books/status', [LibraryBookController::class, 'status'])->name('library.books.status');
     Route::post('library-books/update', [LibraryBookController::class, 'update'])->name('library.books.update');
+
+
+    //Library Setup
+    Route::get('library-setups', [LibrarySetupController::class, 'index'])->name('library.setups.index');
+    Route::post('library-setups/edit', [LibrarySetupController::class, 'edit'])->name('library.setups.edit');
+    Route::post('library-setups/store', [LibrarySetupController::class, 'store'])->name('library.setups.store');
+    Route::post('get-all-library-setups', [LibrarySetupController::class, 'get_ajax_library_setups'])->name('ajax_library_setups');
+    Route::post('library-setups/destory', [LibrarySetupController::class, 'destory'])->name('library.setups.destory');
+    Route::post('library-setups/status', [LibrarySetupController::class, 'status'])->name('library.setups.status');
+    Route::post('library-setups/update', [LibrarySetupController::class, 'update'])->name('library.setups.update');
+
+    Route::post('library-fine-setups/edit', [LibrarySetupController::class, 'fine_edit'])->name('library.fine.setups.edit');
+    Route::post('library-fine-setups/update', [LibrarySetupController::class, 'fine_update'])->name('library.fine.setups.update');
 
     //AddressController City
     Route::get('cities', [AddressController::class, 'cities_index'])->name('cities.index');

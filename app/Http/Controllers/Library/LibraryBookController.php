@@ -65,6 +65,7 @@ class LibraryBookController extends Controller
             'library_categories_id' => 'required|integer',
             'library_publishers_id' => 'required|integer',
             'library_authors_id' => 'required|integer',
+            'library_setups_id' => 'required|integer',
             'created_by' => 'required|integer',
             'status' => 'required|integer'
         ]);
@@ -81,6 +82,7 @@ class LibraryBookController extends Controller
         $action->stock =  $request->stock;
         $action->library_authors_id =  $request->library_authors_id;
         $action->library_publishers_id =  $request->library_publishers_id;
+        $action->library_setups_id =  $request->library_setups_id;
         $action->created_by = $request->created_by;
         $action->order = $request->order;
         $action->status = $request->status;

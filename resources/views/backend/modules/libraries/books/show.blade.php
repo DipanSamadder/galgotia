@@ -114,6 +114,16 @@ if(isset($page) && !empty($page['name'])){
                                             </select>                             
                                         </div>
                                     </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">                                
+                                            <select class="form-control w-100 ms select2 mr-2" name="library_setups_id">
+                                                <option value="">-- Select Setup--</option>
+                                                @foreach(App\Models\LibrarySetup::where('status', 1)->get()  as $key => $value)
+                                                <option value="{{ $value->id }}">{{ $value->title }}</option>
+                                                @endforeach
+                                            </select>                             
+                                        </div>
+                                    </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label class="form-label">Order</label>                                 

@@ -59,6 +59,17 @@
         </div>
         <div class="col-sm-6">
             <div class="form-group">
+                <label class="form-label">Library Selecte <small class="text-danger">*</small></label>                                 
+                <select class="form-control w-100 ms select2 mr-2" name="library_setups_id" disabled>
+                    <option value="">-- Select Setup--</option>
+                    @foreach(App\Models\LibrarySetup::where('status', 1)->get()  as $key => $value)
+                    <option value="{{ $value->id }}" @if($value->id == $data->library_setups_id) selected @endif>{{ $value->title }}</option>
+                    @endforeach
+                </select>                             
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
                 <label class="form-label">Order</label>                                 
                 <input type="text" name="order" class="form-control" placeholder="Order" @if($data->order) value="{{ $data->order }}" @endif  />                                   
             </div>

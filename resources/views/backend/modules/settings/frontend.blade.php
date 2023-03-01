@@ -167,48 +167,54 @@
                             <form id="form_validation" action="{{ route('business.setting.update') }}" class="update_form" method="post"  enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <label>Phone 1 <small>(Number)</small></label>
+                                            <input type="hidden" name="types[]"  value="site_footer_phone_number1">
+                                            <input type="text" class="form-control" placeholder="Phone Number" name="site_footer_phone_number1"  id="site_footer_phone_number1" value="{{ dsld_get_setting('site_footer_phone_number1') }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <label>Phone 2 <small>(Number)</small></label>
+                                            <input type="hidden" name="types[]"  value="site_footer_phone_number2">
+                                            <input type="text" class="form-control" placeholder="Phone Number" name="site_footer_phone_number2"  id="site_footer_phone_number2" value="{{ dsld_get_setting('site_footer_phone_number2') }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <label>Phone 3 <small>(Number)</small></label>
+                                            <input type="hidden" name="types[]"  value="site_footer_phone_number3">
+                                            <input type="text" class="form-control" placeholder="Phone Number" name="site_footer_phone_number3"  id="site_footer_phone_number3" value="{{ dsld_get_setting('site_footer_phone_number3') }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <label>Email 1 <small>(Footer)</small></label>
+                                            <input type="hidden" name="types[]"  value="site_footer_email1">
+                                            <input type="text" class="form-control" placeholder="Email" name="site_footer_email1"  value="{{ dsld_get_setting('site_footer_email1') }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <label>Email 2 <small>(Footer)</small></label>
+                                            <input type="hidden" name="types[]"  value="site_footer_email2">
+                                            <input type="text" class="form-control" placeholder="Email" name="site_footer_email2" value="{{ dsld_get_setting('site_footer_email2') }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <label>Email 3 <small>(Footer)</small></label>
+                                            <input type="hidden" name="types[]"  value="site_footer_email3">
+                                            <input type="text" class="form-control" placeholder="Email" name="site_footer_email3" value="{{ dsld_get_setting('site_footer_email3') }}" required>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12">
                                         <div class="form-group">
-                                            <label>Content <small>(follow us)</small></label>
-                                            <input type="hidden" name="types[]"  value="site_footer_follow_us_content">
-                                            <input type="text" class="form-control" placeholder="Follow Us" name="site_footer_follow_us_content"  id="site_footer_follow_us_content" value="{{ dsld_get_setting('site_footer_follow_us_content') }}" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <label>Sub Heading <small>(blue color)</small></label>
-                                            <input type="hidden" name="types[]"  value="site_footer_sub_heading">
-                                            <input type="text" class="form-control" placeholder="Sub Heading" name="site_footer_sub_heading"  id="site_footer_sub_heading" value="{{ dsld_get_setting('site_footer_sub_heading') }}" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <label>Email <small>(Address)</small></label>
-                                            <input type="hidden" name="types[]"  value="site_footer_email">
-                                            <input type="text" class="form-control" placeholder="Email" name="site_footer_email"  id="site_footer_email" value="{{ dsld_get_setting('site_footer_email') }}" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <label>Phone <small>(Number)</small></label>
-                                            <input type="hidden" name="types[]"  value="site_footer_phone_number">
-                                            <input type="text" class="form-control" placeholder="Phone Number" name="site_footer_phone_number"  id="site_footer_phone_number" value="{{ dsld_get_setting('site_footer_phone_number') }}" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <label>Address <small>(Header)</small></label>
+                                            <label>Address <small>(Footer)</small></label>
                                             <input type="hidden" name="types[]"  value="site_footer_address">
 
                                             <textarea class="form-control" placeholder="Address" name="site_footer_address" id="site_footer_address"  aria-required="true" spellcheck="false" aria-invalid="false">{{ dsld_get_setting('site_footer_address') }}</textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <label>Google <small>(Map)</small></label>
-                                            <input type="hidden" name="types[]"  value="site_footer_google_map">
-
-                                            <textarea class="form-control" placeholder="Google Map" name="site_footer_google_map" id="site_footer_google_map"  aria-required="true" spellcheck="false" aria-invalid="false">{{ dsld_get_setting('site_footer_google_map') }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12">

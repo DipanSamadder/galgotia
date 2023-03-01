@@ -220,18 +220,25 @@
                         <label class="form-label">Template *</label>                                 
                         <select class="form-control" name="template" id="template" onchange="is_edited()">
                             <option value="">-- Please select --</option>
-                            <option value="default_template"  @if($data->template == 'default_template') selected @endif>Default Template</option>
-                            <option value="about_us_template"  @if($data->template == 'about_us_template') selected @endif>About Us Template</option>
-                            <option value="csr_template"  @if($data->template == 'csr_template') selected @endif>CSR Template</option>
-                            <option value="philosophy_template"  @if($data->template == 'philosophy_template') selected @endif>Philosophy Template</option>
-                            <option value="md_message_template"  @if($data->template == 'md_message_template') selected @endif>MD Message Template</option>
-                            <option value="quality_standard_template"  @if($data->template == 'quality_standard_template') selected @endif>Quality Standard Template</option>
-                            <option value="contact_us_template"  @if($data->template == 'contact_us_template') selected @endif>Contact Us Template</option>
-                            <option value="group_timeline_template"  @if($data->template == 'group_timeline_template') selected @endif>Group Timeline Template</option>
-                            <option value="india_timeline_template"  @if($data->template == 'india_timeline_template') selected @endif>India Timeline Template</option>
-                            <option value="career_template"  @if($data->template == 'career_template') selected @endif>Career Template</option>
-                            <option value="blogs_template"  @if($data->template == 'blogs_template') selected @endif>Blog Template</option>
-                            <option value="products_template"  @if($data->template == 'products_template') selected @endif>Products Template</option>
+                            <option value="default"  @if($data->template == 'default') selected @endif>Default</option>
+                            <option value="about"  @if($data->template == 'about') selected @endif>About</option>
+                            <option value="apply_now"  @if($data->template == 'apply_now') selected @endif>Apply Now</option>
+                            <option value="litral_entry_migration"  @if($data->template == 'litral_entry_migration') selected @endif>Litral Entry Migration</option>
+                            <option value="programme_detail"  @if($data->template == 'programme_detail') selected @endif>Programme Detail</option>
+                            <option value="research"  @if($data->template == 'research') selected @endif>Research</option>
+                            <option value="school_department"  @if($data->template == 'school_department') selected @endif>School Department</option>
+                            <option value="school_landing"  @if($data->template == 'school_landing') selected @endif>School Landing</option>
+                            <option value="under_graduate"  @if($data->template == 'under_graduate') selected @endif>Under Graduate</option>
+                        </select>                             
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Parent *</label>                                 
+                        <select class="form-control" name="parent" id="parent" onchange="is_edited()">
+                            <option value="0">-- Please select --</option>
+                            @foreach(App\Models\Page::where('status', 1)->whereNotIn('id', [$data->id])->get() as $key => $value)
+                                <option value="{{ $value->id }}"  @if($data->parent ==  $value->id) selected @endif>{{ $value->title }}</option>
+                            @endforeach
                         </select>                             
                     </div>
                     <div class="form-group">
@@ -644,6 +651,7 @@
                     'date': $('#date').val(),
                     'banner': $('#banner').val(),
                     'template': $('#template').val(),
+                    'parent': $('#parent').val(),
                     'meta_title': $('#meta_title').val(),
                     'meta_description': $('#meta_description').val(),
                     'order': $('#order').val(),

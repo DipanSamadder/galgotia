@@ -162,7 +162,7 @@
             @endif
 
             @if(dsld_have_user_permission('library') == 1 || dsld_have_user_permission('library') == 1)
-            <li class="{{ dsld_is_route_active(['library.books.index', 'library.categories.index','library.authors.index','library.publisher.index', 'library.issues.index'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i> <span>Library</span></a>
+            <li class="{{ dsld_is_route_active(['library.books.index', 'library.categories.index','library.authors.index','library.publisher.index', 'library.issues.index', 'library.setups.index'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i> <span>Library</span></a>
                 <ul class="ml-menu">
                     
                     @if(dsld_have_user_permission('library-issue') == 1)
@@ -190,6 +190,9 @@
                     </li> 
                     @endif
 
+                    @if(dsld_have_user_permission('library-setup') == 1)
+                        <li class="{{ dsld_is_route_active(['library.setups.index']) }}"><a href="{{ route('library.setups.index') }}">Library Setup</a></li>
+                    @endif
 
 
                 </ul>

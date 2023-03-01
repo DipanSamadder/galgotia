@@ -86,6 +86,7 @@ class LibraryBookIssueController extends Controller
 
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|max:50',
+            'library_books_id' => 'required|integer',
             'created_by' => 'required|integer',
         ]);
 
@@ -93,7 +94,11 @@ class LibraryBookIssueController extends Controller
         if($validator->fails()) {
             return response()->json(['status' => 'error', 'message' => $validator->errors()->all()]);
         }
+        
         $user = user::where('id', $request->user_id)->first();
+
+        $setup = LibrarySetup::where('user_id', $request->user_id)->where('status', 1)->count();
+
         $over_used = LibraryBookIssue::where('user_id', $request->user_id)->where('status', 1)->count();
 
         $already_issues = LibraryBookIssue::where('user_id', $request->user_id)->where('library_books_id', $request->library_books_id)->where('status', 1)->first();
@@ -102,7 +107,7 @@ class LibraryBookIssueController extends Controller
         $already_issues = LibraryBookIssue::where('user_id', $request->user_id)->where('library_books_id', $request->library_books_id)->where('status', 1)->first();
         
 
-
+        
 
         if($already_issues == '' && $over_used < 3){
 

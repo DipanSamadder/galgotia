@@ -83,8 +83,10 @@ class PagesController extends Controller
             $page->meta_title = $request->title;
             $page->meta_description =  $request->title;
             $page->keywords =  $request->title;
+            $page->parent =  0;
+            $page->level =  1;
             $page->type = 'custom_page';
-            $page->template = 'default_template';
+            $page->template = 'default';
             $page->is_meta = 0;
             $page->banner = $request->banner;
             $page->status = $request->status;
@@ -109,7 +111,13 @@ class PagesController extends Controller
         $page['title'] = 'Edit Data';
         return view('backend.modules.websites.pages.edit', compact('data', 'page', 'section'));
     }
-    
+    public function parent_level($parent_id){
+        if($parent_id > 0){
+            return Page::where('id', $parent_id)->first()->level + 1;
+        }else{
+            return 1;
+        } 
+    }
     public function show_custom_page($slug){
         $page = Page::where('slug', $slug)->first();
         $header_menu = Menu::where('type', 'header_menu')->where('status', 0)->orderBy('order', 'asc')->get();
@@ -121,7 +129,7 @@ class PagesController extends Controller
             }else if($page->template != null){
                 return view('frontend.pages.'.$page->template, compact('page', 'header_menu'));
             } else{
-                 return view('frontend.pages.default_template', compact('page', 'header_menu'));
+                 return view('frontend.pages.default', compact('page', 'header_menu'));
             }
         }
     }
@@ -129,7 +137,7 @@ class PagesController extends Controller
         if(dsld_have_user_permission('pages_edit') == 0){
             return response()->json(['status' => 'error', 'message'=> "You have no permission."]);
         }
-        $slug = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', $request->slug));
+        $slug = preg_replace('[^A-Za-z0-9\-]', '', str_replace(' ', '-', $request->slug));
 
 
         $validator = Validator::make($request->all(), [
@@ -193,6 +201,8 @@ class PagesController extends Controller
             $page->meta_title = $request->meta_title;
             $page->meta_description =  $request->meta_description;
             $page->keywords =  $request->keywords;
+            $page->parent =  $request->parent;
+            $page->level =  $this->parent_level($request->parent);
             $page->type = 'custom_page';
             $page->template = $request->template;
             $page->is_meta = 0;
