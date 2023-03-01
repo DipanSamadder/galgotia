@@ -118,8 +118,18 @@ class PagesController extends Controller
             return 1;
         } 
     }
-    public function show_custom_page($slug){
-        $page = Page::where('slug', $slug)->first();
+    public function show_custom_page($page, $slug1 = null, $slug2 = null, $slug3 = null){
+
+        if($slug1 == '' && $slug2 == '' && $slug3 == ''){
+            $page = Page::where('slug', $page)->first();
+        }else if($slug2 == '' && $slug3 == ''){
+            $page = Page::where('slug', $page.'/'.$slug1)->first();
+        }else if($slug3 == ''){
+            $page = Page::where('slug', $page.'/'.$slug1.'/'.$slug2)->first();
+        }else{
+            $page = Page::where('slug', $page.'/'.$slug1.'/'.$slug2.'/'.$slug3)->first();
+        }
+
         $header_menu = Menu::where('type', 'header_menu')->where('status', 0)->orderBy('order', 'asc')->get();
         if($page != null){
              if($page->template == 'blogs_template'){
@@ -131,6 +141,8 @@ class PagesController extends Controller
             } else{
                  return view('frontend.pages.default', compact('page', 'header_menu'));
             }
+        }else{
+            return abort(404);
         }
     }
     public function update(Request $request){

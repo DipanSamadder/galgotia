@@ -143,23 +143,23 @@
     			<div class="col-lg-4 mb-4">
     				<div class="ftrlist mb-5">
     					<h4 class="mb-4">REACH US</h4>
-    					<address class="mb-4">Address: Plot No. 2, Sector-17A, Yamuna Expressway, Greater Noida, Gautam buddh Nagar, Uttar Pradesh, India Contact no. 0120-4370000 </address>
+    					<address class="mb-4">{{ dsld_get_setting('site_footer_address1') }} India Contact no. {{ dsld_get_setting('site_footer_phone_number1') }} </address>
     					<div class="contactList mb-4">
     						<ul class="cntctUl">
     							<li class="cntctItem d-flex align-items-center">
     								<span>Phone: </span>
-    								<a href="tel:+919582847072" class="mx-1"> +91 9582847072 </a>
-    								<a href="tel:9810162221 " >, 9810162221 </a>
+    								<a href="tel:{{ dsld_get_setting('site_footer_phone_number1') }}" class="mx-1"> {{ dsld_get_setting('site_footer_phone_number1') }} </a>
+    								<a href="tel:{{ dsld_get_setting('site_footer_phone_number2') }} " >, {{ dsld_get_setting('site_footer_phone_number2') }} </a>
     							</li>
     							<li class="cntctItem d-flex align-items-center">
     								<span>Email: </span>
-    								<a href="mailto:admissions@galgotiasuniversity.edu.in" >admissions@galgotiasuniversity.edu.in</a>
+    								<a href="mailto:{{ dsld_get_setting('site_footer_email1') }}" >{{ dsld_get_setting('site_footer_email1') }}</a>
     							</li>
     							<li class="cntctItem d-flex align-items-center">
-    								<a href="mailto:registrar@galgotiasuniversity.edu.in" >registrar@galgotiasuniversity.edu.in</a>
+    								<a href="mailto:{{ dsld_get_setting('site_footer_email2') }}" >{{ dsld_get_setting('site_footer_email2') }}</a>
     							</li>
     							<li class="cntctItem d-flex align-items-center">
-    								<a href="mailto:vcoffice@galgotiasuniversity.edu.in" >vcoffice@galgotiasuniversity.edu.in</a>
+    								<a href="mailto:{{ dsld_get_setting('site_footer_email3') }}" >{{ dsld_get_setting('site_footer_email3') }}</a>
     							</li>
     						</ul>
     					</div>

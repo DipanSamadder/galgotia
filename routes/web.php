@@ -9,6 +9,7 @@ use App\Http\Controllers\Setting\ContactFormController;
 use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\Setting\AddressController;
+use App\Models\Page;
 
 
 /*
@@ -31,7 +32,7 @@ Route::post('ajax-get-state-by-country', [HomeController::class, 'ajax_get_state
 Route::post('ajax-get-book-list-by-category', [HomeController::class, 'ajax_get_book_list_by_category'])->name('ajax_get_book_list_by_category');
 
 
-Route::get('/p/{slug}', [PagesController::class, 'show_custom_page'])->name('custom-pages.show_custom_page');
+Route::get('/p/{page}/{slug1?}/{slug2?}/{slug3?}', [PagesController::class, 'show_custom_page'])->name('custom-pages.show_custom_page');
 Route::get('/b/{slug}', [PostController::class, 'show_custom_blogs'])->name('blogs.show_blog');
 
 Route::middleware('auth')->group(function () {

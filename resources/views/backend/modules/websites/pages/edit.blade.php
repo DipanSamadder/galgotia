@@ -451,8 +451,8 @@
                                                         <input type="hidden" name="type[]" value="{{ $page_meta_key }}">
                                                         <select class="form-control show-tick ms select2" name="{{ $page_meta_key }}[]" multiple>
                                                             <option value="">-- Please select --</option>
-                                                            @foreach(App\Models\Upload::where('user_id', Auth::user()->id)->where('type', 'image')->get() as $key => $value)
-                                                                <option value="{{ $value->id }}" @if(dsld_page_meta_value_by_meta_key($page_meta_key, $data->id) != 'Null') @if(in_array($value->id, json_decode(dsld_page_meta_value_by_meta_key($page_meta_key, $data->id), true))) selected @endif @endif>({{ $value->id }}) - {{ $value->file_title}} </option>
+                                                            @foreach(App\Models\Upload::where('user_id', Auth::user()->id)->orderBy('id', 'Desc')->get() as $key => $value)
+                                                                <option value="{{ $value->id }}" @if(dsld_page_meta_value_by_meta_key($page_meta_key, $data->id) != 'Null') @if(is_array(json_decode(dsld_page_meta_value_by_meta_key($page_meta_key, $data->id), true)))@if(in_array($value->id, json_decode(dsld_page_meta_value_by_meta_key($page_meta_key, $data->id), true))) selected @endif @endif @endif>({{ $value->id }}) - {{ $value->file_title}} - {{ $value->extension}} </option>
                                                             @endforeach
                                                         </select>
                                                         
@@ -524,8 +524,8 @@
                                                     <input type="hidden" name="type[]" value="{{ $page_meta_key }}">
                                                     <select class="form-control show-tick ms select2" name="{{ $page_meta_key }}" onchange="is_edited()">
                                                         <option value="">-- Please select --</option>
-                                                        @foreach(App\Models\Upload::where('user_id', Auth::user()->id)->where('type', 'image')->get() as $key => $value)
-                                                            <option value="{{ $value->id }}" @if(dsld_page_meta_value_by_meta_key($page_meta_key, $data->id) == $value->id) selected @endif>({{ $value->id }}) - {{ $value->file_title}} </option>
+                                                        @foreach(App\Models\Upload::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get() as $key => $value)
+                                                            <option value="{{ $value->id }}" @if(dsld_page_meta_value_by_meta_key($page_meta_key, $data->id) == $value->id) selected @endif>({{ $value->id }}) - {{ $value->file_title}} - {{ $value->extension}}</option>
                                                         @endforeach
                                                     </select>
                                                     @if(dsld_page_meta_value_by_meta_key($page_meta_key, $data->id) != '')
