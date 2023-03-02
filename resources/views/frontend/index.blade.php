@@ -886,54 +886,44 @@
 
 @endphp
 
-@if( $testimonials_text_0 !='')
+@php 
+	$testimonials = App\Models\Page::where('type','testimonials')->where('status', 1)->orderby('order', 'asc')->get();
+@endphp
+
+@if( $testimonials_text_0 !='' && $testimonials != '')
+
 <section class="z9 pos-rel testimonial">
 	<div class="container">
 		<div class="tstDiv mb-5">
 			<h2 class="mb-4">{{ $testimonials_text_0 }}</h2>
 			<div class="tstDivCrow owl-theme d-flex">
+				
+				@foreach($testimonials as $key => $value)
 				<div class="tstDivCrowBx row item">
 					<div class="col-lg-3 col-md-4 mb-4">
 						<div class="tstImgBox">
-							<div class="tstImg"><img src="{{ dsld_static_asset('frontend/assets/images/Shivam Saini_TCS.png') }}" class="img-fluid"> </div>
+							<div class="tstImg">
+								@if(!empty($value->banner))
+									<img src="{{ dsld_uploaded_asset($value->banner) }}" class="img-fluid">
+								@else
+									<img src="{{ dsld_static_asset('frontend/assets/images/Shivam Saini_TCS.png') }}" class="img-fluid">
+								@endif
+							</div>
 							<div class="tstCnt"> 
-								<p class="mb-0">Manish Sharma</p>
-								<strong>16 LPA | GENPECT</strong>
+								<p class="mb-0">{{ $value->title }}</p>
+								<strong>{{ json_decode($value->meta_fields)->package }} | {{ json_decode($value->meta_fields)->company }}</strong>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-1">
 						<div class="text-center h-100"><span class="quoteBdr"></span></div>
-						
 					</div>
 					<div class="col-lg-8 col-md-7 mb-4">
-						
-						<blockquote>
-							"Mr. Deepak Goyal I got placed in one of the best MNC because of the support I've had from placement cell. They helped me to improve my communication and technical skills. I hope this process continuous to help placement aspirants in future to achieve their goal of getting placed in dream companies"
-						</blockquote>
+						<blockquote>{{ $value->content }}</blockquote>
 					</div>
 				</div>
-				<div class="tstDivCrowBx row item">
-					<div class="col-lg-3 col-md-4 mb-4">
-						<div class="tstImgBox">
-							<div class="tstImg"><img src="{{ dsld_static_asset('frontend/assets/images/Shivam Saini_TCS.png') }}" class="img-fluid"> </div>
-							<div class="tstCnt"> 
-								<p class="mb-0">Manish Sharma</p>
-								<strong>16 LPA | GENPECT</strong>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-1">
-						<div class="text-center h-100"><span class="quoteBdr"></span></div>
-						
-					</div>
-					<div class="col-lg-8 col-md-7 mb-4">
-						
-						<blockquote>
-							"Mr. Deepak Goyal I got placed in one of the best MNC because of the support I've had from placement cell. They helped me to improve my communication and technical skills. I hope this process continuous to help placement aspirants in future to achieve their goal of getting placed in dream companies"
-						</blockquote>
-					</div>
-				</div>
+				@endforeach
+
 			</div>
 		</div>
 		<div class="ytRow row pt-md-5 pt-4">
@@ -999,30 +989,22 @@
 				@endif
 			</div>
 			<div class="allCrosal owl-theme">
-				<div class="allCrosalBox item">
-					<div class="allCrosalBoxImg mb-3"><img src="{{ dsld_static_asset('frontend/assets/images/aff-logo-1.png') }}" class="img-fluid"> </div>
-					<div class="allCrosalBoxCnt">
-						<p class="mb-0">Recognised by the University Grants Commission, Govt. of India, under Section 2(f) of the UGC Act 1956</p>
+
+				@php 
+					$alliances = App\Models\Page::where('type','news_events')->where('cat_type','alliances')->where('status', 1)->orderBy('order', 'desc')->get();
+				@endphp
+				@if(!empty($alliances))
+					@foreach($alliances as $key => $value)
+					<div class="allCrosalBox item">
+						<div class="allCrosalBoxImg mb-3"><img src="{{ dsld_uploaded_asset($value->banner) }}" class="img-fluid"> </div>
+						<div class="allCrosalBoxCnt">
+							<p class="mb-0">{{  $value-> title }}</p>
+						</div>
 					</div>
-				</div>
-				<div class="allCrosalBox item">
-					<div class="allCrosalBoxImg mb-3"><img src="{{ dsld_static_asset('frontend/assets/images/aff-logo-5.png') }}" class="img-fluid"> </div>
-					<div class="allCrosalBoxCnt">
-						<p class="mb-0">Recognised by the University Grants Commission, Govt. of India, under Section 2(f) of the UGC Act 1956</p>
-					</div>
-				</div>
-				<div class="allCrosalBox item">
-					<div class="allCrosalBoxImg mb-3"><img src="{{ dsld_static_asset('frontend/assets/images/aff-logo-3.png') }}" class="img-fluid"> </div>
-					<div class="allCrosalBoxCnt">
-						<p class="mb-0">Recognised by the Bar Council of India, Govt. of India</p>
-					</div>
-				</div>
-				<div class="allCrosalBox item">
-					<div class="allCrosalBoxImg mb-3"><img src="{{ dsld_static_asset('frontend/assets/images/aff-logo-4.png') }}" class="img-fluid"> </div>
-					<div class="allCrosalBoxCnt">
-						<p class="mb-0">University is accredited by the National Assessment and Accreditation Council (NAAC), Govt of India</p>
-					</div>
-				</div>
+					@endforeach
+				@endif
+				
+				
 			</div>
 		</div>
 	</div>
@@ -1074,58 +1056,76 @@
 			@endif
 
 		</div>
+		@php 
+			$news_events = App\Models\Page::where('type', 'news_events')->whereIn('cat_type',  ['news','events'])->where('status', 1)->orderBy('order', 'desc')->get();
+		@endphp
+		@if(!empty($news_events))
+		
 		<div class="row">
 			<div class="col-lg-4 col-md-6 mb-4">
 				<div class="newsBoxGrp">
+					@if(count($news_events) > 0)
 					<div class="newsBox mb-4">
-						<div class="newsImgs"> <img src="{{ dsld_static_asset('frontend/assets/images/news1.png') }}" class="img-fluid"> </div>
+						<div class="newsImgs"> <img src="{{ dsld_uploaded_asset($news_events[0]->banner) }}" class="img-fluid"> </div>
 						<div class="newsCntent">
-							<span>News and Events</span>
-							<p>Department of Electrical Engineering, University Polytechnic...</p>
+							<span>{{  ucwords($news_events[0]->cat_type) }}</span>
+							<p>{{  $news_events[0]->title }}</p>
 						</div>
 					</div>
+					@endif
+					@if(count($news_events) > 1)
 					<div class="newsBox mb-4 pos-rel">
-						<div class="newsImg"> <img src="{{ dsld_static_asset('frontend/assets/images/news2.png') }}" class="img-fluid"> </div>
+						<div class="newsImg"> <img src="{{ dsld_uploaded_asset($news_events[1]->banner) }}" class="img-fluid"> </div>
 						<div class="newsCnt">
-							<span>Events</span>
-							<p>Department of Electrical Engineering, University Polytechnic...</p>
+							<span>{{  ucwords($news_events[1]->cat_type) }}</span>
+							<p>{{  $news_events[1]->title }}</p>
 						</div>
 					</div>
+					@endif
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 mb-4">
 				<div class="newsBoxGrp">
+					
+					@if(count($news_events) > 2)
 					<div class="newsBox mb-4 pos-rel">
-						<div class="newsImg"> <img src="{{ dsld_static_asset('frontend/assets/images/news3.png') }}" class="img-fluid"> </div>
+						<div class="newsImg"> <img src="{{ dsld_uploaded_asset($news_events[2]->banner) }}" class="img-fluid"> </div>
 						<div class="newsCnt">
-							<span>Events</span>
-							<p>Department of Electrical Engineering, University Polytechnic...</p>
+							<span>{{  ucwords($news_events[2]->cat_type) }}</span>
+							<p>{{  $news_events[2]->title }}</p>
 						</div>
 					</div>
+					
+					@endif
+					@if(count($news_events) > 3)
 					<div class="newsBox mb-4 pos-rel">
-						<div class="newsImg"> <img src="{{ dsld_static_asset('frontend/assets/images/news4.png') }}" class="img-fluid"> </div>
+						<div class="newsImg"> <img src="{{ dsld_uploaded_asset($news_events[3]->banner) }}" class="img-fluid"> </div>
 						<div class="newsCnt">
-							<span>Events</span>
-							<p>Department of Electrical Engineering, University Polytechnic...</p>
+							<span>{{  ucwords($news_events[3]->cat_type) }}</span>
+							<p>{{  $news_events[3]->title }}</p>
 						</div>
 					</div>
+					@endif
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-6 mb-4 d-none d-lg-block">
 				<div class="newsBoxGrp">
+					@if(count($news_events) > 4)
 					<div class="newsBox mb-4 pos-rel">
-						<div class="newsImg"> <img src="{{ dsld_static_asset('frontend/assets/images/news4.png') }}" class="img-fluid"> </div>
+						<div class="newsImg"> <img src="{{ dsld_uploaded_asset($news_events[4]->banner) }}" class="img-fluid"> </div>
 						<div class="newsCnt">
-							<span>Events</span>
-							<p>Department of Electrical Engineering, University Polytechnic...</p>
+							<span>{{  ucwords($news_events[4]->cat_type) }}</span>
+							<p>{{  $news_events[4]->title }}</p>
 						</div>
 					</div>
+					@endif
 					<div class="newsBox mb-4 pos-rel">
 						<div class="newsImg"> <img src="{{ dsld_static_asset('frontend/assets/images/news6.png') }}" class="img-fluid"> </div>
 					</div>
 				</div>
 			</div>
 		</div>
+		@endif
 	</div>
 </section>
 @endif

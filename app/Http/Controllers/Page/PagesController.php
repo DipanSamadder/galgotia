@@ -317,4 +317,290 @@ class PagesController extends Controller
         }
        
     }
+
+
+    public function testimonials_index(){
+        if(dsld_have_user_permission('testimonials') == 0){
+            return redirect()->route('backend.admin')->with('error', 'You have no permission');
+        }
+
+        $page['name'] = 'Testimonial';
+        $page['title'] = 'Show all '.$page['name'].'s';
+        return view('backend.modules.websites.pages.testimonials.show', compact('page'));
+    }
+    public function testimonials_get_ajax_files(Request $request){
+        if(dsld_have_user_permission('testimonials') == 0){
+            return "You have no permission.";
+        }
+
+        if($request->page != 1){$start = $request->page * 15;}else{$start = 0;}
+        $search = $request->search;
+        $sort = $request->sort;
+
+        $data = Page::where('type','testimonials');
+        if($search != ''){
+            $data->where('title', 'like', '%'.$search.'%');
+        }
+       
+        if($sort != ''){
+            switch ($request->sort) {
+                case 'newest':
+                    $data->orderBy('created_at', 'desc');
+                    break;
+                case 'oldest':
+                    $data->orderBy('created_at', 'asc');
+                    break;
+                case 'active':
+                    $data->where('status', 1);
+                    break;
+                case 'deactive':
+                    $data->where('status', 0);
+                    break;
+                default:
+                    $data->orderBy('created_at', 'desc');
+                    break;
+            }
+        }
+        $data = $data->skip($start)->paginate(15);
+        
+        return view('backend.modules.websites.pages.testimonials.ajax_files', compact('data'));
+    }
+
+    public function testimonials_store(Request $request){
+        if(dsld_have_user_permission('testimonials_add') == 0){
+            return response()->json(['status' => 'error', 'message'=> "You have no permission."]);
+        }
+ 
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:50',
+            'package' => 'required|max:50',
+            'company' => 'required|max:50',
+            'content' => 'required|max:350',
+            'status' => 'required|integer'
+        ]);
+
+
+        if($validator->fails()) {
+            return response()->json(['status' => 'error', 'message' => $validator->errors()->all()]);
+        }
+
+        $arr = array(
+            'package' => $request->package,
+            'company' => $request->company
+        );
+        $page = new Page;
+        $page->title = $request->title;
+        $page->meta_title = $request->title;
+        $page->meta_description =  $request->title;
+        $page->keywords =  $request->title;
+        $page->parent =  0;
+        $page->level =  1;
+        $page->type = 'testimonials';
+        $page->template = '-';
+        $page->is_meta = 1;
+        $page->banner = $request->banner;
+        $page->status = $request->status;
+        $page->content = $request->content;
+        $page->meta_fields = json_encode($arr);
+        $page->slug = '-';
+        
+        if($page->save()){
+            return response()->json(['status' => 'success', 'message'=> 'Data insert success.']);
+        }else{
+            return response()->json(['status' => 'error', 'message'=> 'Data insert failed.']);
+        }
+
+    }
+
+    public function testimonials_edit(Request $request){
+        if(dsld_have_user_permission('testimonials_edit') == 0){
+            return redirect()->route('backend.admin')->with('error', 'You have no permission');
+        }
+        $data = Page::where('id', $request->id)->first();
+        return view('backend.modules.websites.pages.testimonials.edit', compact('data'));
+    }
+
+    public function testimonials_update(Request $request){
+        if(dsld_have_user_permission('testimonials_edit') == 0){
+            return response()->json(['status' => 'error', 'message'=> "You have no permission."]);
+        }
+        $slug = preg_replace('[^A-Za-z0-9\-]', '', str_replace(' ', '-', $request->slug));
+
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:50',
+            'package' => 'required|max:50',
+            'company' => 'required|max:50',
+            'content' => 'required|max:350',
+            'status' => 'required|integer'
+        ]);
+
+
+        if($validator->fails()) {
+            return response()->json(['status' => 'error', 'message' => $validator->errors()->all()]);
+        }
+
+      
+        $page =  Page::findOrFail($request->id);
+
+        $arr = array(
+            'package' => $request->package,
+            'company' => $request->company
+        );
+
+        $page->title = $request->title;
+        $page->banner = $request->banner;
+        $page->status = $request->status;
+        $page->content = $request->content;
+        $page->meta_fields = json_encode($arr);
+            
+        if($page->save()){
+            return response()->json(['status' => 'success', 'message'=> 'Data update success.']);
+        }else{
+            return response()->json(['status' => 'error', 'message'=> 'Data update failed.']);
+        }
+       
+
+    }
+    
+    public function news_event_index(){
+        if(dsld_have_user_permission('newsevents') == 0){
+            return redirect()->route('backend.admin')->with('error', 'You have no permission');
+        }
+
+        $page['name'] = 'News & Event';
+        $page['title'] = 'Show all '.$page['name'].'s';
+        return view('backend.modules.websites.pages.news_events.show', compact('page'));
+    }
+    public function news_event_get_ajax_files(Request $request){
+        if(dsld_have_user_permission('newsevents') == 0){
+            return "You have no permission.";
+        }
+
+        if($request->page != 1){$start = $request->page * 15;}else{$start = 0;}
+        $search = $request->search;
+        $sort = $request->sort;
+
+        $data = Page::where('type','news_events');
+        if($search != ''){
+            $data->where('title', 'like', '%'.$search.'%');
+        }
+       
+        if($sort != ''){
+            switch ($request->sort) {
+                case 'newest':
+                    $data->orderBy('created_at', 'desc');
+                    break;
+                case 'oldest':
+                    $data->orderBy('created_at', 'asc');
+                    break;
+                case 'active':
+                    $data->where('status', 1);
+                    break;
+                case 'deactive':
+                    $data->where('status', 0);
+                    break;
+                default:
+                    $data->orderBy('created_at', 'desc');
+                    break;
+            }
+        }
+        $data = $data->skip($start)->paginate(15);
+        
+        return view('backend.modules.websites.pages.news_events.ajax_files', compact('data'));
+    }
+
+    public function news_event_store(Request $request){
+        if(dsld_have_user_permission('newsevents_add') == 0){
+            return response()->json(['status' => 'error', 'message'=> "You have no permission."]);
+        }
+ 
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:150',
+            'cat_type' => 'required|max:50',
+            'banner' => 'required|max:50',
+            'status' => 'required|integer'
+        ]);
+
+        $slug = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', $request->title));
+
+        if($validator->fails()) {
+            return response()->json(['status' => 'error', 'message' => $validator->errors()->all()]);
+        }
+
+        if(Page::where('slug', strtolower($slug))->first() == null){
+            $page = new Page;
+            $page->title = $request->title;
+            $page->meta_title = $request->title;
+            $page->meta_description =  $request->title;
+            $page->keywords =  $request->title;
+            $page->parent =  0;
+            $page->level =  1;
+            $page->type = 'news_events';
+            $page->cat_type = $request->cat_type;
+            $page->template = '-';
+            $page->is_meta = 0;
+            $page->banner = $request->banner;
+            $page->status = $request->status;
+            $page->content = $request->content;
+            $page->order = $request->order;
+            $page->meta_fields = '';
+            $page->slug = $slug;
+            
+            if($page->save()){
+                return response()->json(['status' => 'success', 'message'=> 'Data insert success.']);
+            }else{
+                return response()->json(['status' => 'error', 'message'=> 'Data insert failed.']);
+            }
+        }else{
+            return response()->json(['status' => 'warning', 'message'=> 'Page & slug already exist! please try agin.']);
+        }
+    }
+
+    public function news_event_edit(Request $request){
+        if(dsld_have_user_permission('newsevents_edit') == 0){
+            return redirect()->route('backend.admin')->with('error', 'You have no permission');
+        }
+        $data = Page::where('id', $request->id)->first();
+        return view('backend.modules.websites.pages.news_events.edit', compact('data'));
+    }
+
+    public function news_event_update(Request $request){
+        if(dsld_have_user_permission('newsevents_edit') == 0){
+            return response()->json(['status' => 'error', 'message'=> "You have no permission."]);
+        }
+        $slug = preg_replace('[^A-Za-z0-9\-]', '', str_replace(' ', '-', $request->slug));
+
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:150',
+            'cat_type' => 'required|max:50',
+            'banner' => 'required|max:50',
+            'status' => 'required|integer'
+        ]);
+
+
+        if($validator->fails()) {
+            return response()->json(['status' => 'error', 'message' => $validator->errors()->all()]);
+        }
+
+      
+        $page =  Page::findOrFail($request->id);
+
+
+        $page->cat_type = $request->cat_type;
+        $page->title = $request->title;
+        $page->banner = $request->banner;
+        $page->status = $request->status;
+        $page->content = $request->content;
+        $page->order = $request->order;
+            
+        if($page->save()){
+            return response()->json(['status' => 'success', 'message'=> 'Data update success.']);
+        }else{
+            return response()->json(['status' => 'error', 'message'=> 'Data update failed.']);
+        }
+       
+
+    }
 }

@@ -250,7 +250,13 @@
                                 @endif
                                 @if(dsld_have_user_permission('sections'))
                                 <li class="{{ dsld_is_route_active(['pages_section.index',   'pages_section_fields.edit']) }}"><a href="{{ route('pages_section.index') }}">All Sections</a></li>
-                                @endif  
+                                @endif 
+                                @if(dsld_have_user_permission('testimonials'))
+                                <li class="{{ dsld_is_route_active(['testimonials.index',   'testimonials.edit']) }}"><a href="{{ route('testimonials.index') }}">Testimonials</a></li>
+                                @endif 
+                                @if(dsld_have_user_permission('newsevents'))
+                                <li class="{{ dsld_is_route_active(['news_event.index',   'news_event.edit']) }}"><a href="{{ route('news_event.index') }}">News & Event</a></li>
+                                @endif   
                             </ul>
                         </li> 
                     @endif

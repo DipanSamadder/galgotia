@@ -51,6 +51,22 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
     Route::get('send-test-mail', [MailController::class, 'testmail'])->name('testmail');
  
 
+
+    //Testimonial Section
+    Route::get('testimonials', [PagesController::class, 'testimonials_index'])->name('testimonials.index');
+    Route::post('testimonials/edit', [PagesController::class, 'testimonials_edit'])->name('testimonials.edit');
+    Route::post('testimonials/store', [PagesController::class, 'testimonials_store'])->name('testimonials.store');
+    Route::post('get-all-testimonials', [PagesController::class, 'testimonials_get_ajax_files'])->name('testimonials.get_ajax_files');
+    Route::post('testimonials/update', [PagesController::class, 'testimonials_update'])->name('testimonials.update');
+
+    //news & event Section
+    Route::get('news-events', [PagesController::class, 'news_event_index'])->name('news_event.index');
+    Route::post('news-events/edit', [PagesController::class, 'news_event_edit'])->name('news_event.edit');
+    Route::post('news-events/store', [PagesController::class, 'news_event_store'])->name('news_event.store');
+    Route::post('get-all-news-event', [PagesController::class, 'news_event_get_ajax_files'])->name('news_event.get_ajax_files');
+    Route::post('news-events/update', [PagesController::class, 'news_event_update'])->name('news_event.update');
+
+
     //Library
 
     //Library Author
