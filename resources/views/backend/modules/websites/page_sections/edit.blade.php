@@ -19,7 +19,7 @@
                 <label class="form-label">Page <small class="text-danger">*</small></label>                                 
                 <select class="form-control show-tick ms select2" name="page_id" id="edit_page_id" onchange="is_edited()">
                     <option value="">-- Please select --</option>
-                    @foreach(App\Models\Page::orderBy('title', 'ASC')->where('type', 'custom_page')->where('status', '1')->get() as $key => $value)
+                    @foreach(App\Models\Page::orderBy('title', 'ASC')->where('status', '1')->get() as $key => $value)
                         <option value="{{ $value->id }}" @if($data->page_id == $value->id) selected @endif>{{ $value->title}} - ({{ $value->id }})</option>
                     @endforeach
                 </select>                                                                

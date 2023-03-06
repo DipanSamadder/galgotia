@@ -1,4 +1,4 @@
-@if(dsld_page_meta_value_by_meta_key('setting_page_slider_image', $page->id) !='Null') 
+@if(dsld_page_meta_value_by_meta_key('setting_page_slider_image', $page->id) !='') 
 @if(dsld_page_meta_value_by_meta_key('setting_page_banner_slider', $page->id) == 'slider') 
 
 @if(is_array(json_decode(dsld_page_meta_value_by_meta_key('setting_page_slider_image', $page->id), true)) && count(json_decode(dsld_page_meta_value_by_meta_key('setting_page_slider_image', $page->id), true)) > 0 ) 

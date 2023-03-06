@@ -9,7 +9,7 @@
         <title>@yield('meta_title', dsld_get_setting('site_title'))</title>
         <meta name="description" content="@yield('meta_description', dsld_get_setting('site_meta_description') )" />
         <meta name="keywords" content="@yield('meta_keywords', dsld_get_setting('site_meta_keyword') )">
-
+        <link rel="icon" type="image/png" href="{{ dsld_uploaded_asset(dsld_get_setting('site_fav_icon')) }}" />
 
         @include('frontend.inc.header')
         @yield('header')

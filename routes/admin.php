@@ -5,6 +5,7 @@ use App\Http\Controllers\Setting\BusinessSettingsController;
 use App\Http\Controllers\UploadsMediaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Page\PagesController;
+use App\Http\Controllers\Page\ProgramPageController;
 use App\Http\Controllers\User\UsersController;
 use App\Http\Controllers\Setting\RolesController;
 use App\Http\Controllers\Setting\RolePermissionsController;
@@ -274,7 +275,12 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
     Route::post('page/update', [PagesController::class, 'update'])->name('pages.update');
     Route::post('page-extra-content/update', [PagesController::class, 'update_extra_content'])->name('pages_extra_content.update');
     
-    
+   
+    //Programs
+    Route::get('program', [ProgramPageController::class, 'index'])->name('program.index');
+    Route::get('program/edit/{id}', [ProgramPageController::class, 'edit'])->name('program.edit');
+    Route::post('get-all-programs', [ProgramPageController::class, 'get_ajax_programs'])->name('ajax_programs');
+     
     //Contact Form
     Route::get('contact-form', [ContactFormController::class, 'index'])->name('contact_form.index');
     Route::post('contact-form/edit', [ContactFormController::class, 'edit'])->name('contact_form.edit');

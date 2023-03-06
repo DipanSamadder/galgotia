@@ -14,7 +14,7 @@
         <div class="col-lg-8">
             @csrf 
             <input type="hidden" name="id" id="id" value="{{ $data->id }}" />
-            <input type="hidden" name="type" id="type" value="custom_page" />
+            <input type="hidden" name="type" id="type" value="program_page" />
             <div class="card mb-0">
                 <div class="header">
                     <a href="{{ route('custom-pages.show_custom_page', [$data->slug ]) }}" target="_blank">         
@@ -46,7 +46,7 @@
             </div>
             <div class="card mb-0">
                 <div class="header">
-                    <h2><strong>Description</strong></h2>
+                    <h2><strong>Content</strong></h2>
                 </div>
                 <div class="form-group">                                
                     <div class="summernote" id="content" onchange="is_edited()"><?php $str = $data->content; echo htmlspecialchars_decode($str); ?></div>                                   
@@ -69,8 +69,9 @@
                                     <label for="setting_page_name_hide">Hide</label>
                                 </div>
                             </div>
+                            
                         </div>
-                    </div><hr>
+                    </div>
                     <div class="row clearfix">
                         <div class="col-lg-3 col-md-3 col-sm-4 form-control-label">
                             <label class="form-label"><strong>Banner/Slider </strong></label>  
@@ -86,116 +87,7 @@
                                 <div class="radio inlineblock m-r-20">
                                     <input type="radio" name="setting_page_banner_slider" id="setting_page_banner_slider_banner" class="with-gap slider_activity" value="banner"  @if(dsld_page_meta_value_by_meta_key('setting_page_banner_slider', $data->id) =='banner') checked @endif>
                                     <label for="setting_page_banner_slider_banner">Banner</label>
-                                </div>                                
-                                <div class="radio inlineblock">
-                                    <input type="radio" name="setting_page_banner_slider" id="setting_page_banner_slider_slider" class="with-gap slider_activity" value="slider"   @if(dsld_page_meta_value_by_meta_key('setting_page_banner_slider', $data->id) =='slider') checked @endif>
-                                    <label for="setting_page_banner_slider_slider">Slider</label>
-                                </div>                                  
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-0 slider_card" @if(dsld_page_meta_value_by_meta_key('setting_page_banner_slider', $data->id) !='slider') style="display:none" @endif>
-                <div class="header">
-                    <h2><strong>Slider</strong></h2>                        
-                </div>
-                <div class="body">
-                    <div class="row clearfix">
-                        <div class="col-lg-12 col-md-12 col-sm-12 form-control-label">
-                            <label class="form-label"><strong>Image, Content, Sub Content, Button and Button</strong></label>  
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12">
-                            <div class="setting_page_slider_area">
-                                
-                                <input name="setting_slider[]" type="hidden" value="setting_page_slider_heading">
-                                <input name="setting_slider[]" type="hidden" value="setting_page_slider_content">   
-                                <input name="setting_slider[]" type="hidden" value="setting_page_slider_btn_link">  
-                                <input name="setting_slider[]" type="hidden" value="setting_page_slider_btn_link2">  
-                                <input name="setting_slider[]" type="hidden" value="setting_page_slider_image"> 
-                                @if(dsld_page_meta_value_by_meta_key('setting_page_slider_image', $data->id) != 'Null' && dsld_page_meta_value_by_meta_key('setting_page_slider_image', $data->id) != 'null' && dsld_page_meta_value_by_meta_key('setting_page_slider_image', $data->id) != '')
-                                @foreach(json_decode(dsld_page_meta_value_by_meta_key('setting_page_slider_image', $data->id), true) as $key => $value)
-                                <div class="row clearfix">
-                                    <div class="col-sm-10">
-                                        <div class="form-group">
-                                            <input type="text" name="setting_page_slider_heading[]" class="form-control" placeholder="Heading" value="{{ json_decode(dsld_page_meta_value_by_meta_key('setting_page_slider_heading', $data->id), true)[$key] }}" />
-                                        </div>
-                                        <div class="form-group">                             
-                                            <textarea name="setting_page_slider_content[]"  class="form-control" placeholder="Content">{{ json_decode(dsld_page_meta_value_by_meta_key('setting_page_slider_content  ', $data->id), true)[$key] }}</textarea>                                   
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" name="setting_page_slider_btn_link[]" class="form-control" placeholder="Button Link" value="{{ json_decode(dsld_page_meta_value_by_meta_key('setting_page_slider_btn_link', $data->id), true)[$key] }}" />
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" name="setting_page_slider_btn_link2[]" class="form-control" placeholder="Button Link 2"  value="{{ json_decode(dsld_page_meta_value_by_meta_key('setting_page_slider_btn_link2', $data->id), true)[$key] }}" />
-                                        </div>
-                                        <div class="form-group">
-                                            <select class="form-control show-tick ms select2" name="setting_page_slider_image[]">
-                                                <option value="">-- Please select --</option>
-                                                @foreach(App\Models\Upload::where('user_id', Auth::user()->id)->where('type', 'image')->get() as $key3 => $value)
-                                                    <option value="{{ $value->id }}" @if(json_decode(dsld_page_meta_value_by_meta_key('setting_page_slider_image', $data->id), true)[$key] == $value->id) selected @endif>({{ $value->id }}) - {{ $value->file_title}} </option>
-                                                @endforeach
-                                            </select>
-                                            @if(json_decode(dsld_page_meta_value_by_meta_key('setting_page_slider_image', $data->id), true)[$key] > 0)
-                                            <div class="image mt-2">
-                                                <img src="{{ dsld_uploaded_asset(json_decode(dsld_page_meta_value_by_meta_key('setting_page_slider_image', $data->id), true)[$key]) }}"  alt="{{ dsld_upload_file_title(json_decode(dsld_page_meta_value_by_meta_key('setting_page_slider_image', $data->id), true)[$key]) }}" width="100">
-                                            </div> 
-                                            @endif                                   
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <button type="button" class="btn btn-sm btn-danger" data-toggle="remove-parent" data-parent=".row">
-                                            <i class="zmdi zmdi-hc-fw"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                @endforeach
-                                @endif
-                            </div>
-                            <div class="row clearfix">
-                                <div class="col-sm-10">
-                                    <button
-                                    type="button"
-                                    class="btn btn-primary addMoreBtn"
-                                    data-toggle="add-more"
-                                    data-content='<div class="row clearfix">
-                                    <div class="col-sm-10">
-                                        <div class="form-group">
-                                            <input type="text" name="setting_page_slider_heading[]" class="form-control" placeholder="Heading" />
-                                        </div>
-                                        <div class="form-group">                             
-                                            <textarea name="setting_page_slider_content[]"  class="form-control" placeholder="Content"></textarea>                                   
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" name="setting_page_slider_btn_link[]" class="form-control" placeholder="Button Link" />
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" name="setting_page_slider_btn_link2[]" class="form-control" placeholder="Button Link 2"  />
-                                        </div>
-                                        <div class="form-group">
-                                            <select class="form-control show-tick ms select2" name="setting_page_slider_image[]">
-                                                <option value="">-- Please select --</option>
-                                                @foreach(App\Models\Upload::where("user_id", Auth::user()->id)->where("type", "image")->get() as $key => $value)
-                                                    <option value="{{ $value->id }}" @if($data->banner == $value->id) selected @endif>({{ $value->id }}) - {{ $value->file_title}} </option>
-                                                @endforeach
-                                            </select>
-                                            @if($data->banner > 0)
-                                            <div class="image mt-2">
-                                                <img src="{{ dsld_uploaded_asset($data->banner) }}"  alt="{{ dsld_upload_file_title($data->banner) }}" width="100">
-                                            </div> 
-                                            @endif                                   
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <button type="button" class="btn btn-sm btn-danger" data-toggle="remove-parent" data-parent=".row">
-                                            <i class="zmdi zmdi-hc-fw"></i>
-                                        </button>
-                                    </div>
-                                </div>'
-                                    data-target=".setting_page_slider_area">
-                                    <i class="zmdi zmdi-hc-fw"></i> Add New
-                                    </button>
-                                </div>
+                                </div>                                 
                             </div>
                         </div>
                     </div>
@@ -222,15 +114,9 @@
                         <select class="form-control" name="template" id="template" onchange="is_edited()">
                             <option value="">-- Please select --</option>
                             <option value="default"  @if($data->template == 'default') selected @endif>Default</option>
-                            <option value="about"  @if($data->template == 'about') selected @endif>About</option>
-                            <option value="apply_now"  @if($data->template == 'apply_now') selected @endif>Apply Now</option>
-                            <option value="litral_entry_migration"  @if($data->template == 'litral_entry_migration') selected @endif>Litral Entry Migration</option>
-                            <option value="programme_detail"  @if($data->template == 'programme_detail') selected @endif>Programme Detail</option>
-                            <option value="research"  @if($data->template == 'research') selected @endif>Research</option>
-                            <option value="school_department"  @if($data->template == 'school_department') selected @endif>School Department</option>
-                            <option value="school_landing"  @if($data->template == 'school_landing') selected @endif>School Landing</option>
-                            <option value="under_graduate"  @if($data->template == 'under_graduate') selected @endif>Under Graduate</option>
                             <option value="page_with_sidebar"  @if($data->template == 'page_with_sidebar') selected @endif>Page With Sidebar</option>
+                            <option value="program_school_lists"  @if($data->template == 'program_school_lists') selected @endif>School List</option>
+                            <option value="program_school_details"  @if($data->template == 'program_school_details') selected @endif>School Details</option>
                         </select>                             
                     </div>
                     
@@ -238,8 +124,34 @@
                         <label class="form-label">Parent *</label>                                 
                         <select class="form-control" name="parent" id="parent" onchange="is_edited()">
                             <option value="0">-- Please select --</option>
-                            @foreach(App\Models\Page::where('type', 'custom_page')->where('status', 1)->whereNotIn('id', [$data->id])->get() as $key => $value)
+                            @foreach(App\Models\Page::where('type', 'program_page')->where('level', 1)->where('status', 1)->whereNotIn('id', [$data->id])->get() as $key => $value)
+                                
                                 <option value="{{ $value->id }}"  @if($data->parent ==  $value->id) selected @endif>{{ $value->title }}</option>
+                                @php
+                                    $child = App\Models\Page::where('parent', $value->id)->where('type', 'program_page')->where('level', 2)->where('status', 1)->get();
+                                @endphp
+                                @if($child != '')
+                                    @foreach($child as $key => $value1)
+                                        <option value="{{ $value1->id }}"  @if($data->parent ==  $value1->id) selected @endif>- {{ $value1->title }}</option>
+                                        @php
+                                            $child2 = App\Models\Page::where('parent', $value1->id)->where('type', 'program_page')->where('level', 3)->where('status', 1)->get();
+                                        @endphp
+                                        @if($child2 != '')
+                                            @foreach($child2 as $key => $value2)
+                                                <option value="{{ $value2->id }}"  @if($data->parent ==  $value2->id) selected @endif>-- {{ $value2->title }}</option>
+                                                @php
+                                                    $child3 = App\Models\Page::where('parent', $value2->id)->where('type', 'program_page')->where('level', 4)->where('status', 1)->get();
+                                                @endphp
+                                                @if($child3 != '')
+                                                    @foreach($child3 as $key => $value3)
+                                                        <option value="{{ $value3->id }}"  @if($data->parent ==  $value3->id) selected @endif>--- {{ $value3->title }}</option>
+                                                    @endforeach
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    @endforeach
+                                @endif
+
                             @endforeach
                         </select>                             
                     </div>
@@ -326,9 +238,9 @@
 <!-- Exportable Table -->
 
 @if(is_array($section) || count($section) > 0)
-
+<div class="program_fields" style="display:none">
 <hr>
-<h4>Extra Section</h4>
+<h4>Program Details</h4>
 <div class="row clearfix">
     <div class="col-lg-12">
         <div class="card mb-0">
@@ -365,7 +277,7 @@
                                 @if($sec->meta_fields !="")
                                 @foreach (json_decode($sec->meta_fields) as $key2 => $element)
                                     @php 
-                                        $page_meta_key = $page_title."_".$name."_".$element->type."_".$key2;
+                                        $page_meta_key = $name."_".$element->type."_".$key2;
                                     @endphp
 
                                     @if ($element->type == 'text')
@@ -393,8 +305,8 @@
                                                 <div class="text_repeter{{ $sec->id }}_{{ $key2 }}">
                                                     <input type="hidden" name="type[]" value="{{ $page_meta_key }}">
                                                     
-                                                    @if(dsld_page_meta_value_by_meta_key($page_meta_key, $data->id) != 'Null')
-                                                        @foreach(json_decode(dsld_page_meta_value_by_meta_key($page_meta_key, $data->id), true) as $key3 => $value) 
+                                                    @if(dsld_page_meta_value_by_meta_key($page_meta_key, $data->id) != '')
+                                                        @foreach(@json_decode(dsld_page_meta_value_by_meta_key($page_meta_key, $data->id), true) as $key3 => $value) 
                                                             
                                                             <div class="row clearfix">
                                                                 <div class="col-sm-10">
@@ -484,7 +396,7 @@
                                                             <option value="">-- Please select --</option>
                                                             @if (is_array(json_decode($element->options)))
                                                                 @foreach (json_decode($element->options) as $value)
-                                                                    <option value="{{ $value }}" @if(dsld_page_meta_value_by_meta_key($page_meta_key, $data->id) != 'Null')  @if(in_array($value, json_decode(dsld_page_meta_value_by_meta_key($page_meta_key, $data->id), true))) selected @endif @endif>{{ $value }}</option>
+                                                                    <option value="{{ $value }}" @if(dsld_page_meta_value_by_meta_key($page_meta_key, $data->id) != '')  @if(in_array($value, json_decode(dsld_page_meta_value_by_meta_key($page_meta_key, $data->id), true))) selected @endif @endif>{{ $value }}</option>
                                                                 @endforeach
                                                             @endif
                                                         </select>
@@ -589,7 +501,7 @@
         
     </div>
 </div>
-
+<div>
 @endif
 @endsection
 
@@ -601,40 +513,24 @@
 <script>
     
     $(document).ready(function(){
+        if ($('#template').val() == 'program_school_details') { 
+            $('.program_fields').show();
+        }else{
+            $('.program_fields').hide();   
+        }
+
         $(".summernote").summernote('code');
         $('#update_form').on('submit', function(event){
         event.preventDefault();
         
             var setting_page_name_hide = 'no';
-            var setting = $('input[name="setting[]"]').map(function(){ 
-                    return this.value; 
-                }).get();
-
-            var setting_slider = $('input[name="setting_slider[]"]').map(function(){ 
-                    return this.value; 
-                }).get();
-            var setting_page_slider_heading = $('input[name="setting_page_slider_heading[]"]').map(function(){ 
-                    return this.value; 
-                }).get();
-            var setting_page_slider_content = $('textarea[name="setting_page_slider_content[]"]').map(function(){ 
-                    return this.value; 
-                }).get();
-            var setting_page_slider_btn_link = $('input[name="setting_page_slider_btn_link[]"]').map(function(){ 
-                    return this.value; 
-                }).get();
-            var setting_page_slider_btn_link2 = $('input[name="setting_page_slider_btn_link2[]"]').map(function(){ 
-                    return this.value; 
-                }).get();
-            var setting_page_slider_image = $('select[name="setting_page_slider_image[]"]').map(function(){ 
-                    return this.value; 
-                }).get();
-
+            
             if ($('#setting_page_name_hide').is(":checked")) { 
                 if($('#setting_page_name_hide').val() == 'yes'){
                     setting_page_name_hide = 'yes';
                 }
             }
-
+            $('input[name=slug]').removeAttr('disabled');
             $('.dsld-btn-loader').addClass('btnloading');
             var Loader = ".btnloading";
             DSLDButtonLoader(Loader, "start");
@@ -643,39 +539,13 @@
                 url: $(this).attr('action'),
                 type: $(this).attr('method'),
                 cache : false,
-                data: {
-                    '_token':'{{ csrf_token() }}', 
-                    'user_id':'{{ Auth::user()->id }}',
-                    'id': $('#id').val(),
-                    'title': $('#title').val(),
-                    'slug': $('#slug').val(),
-                    'status': $('#status').val(),
-                    'date': $('#date').val(),
-                    'banner': $('#banner').val(),
-                    'template': $('#template').val(),
-                    'parent': $('#parent').val(),
-                    'type': $('#type').val(),
-                    'meta_title': $('#meta_title').val(),
-                    'meta_description': $('#meta_description').val(),
-                    'order': $('#order').val(),
-                    'keywords': $('#keywords').val(),
-                    'status': $('#status').val(),
-                    'content': content,
-                    'setting': setting,
-                    'setting_page_name_hide': setting_page_name_hide,
-                    'setting_page_banner_slider': $('#setting_slider').val(),
-                    'setting_slider': setting_slider,
-                    'setting_page_slider_heading': setting_page_slider_heading,
-                    'setting_page_slider_content': setting_page_slider_content,
-                    'setting_page_slider_btn_link': setting_page_slider_btn_link,
-                    'setting_page_slider_btn_link2': setting_page_slider_btn_link2,
-                    'setting_page_slider_image': setting_page_slider_image,
-                },
+                data: $(this).serialize(),
                 success: function(data) {
                     DSLDButtonLoader(Loader, "");
                     dsldFlashNotification(data['status'], data['message']);
                     if(data['status'] =='success'){
-                        location.reload();
+                        $('input[name=slug]').attr('disabled', true);
+                        //location.reload();
                     }
                     
                 }
@@ -688,17 +558,11 @@
     function get_pages(){
         window.location.href = "{{ route('pages.index') }}";
     }
-    $('.slider_activity').on('click', function(){
-       
-        if ($(this).is(":checked") && $(this).val() == 'slider') { 
-            $('#setting_slider').val('slider');
-            $('.slider_card').show();
-        }else if ($(this).is(":checked") && $(this).val() == 'banner') { 
-            $('#setting_slider').val('banner');
-            $('.slider_card').hide();
+    $('#template').on('change', function(){
+        if ($(this).val() == 'program_school_details') { 
+            $('.program_fields').show();
         }else{
-            $('#setting_slider').val('no');
-            $('.slider_card').hide();   
+            $('.program_fields').hide();   
         }
    });
 </script>

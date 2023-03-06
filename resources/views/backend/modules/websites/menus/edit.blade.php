@@ -107,6 +107,7 @@
                             <option value="">-- Please select --</option>
                             <option value="header_menu" @if($data->type == 'header_menu') selected @endif>Header Menu</option>
                             <option value="footer_menu" @if($data->type == 'footer_menu') selected @endif>Footer Menu</option>
+                            <option value="important_link" @if($data->type == 'important_link') selected @endif>Important Menu</option>
                         </select>                            
                     </div>
                     <div class="form-group">

@@ -62,22 +62,20 @@ class MenuController extends Controller
         }
 
      
-        if(Menu::where('name', $request->name)->first() == null){
-            $menu =  new Menu;
-            $menu->name = $request->name;
-            $menu->url = $request->url;
-            $menu->parent = $request->parent;
-            $menu->user_id = $request->user_id;
-            $menu->setting = json_encode(array('target' => "0", 'class' => ""));
-            
-            if($menu->save()){
-                return response()->json(['status' => 'success', 'message'=> 'Data insert success.']);
-            }else{
-                return response()->json(['status' => 'error', 'message'=> 'Data insert failed.']);
-            }
+
+        $menu =  new Menu;
+        $menu->name = $request->name;
+        $menu->url = $request->url;
+        $menu->parent = $request->parent;
+        $menu->user_id = $request->user_id;
+        $menu->setting = json_encode(array('target' => "0", 'class' => ""));
+        
+        if($menu->save()){
+            return response()->json(['status' => 'success', 'message'=> 'Data insert success.']);
         }else{
-            return response()->json(['status' => 'warning', 'message'=> 'Details already exist! please try agin.']);
+            return response()->json(['status' => 'error', 'message'=> 'Data insert failed.']);
         }
+        
     }
     public function edit($id){
         if(dsld_have_user_permission('menus_edit') == 0){
@@ -174,7 +172,7 @@ class MenuController extends Controller
             return response()->json(['status' => 'error', 'message' => $validator->errors()->all()]);
         }
      
-        if(Menu::whereNotIn('id', [$request->id])->where('name', $request->name)->first() == null){
+        if(Menu::whereNotIn('id', [$request->id])->where('name', $request->name)->where('type', $request->type)->first() == null){
             $menu =  Menu::findOrFail($request->id);
             $menu->name = $request->name;
             $menu->url = $request->url;

@@ -67,7 +67,7 @@ class PagesController extends Controller
 
 
         $validator = Validator::make($request->all(), [
-            'title' => 'required|max:50',
+            'title' => 'required|max:350',
             'status' => 'required|integer'
         ]);
 
@@ -76,22 +76,35 @@ class PagesController extends Controller
             return response()->json(['status' => 'error', 'message' => $validator->errors()->all()]);
         }
 
-     
-        if(Page::where('slug', strtolower($slug))->first() == null){
+        if(isset($request->parent)){
+            $parent_slug = $this->parent_slug($request->parent);
+            if($request->type =='program_page'){
+                $slug = $parent_slug.'/'.strtolower($slug);
+            }
+        }
+        
+        $check_d =  Page::where('slug', $slug)->where('type', $request->type)->first();
+        
+        if(empty($check_d)){
             $page = new Page;
             $page->title = $request->title;
             $page->meta_title = $request->title;
             $page->meta_description =  $request->title;
             $page->keywords =  $request->title;
-            $page->parent =  0;
-            $page->level =  1;
-            $page->type = 'custom_page';
+            if(isset($request->parent)){
+                $page->parent =  $request->parent;
+                $page->level =  $this->parent_level($request->parent);
+            }else{
+                $page->parent =  0;
+                $page->level =  1;
+            }
+            $page->slug = $slug;
+            $page->type = $request->type;
             $page->template = 'default';
             $page->is_meta = 0;
             $page->banner = $request->banner;
             $page->status = $request->status;
             $page->content = $request->content;
-            $page->slug = strtolower($slug);
             
             if($page->save()){
                 return response()->json(['status' => 'success', 'message'=> 'Data insert success.']);
@@ -117,6 +130,11 @@ class PagesController extends Controller
         }else{
             return 1;
         } 
+    }
+    public function parent_slug($parent_id){
+        if($parent_id > 0){
+            return Page::where('id', $parent_id)->first()->slug;
+        }
     }
     public function show_custom_page($page, $slug1 = null, $slug2 = null, $slug3 = null){
 
@@ -153,7 +171,7 @@ class PagesController extends Controller
 
 
         $validator = Validator::make($request->all(), [
-            'title' => 'required|max:50',
+            'title' => 'required|max:350',
             'status' => 'required|integer'
         ]);
 
@@ -215,7 +233,7 @@ class PagesController extends Controller
             $page->keywords =  $request->keywords;
             $page->parent =  $request->parent;
             $page->level =  $this->parent_level($request->parent);
-            $page->type = 'custom_page';
+            $page->type = $request->type;
             $page->template = $request->template;
             $page->is_meta = 0;
             $page->order = $request->order;
@@ -242,7 +260,7 @@ class PagesController extends Controller
         // echo '<pre>';
         // print_r($request->all());
          foreach($request->type as $key => $type){
-             $meta_data = PageMeta::where('meta_key', $type)->first();
+             $meta_data = PageMeta::where('meta_key', $type)->where('page_id', $request->page_id)->first();
              if($meta_data == ''){
                  if(gettype($request[$type]) == 'array'){
                      $new_data = new PageMeta;

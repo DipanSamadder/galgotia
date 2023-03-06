@@ -24,6 +24,10 @@
         @yield('header')
 
         <style>
+            .sidebar{width: 200px;font-size: 12px;}
+            .sidebar .user-info .detail h4 {font-size: 12px;}
+            section.content{margin: 11px 70px 20px 200px;}
+  
             .bootstrap-notify-container {
                 z-index: 99999 !important;
             }

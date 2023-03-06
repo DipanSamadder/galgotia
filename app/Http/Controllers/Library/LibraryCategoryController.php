@@ -110,7 +110,7 @@ class LibraryCategoryController extends Controller
              
         $action =  LibraryCategory::findOrFail($request->id);
         $action->title = $request->title;
-        $action->order = $request->order;;
+        $action->order = $request->order;
         $action->status = $request->status;
         
         if($action->save()){
