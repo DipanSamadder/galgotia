@@ -164,6 +164,15 @@ if(!function_exists('dsld_is_route_active')){
     }
 }
 
+if(!function_exists('dsld_is_slug_active')){
+    function dsld_is_slug_active(Array $slugs, $output = 'active'){
+        foreach($slugs as $slug){
+            if(str_replace(url('/').'/p/', '', URL::current()) == $slug) return $output;
+        }
+    }
+}
+
+
 if(!function_exists('include_form_by_id')){
     function include_form_by_id($form_id){
 

@@ -57,7 +57,7 @@
                             </a>
                             
                             @if(dsld_have_user_permission('pages_edit') == 1)
-                            <a href="{{ route('program.edit', [$value->id]) }}"  class="btn btn-default waves-effect waves-float btn-sm waves-red bg-primary">
+                            <a href="{{ route('departments.edit', [$value->id]) }}"  class="btn btn-default waves-effect waves-float btn-sm waves-red bg-primary">
                                 <i class="zmdi zmdi-edit"></i>
                             </a>
                             @endif

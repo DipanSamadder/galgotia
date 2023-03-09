@@ -150,11 +150,12 @@ $section = App\Models\PageSection::where('page_id', 56)->orderBy('order', 'asc')
         
                 @foreach($section as $key => $sec)
      
-                    
-                    @if(in_array($sec->title, json_decode($needsection_multi_select_0)))
-                    <li class="nav-item">
-                        <a class="nav-link f22 gothammedium  white @if($key == 0 ) active @endif" data-bs-toggle="pill" href="#programDetails-{{ $key }}-{{ $sec->id }}"> {{ $sec->title }}</a>
-                    </li>
+                    @if(!empty($needsection_multi_select_0))
+                        @if(in_array($sec->title, json_decode($needsection_multi_select_0)))
+                        <li class="nav-item">
+                            <a class="nav-link f22 gothammedium  white @if($key == 0 ) active @endif" data-bs-toggle="pill" href="#programDetails-{{ $key }}-{{ $sec->id }}"> {{ $sec->title }}</a>
+                        </li>
+                        @endif
                     @endif
                 @endforeach
 
@@ -187,6 +188,7 @@ $abouttheprogramme_text_3 = dsld_page_meta_value_by_meta_key('abouttheprogramme_
             <div class="container">
                 <div class="row my-4">
                     <div class="col-lg-8 my-4">
+                    
                     @if(in_array($abouttheprogramme_text_3, json_decode($needsection_multi_select_0)))
                     @if(!empty($abouttheprogramme_text_3))
                         <h2 class="gothambold f30 my-2 pt-5 pb-2">{{ $abouttheprogramme_text_3 }}</h2>
@@ -196,7 +198,9 @@ $abouttheprogramme_text_3 = dsld_page_meta_value_by_meta_key('abouttheprogramme_
                     <p class="f18 gothamnarrow325"><?php echo htmlspecialchars_decode($abouttheprogramme_editor_4); ?></p>
                     @endif
                     @endif
+                  
                     
+                    @if(!empty($needsection_multi_select_0))
                     @if(in_array($admissiondetails_text_0 , json_decode($needsection_multi_select_0)))
                     @if(!empty($admissiondetails_text_0))
                         <h2 class="gothambold f30 my-2 pt-5 pb-2">{{ $admissiondetails_text_0 }}</h2>
@@ -206,7 +210,9 @@ $abouttheprogramme_text_3 = dsld_page_meta_value_by_meta_key('abouttheprogramme_
                     <p class="f18 gothamnarrow325"><?php echo htmlspecialchars_decode($admissiondetails_editor_1); ?></p>
                     @endif
                     @endif
+                    @endif
 
+                    @if(!empty($needsection_multi_select_0))
                     @if(in_array('Eligibility', json_decode($needsection_multi_select_0)))
                     @if(!empty($eligibility_editor_0))
                     <h2 class="gothambold f30 my-2 pt-5 pb-2">Eligibility</h2>
@@ -217,7 +223,9 @@ $abouttheprogramme_text_3 = dsld_page_meta_value_by_meta_key('abouttheprogramme_
                     </p>
                     @endif
                     @endif
+                    @endif
 
+                    @if(!empty($needsection_multi_select_0))
                     @if(in_array('Fee Structure', json_decode($needsection_multi_select_0)))
                     @if(!empty($feestructure_text_0) && !empty($feestructure_text_1) && !empty($feestructure_text_2))
                     <div class="feestruc bg-ligry my-4 w-50 p-4">
@@ -243,8 +251,9 @@ $abouttheprogramme_text_3 = dsld_page_meta_value_by_meta_key('abouttheprogramme_
                     </div>
                     @endif
                     @endif
+                    @endif
 
-
+                    @if(!empty($needsection_multi_select_0))
                     @if(in_array('Core Modules & Scheme', json_decode($needsection_multi_select_0)))
                     @if(!empty($coremodulesscheme_editor_1))
                     <h2 class="gothambold f30 my-2 pt-5 pb-2">Core Modules & Scheme</h2>
@@ -257,11 +266,12 @@ $abouttheprogramme_text_3 = dsld_page_meta_value_by_meta_key('abouttheprogramme_
                         <a href="{{ $coremodulesscheme_button_0 }}" class="explore">Core Module</a>
                     @endif
                     @endif
+                    @endif
 
                     @php
                         $pos = json_decode(dsld_page_meta_value_by_meta_key('programmeobjectives_text_repeter_0', $page->id), true);
                     @endphp
-                    
+                    @if(!empty($needsection_multi_select_0))
                     @if(in_array('Programme Objectives', json_decode($needsection_multi_select_0)))
                     @if(is_array($pos) && count($pos) > 0)
                     <div class="aspachiv ">
@@ -281,12 +291,13 @@ $abouttheprogramme_text_3 = dsld_page_meta_value_by_meta_key('abouttheprogramme_
                     </div>
                     @endif
                     @endif
+                    @endif
 
                     @php
                         $psos = json_decode(dsld_page_meta_value_by_meta_key('programmespecificoutcomespsos_text_repeter_0', $page->id), true);
                     @endphp
                     @if(is_array($psos) && count($psos) > 0)
-                    
+                    @if(!empty($needsection_multi_select_0))
                     @if(in_array('Programme Specific Outcomes (PSOs)', json_decode($needsection_multi_select_0)))
                     <div class="aspachiv profilecard">
                         <h1 class="f30  gothambold  white">Programme Specific Outcomes (PSOs)</h1>
@@ -303,6 +314,7 @@ $abouttheprogramme_text_3 = dsld_page_meta_value_by_meta_key('abouttheprogramme_
                             @endforeach
                         </div>
                     </div>
+                @endif
                 @endif
                 @endif
                 </div>

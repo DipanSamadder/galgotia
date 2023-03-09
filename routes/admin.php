@@ -6,6 +6,7 @@ use App\Http\Controllers\UploadsMediaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Page\PagesController;
 use App\Http\Controllers\Page\ProgramPageController;
+use App\Http\Controllers\Page\DepartmentPageController;
 use App\Http\Controllers\User\UsersController;
 use App\Http\Controllers\Setting\RolesController;
 use App\Http\Controllers\Setting\RolePermissionsController;
@@ -200,14 +201,25 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
     Route::post('program-semester/update', [ProgramSemesterController::class, 'update'])->name('program_semesters.update');
 
 
+
+     //Programs
+     Route::get('program', [ProgramPageController::class, 'index'])->name('program.index');
+     Route::get('program/edit/{id}', [ProgramPageController::class, 'edit'])->name('program.edit');
+     Route::post('get-all-programs', [ProgramPageController::class, 'get_ajax_programs'])->name('ajax_programs');
+     
+     //Department
+     Route::get('department', [DepartmentPageController::class, 'index'])->name('departments.index');
+     Route::get('department/edit/{id}', [DepartmentPageController::class, 'edit'])->name('departments.edit');
+     Route::post('get-all-departments', [DepartmentPageController::class, 'get_ajax_departments'])->name('ajax_departments');
+      
     //Program 
-    Route::get('programs', [ProgramController::class, 'index'])->name('programs.index');
-    Route::post('programs/edit', [ProgramController::class, 'edit'])->name('programs.edit');
-    Route::post('programs/store', [ProgramController::class, 'store'])->name('programs.store');
-    Route::post('get-all-programs', [ProgramController::class, 'get_ajax_programs'])->name('ajax_programs');
-    Route::post('programs/destory', [ProgramController::class, 'destory'])->name('programs.destory');
-    Route::post('programs/status', [ProgramController::class, 'status'])->name('programs.status');
-    Route::post('programs/update', [ProgramController::class, 'update'])->name('programs.update');
+    // Route::get('programs', [ProgramController::class, 'index'])->name('programs.index');
+    // Route::post('programs/edit', [ProgramController::class, 'edit'])->name('programs.edit');
+    // Route::post('programs/store', [ProgramController::class, 'store'])->name('programs.store');
+    // Route::post('get-all-programs', [ProgramController::class, 'get_ajax_programs'])->name('ajax_programs');
+    // Route::post('programs/destory', [ProgramController::class, 'destory'])->name('programs.destory');
+    // Route::post('programs/status', [ProgramController::class, 'status'])->name('programs.status');
+    // Route::post('programs/update', [ProgramController::class, 'update'])->name('programs.update');
 
 
     //Class Room 
@@ -248,13 +260,13 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
 
 
     //Department
-    Route::get('departments', [DepartmentController::class, 'index'])->name('departments.index');
-    Route::post('departments/edit', [DepartmentController::class, 'edit'])->name('departments.edit');
-    Route::post('departments/store', [DepartmentController::class, 'store'])->name('departments.store');
-    Route::post('get-all-departments', [DepartmentController::class, 'get_ajax_departments'])->name('ajax_departments');
-    Route::post('departments/destory', [DepartmentController::class, 'destory'])->name('departments.destory');
-    Route::post('departments/status', [DepartmentController::class, 'status'])->name('departments.status');
-    Route::post('departments/update', [DepartmentController::class, 'update'])->name('departments.update');
+    // Route::get('departments', [DepartmentController::class, 'index'])->name('departments.index');
+    // Route::post('departments/edit', [DepartmentController::class, 'edit'])->name('departments.edit');
+    // Route::post('departments/store', [DepartmentController::class, 'store'])->name('departments.store');
+    // Route::post('get-all-departments', [DepartmentController::class, 'get_ajax_departments'])->name('ajax_departments');
+    // Route::post('departments/destory', [DepartmentController::class, 'destory'])->name('departments.destory');
+    // Route::post('departments/status', [DepartmentController::class, 'status'])->name('departments.status');
+    // Route::post('departments/update', [DepartmentController::class, 'update'])->name('departments.update');
 
 
     //Media library
@@ -276,11 +288,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
     Route::post('page-extra-content/update', [PagesController::class, 'update_extra_content'])->name('pages_extra_content.update');
     
    
-    //Programs
-    Route::get('program', [ProgramPageController::class, 'index'])->name('program.index');
-    Route::get('program/edit/{id}', [ProgramPageController::class, 'edit'])->name('program.edit');
-    Route::post('get-all-programs', [ProgramPageController::class, 'get_ajax_programs'])->name('ajax_programs');
-     
+   
     //Contact Form
     Route::get('contact-form', [ContactFormController::class, 'index'])->name('contact_form.index');
     Route::post('contact-form/edit', [ContactFormController::class, 'edit'])->name('contact_form.edit');

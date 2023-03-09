@@ -60,7 +60,7 @@
             @endif
 
             @if(dsld_have_user_permission('institute') == 1 || dsld_have_user_permission('institute') == 1)
-            <li class="{{ dsld_is_route_active(['institutes.index', 'classes.index', 'institute_types.index', 'program_session.index', 'program_semesters.index', 'programs.index', 'departments.index', 'faculty.index', 'faculty_type.index'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i><span>Organization</span></a>
+            <li class="{{ dsld_is_route_active(['institutes.index', 'classes.index', 'institute_types.index', 'program_session.index', 'program_semesters.index', 'program.index', 'departments.index', 'faculty.index', 'faculty_type.index'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i><span>Organization</span></a>
                 <ul class="ml-menu">
                     
                     @if(dsld_have_user_permission('institute') == 1 || dsld_have_user_permission('institute-types') == 1)
@@ -80,27 +80,6 @@
                         </li> 
                     @endif 
 
-                    @if(dsld_have_user_permission('programs') == 1 || dsld_have_user_permission('programs') == 1)
-                        <li class="{{ dsld_is_route_active(['program_session.index', 'program_semesters.index', 'programs.index'], 'active open') }} level-2"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i> <span>Program</span></a>
-                            <ul class="ml-menu">
-                                @if(dsld_have_user_permission('programs') == 1)
-                                <li class="{{ dsld_is_route_active(['programs.index']) }}"><a href="{{ route('programs.index') }}">All Programs</a>
-                                
-                                </li>
-                                @endif
-                                @if(dsld_have_user_permission('institute') == 1)
-                                <li class="{{ dsld_is_route_active(['program_session.index']) }}"><a href="{{ route('program_session.index') }}">Sessions</a>
-                                
-                                </li>
-                                @endif
-                                @if(dsld_have_user_permission('institute-types') == 1)
-                                <li class="{{ dsld_is_route_active(['program_semesters.index']) }}"><a href="{{ route('program_semesters.index') }}">Semesters</a></li>
-                                @endif  
-                            </ul>
-                        </li> 
-                    @endif 
-                    
-
                     @if(dsld_have_user_permission('class-room') == 1)
                         <li class="{{ dsld_is_route_active(['classes.index'], 'active open') }} level-2"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i> <span>Classes</span></a>
                             <ul class="ml-menu">
@@ -114,18 +93,7 @@
                         </li> 
                     @endif 
 
-                    @if(dsld_have_user_permission('class-room') == 1)
-                        <li class="{{ dsld_is_route_active(['departments.index'], 'active open') }} level-2"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i> <span>Departments</span></a>
-                            <ul class="ml-menu">
 
-                                @if(dsld_have_user_permission('class-room') == 1)
-                                    <li class="{{ dsld_is_route_active(['departments.index']) }}"><a href="{{ route('departments.index') }}">All Departments</a>
-                                    </li>
-                                @endif
-                                 
-                            </ul>
-                        </li> 
-                    @endif 
 
                     @if(dsld_have_user_permission('faculty') == 1 || dsld_have_user_permission('faculty-type') == 1)
                         <li class="{{ dsld_is_route_active(['faculty.index', 'faculty_type.index'], 'active open') }} level-2"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i> <span>Faculty</span></a>
@@ -147,7 +115,40 @@
             </li> 
             @endif
 
-          
+            @if(dsld_have_user_permission('class-room') == 1)
+                <li class="{{ dsld_is_route_active(['departments.index'], 'active open') }} level-2"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i> <span>Departments</span></a>
+                    <ul class="ml-menu">
+
+                        @if(dsld_have_user_permission('class-room') == 1)
+                            <li class="{{ dsld_is_route_active(['departments.index']) }}"><a href="{{ route('departments.index') }}">Lists</a>
+                            </li>
+                        @endif
+                            
+                    </ul>
+                </li> 
+            @endif 
+
+            @if(dsld_have_user_permission('programs') == 1 || dsld_have_user_permission('programs') == 1)
+                <li class="{{ dsld_is_route_active(['program_session.index', 'program_semesters.index', 'programs.index'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i> <span>Program</span></a>
+                    <ul class="ml-menu">
+                        @if(dsld_have_user_permission('programs') == 1)
+                        <li class="{{ dsld_is_route_active(['program.index']) }}"><a href="{{ route('program.index') }}">All Programs</a>
+                        
+                        </li>
+                        @endif
+                        @if(dsld_have_user_permission('institute') == 1)
+                        <li class="{{ dsld_is_route_active(['program_session.index']) }}"><a href="{{ route('program_session.index') }}">Sessions</a>
+                        
+                        </li>
+                        @endif
+                        @if(dsld_have_user_permission('institute-types') == 1)
+                        <li class="{{ dsld_is_route_active(['program_semesters.index']) }}"><a href="{{ route('program_semesters.index') }}">Semesters</a></li>
+                        @endif  
+                    </ul>
+                </li> 
+            @endif 
+
+
             @if(dsld_have_user_permission('student') == 1 || dsld_have_user_permission('student') == 1)
             <li class="{{ dsld_is_route_active(['students.index'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i> <span>Students</span></a>
                 <ul class="ml-menu">
@@ -218,7 +219,7 @@
             </li> 
             @endif
             
-            <li><a href="javascript:void(0);" class="menu-toggle {{ dsld_is_route_active(['contact_form.index', 'contact_form.leads','posts.index', 'posts.edit', 'posts.store', 'posts_cat.index', 'posts_cat.store', 'posts_cat.edit', 'pages.index', 'pages.edit', 'pages.store', 'pages_section.index',   'pages_section_fields.edit','office.index',   'office.edit', 'history.timeline.index','cities.index','states.index','countries.index'], 'toggled') }}"><i class="zmdi zmdi-hc-fw"></i><span> Website</span></a>
+            <li><a href="javascript:void(0);" class="menu-toggle {{ dsld_is_route_active(['contact_form.index', 'contact_form.leads','posts.index', 'posts.edit', 'posts.store', 'posts_cat.index', 'posts_cat.store', 'posts_cat.edit', 'pages.index', 'pages.edit', 'pages.store', 'pages_section.index',   'pages_section_fields.edit','office.index',   'office.edit', 'history.timeline.index','cities.index','states.index','countries.index', 'program.index'], 'toggled') }}"><i class="zmdi zmdi-hc-fw"></i><span> Website</span></a>
                 <ul class="ml-menu">
                 @if(dsld_have_user_permission('contact-forms') == 1 || dsld_have_user_permission('contact-form-leads') == 1)  
                     <li class="level-2 {{ dsld_is_route_active(['contact_form.index', 'contact_form.leads'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i><span>Forms</span></a>
@@ -241,7 +242,7 @@
                         </li> 
                         @endif
                         @if(dsld_have_user_permission('pages') || dsld_have_user_permission('sections') || dsld_have_user_permission('timelines') || dsld_have_user_permission('office'))
-                        <li class="level-2 {{ dsld_is_route_active(['pages.index', 'pages.edit', 'pages.store', 'pages_section.index',   'pages_section_fields.edit','office.index',   'office.edit', 'history.timeline.index'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-assignment"></i><span>Pages</span></a>
+                        <li class="level-2 {{ dsld_is_route_active(['pages.index', 'pages.edit', 'pages.store', 'pages_section.index',   'pages_section_fields.edit','office.index',   'office.edit', 'history.timeline.index', 'program.index'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-assignment"></i><span>Pages</span></a>
                             <ul class="ml-menu">
                                 @if(dsld_have_user_permission('pages'))
                                 <li class="{{ dsld_is_route_active(['pages.index', 'pages.edit']) }}"><a href="{{ route('pages.index') }}">All Pages</a>
@@ -256,7 +257,7 @@
                                 @endif 
                                 @if(dsld_have_user_permission('newsevents'))
                                 <li class="{{ dsld_is_route_active(['news_event.index',   'news_event.edit']) }}"><a href="{{ route('news_event.index') }}">News & Event</a></li>
-                                @endif   
+                                @endif  
                             </ul>
                         </li> 
                     @endif
@@ -284,6 +285,7 @@
             @if(dsld_have_user_permission('roles') || dsld_have_user_permission('permissions'))
                 <li  class="{{ dsld_is_route_active(['roles.index', 'roles.edit', 'roles.store', 'permissions.index', 'permissions.edit', 'permissions.store'], 'active open') }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-hc-fw"></i><span>Roles</span></a>
                     <ul class="ml-menu">
+                        
                         @if(dsld_have_user_permission('roles'))
                         <li class="{{ dsld_is_route_active(['roles.index', 'roles.edit']) }}"><a href="{{ route('roles.index') }}">All Roles</a></li>
                         @endif
@@ -291,6 +293,7 @@
                         @if(dsld_have_user_permission('permissions'))
                         <li class="{{ dsld_is_route_active(['permissions.index', 'permissions.edit']) }}"><a href="{{ route('permissions.index') }}">All Permissions</a></li>
                         @endif
+
                     </ul>
                 </li>  
             @endif

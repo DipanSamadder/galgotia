@@ -24,7 +24,7 @@
                         @if($data->meta_fields != '')
                         @foreach (json_decode($data->meta_fields) as $key => $element)
 
-								@if ($element->type == 'text' || $element->type == 'button' || $element->type == 'editor' || $element->type == 'file' || $element->type == 'text_repeter' || $element->type == 'file_repeter')
+								@if ($element->type == 'text' || $element->type == 'image_box' || $element->type == 'image_box_repeter' ||$element->type == 'button' || $element->type == 'editor' || $element->type == 'file' || $element->type == 'text_repeter' || $element->type == 'file_repeter')
 								
 									<div class="row clearfix  mb-2">
 									    <input type="hidden" name="type[]" value="{{ $element->type }}">
@@ -97,6 +97,8 @@
                         <li class="list-group-item btn" style="text-align: left;" onclick="appendToForm('file')">File</li>
                         <li class="list-group-item btn" style="text-align: left;" onclick="appendToForm('file_repeter')">File Repeter</li>
                         <li class="list-group-item btn" style="text-align: left;" onclick="appendToForm('button')">Button</li>
+                        <li class="list-group-item btn" style="text-align: left;" onclick="appendToForm('image_box')">Image Box</li>
+                        <li class="list-group-item btn" style="text-align: left;" onclick="appendToForm('image_box_repeter')">Image Box Repeter</li>
                     </ul>
                 </div>
             </div>
@@ -127,7 +129,35 @@
                             +'</div>'
                         +'</div>';
             $('#form_elements').append(str);
-        } else if (type == 'text_repeter') {
+        }else if(type == 'image_box'){
+            var str = '<div class="row clearfix mb-2">'
+                            +'<div class="col-sm-3">'
+                                +'<input type="hidden" name="type[]" value="image_box">'
+                                +'<label class="col-from-label">Image Box</label>'
+                            +'</div>'
+                            +'<div class="col-sm-7">'
+                                +'<input class="form-control" type="text" name="label[]" placeholder="Label" onchange="is_edited()">'
+                            +'</div>'
+                            +'<div class="col-sm-2">'
+                                +'<button type="button" class="btn btn-sm btn-danger" data-toggle="remove-parent" data-parent=".row"><i class="zmdi zmdi-hc-fw"></i> </button>'
+                            +'</div>'
+                        +'</div>';
+            $('#form_elements').append(str);
+        }else if(type == 'image_box_repeter'){
+            var str = '<div class="row clearfix mb-2">'
+                            +'<div class="col-sm-3">'
+                                +'<input type="hidden" name="type[]" value="image_box_repeter">'
+                                +'<label class="col-from-label">Image Box Repeter</label>'
+                            +'</div>'
+                            +'<div class="col-sm-7">'
+                                +'<input class="form-control" type="text" name="label[]" placeholder="Label" onchange="is_edited()">'
+                            +'</div>'
+                            +'<div class="col-sm-2">'
+                                +'<button type="button" class="btn btn-sm btn-danger" data-toggle="remove-parent" data-parent=".row"><i class="zmdi zmdi-hc-fw"></i> </button>'
+                            +'</div>'
+                        +'</div>';
+            $('#form_elements').append(str);
+        }  else if (type == 'text_repeter') {
             i++;
             var str = '<div class="row clearfix mb-2">'
                             +'<div class="col-sm-3">'

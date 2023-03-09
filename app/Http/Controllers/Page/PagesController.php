@@ -78,7 +78,7 @@ class PagesController extends Controller
 
         if(isset($request->parent)){
             $parent_slug = $this->parent_slug($request->parent);
-            if($request->type =='program_page'){
+            if($request->type =='program_page' || $request->type =='department_page'){
                 $slug = $parent_slug.'/'.strtolower($slug);
             }
         }
@@ -260,7 +260,9 @@ class PagesController extends Controller
         // echo '<pre>';
         // print_r($request->all());
          foreach($request->type as $key => $type){
+           
              $meta_data = PageMeta::where('meta_key', $type)->where('page_id', $request->page_id)->first();
+          
              if($meta_data == ''){
                  if(gettype($request[$type]) == 'array'){
                      $new_data = new PageMeta;
