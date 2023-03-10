@@ -296,12 +296,12 @@
 
                                     @elseif ($element->type == 'image_box')
                                         @php 
-                                            $page_meta_key_heading = $name."_".$element->type."_"."heading_".$key2;
-                                            $page_meta_key_subheading = $name."_".$element->type."_"."subheading_".$key2;
-                                            $page_meta_key_img = $name."_".$element->type."_"."img_".$key2;
-                                            $page_meta_key_content = $name."_".$element->type."_"."content_".$key2;
-                                            $page_meta_key_btn = $name."_".$element->type."_"."btn_".$key2;
-                                            $page_meta_key_link = $name."_".$element->type."_"."link_".$key2;
+                                            $page_meta_key_heading = $page_meta_key."_heading";
+                                            $page_meta_key_subheading = $page_meta_key."_subheading";
+                                            $page_meta_key_img = $page_meta_key."_img";
+                                            $page_meta_key_content = $page_meta_key."_content";
+                                            $page_meta_key_btn = $page_meta_key."_btn";
+                                            $page_meta_key_link = $page_meta_key."_link";
                                         @endphp
                                         <div class="row clearfix">
                                             <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
@@ -365,15 +365,158 @@
                                             </div>
                                         </div>
                                     @elseif ($element->type == 'image_box_repeter')
-                                        <div class="row clearfix">
+                                    @php 
+                                        $page_meta_key_repeter_heading = $page_meta_key."_heading";
+                                        $page_meta_key_repeter_subheading = $page_meta_key."_subheading";
+                                        $page_meta_key_repeter_img = $page_meta_key."_img";
+                                        $page_meta_key_repeter_content = $page_meta_key."_content";
+                                        $page_meta_key_repeter_btn = $page_meta_key."_btn";
+                                        $page_meta_key_repeter_link = $page_meta_key."_link";
+                                    @endphp
+                                    <div class="row clearfix">
                                             <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
                                                 <label class="form-label">{{ ucfirst($element->label) }}</label>  
                                             </div>
                                             <div class="col-lg-10 col-md-10 col-sm-8">
-                                                <div class="form-group">
+                                                <div class="text_repeter{{ $sec->id }}_{{ $key2 }}">
+
                                                     <input type="hidden" name="type[]" value="{{ $page_meta_key }}">
-                                                    <input type="text" name="{{ $page_meta_key }}" class="form-control" placeholder="{{ ucfirst($element->label) }}" onchange="is_edited()" value="{{ dsld_page_meta_value_by_meta_key($page_meta_key, $data->id) }}" />
-                                                    <small>Meta Key: {{ $page_meta_key }}</small>
+
+                                                    <input type="hidden" name="{{ $page_meta_key }}[]" value="{{ $page_meta_key_repeter_heading }}">
+                                                    <input type="hidden" name="{{ $page_meta_key }}[]" value="{{ $page_meta_key_repeter_subheading }}">
+                                                    <input type="hidden" name="{{ $page_meta_key }}[]" value="{{ $page_meta_key_repeter_img }}">
+                                                    <input type="hidden" name="{{ $page_meta_key }}[]" value="{{ $page_meta_key_repeter_content }}">
+                                                    <input type="hidden" name="{{ $page_meta_key }}[]" value="{{ $page_meta_key_repeter_btn }}">
+                                                    <input type="hidden" name="{{ $page_meta_key }}[]" value="{{ $page_meta_key_repeter_link }}">
+
+                                                    @if(dsld_page_meta_value_by_meta_key($page_meta_key_repeter_img, $data->id) != '')
+                                                        @foreach(@json_decode(dsld_page_meta_value_by_meta_key($page_meta_key_repeter_img, $data->id), true) as $key3 => $value) 
+                                                            <div class="row clearfix">
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <input type="hidden" name="type[]" value="{{ $page_meta_key_repeter_heading }}">
+                                                                        <input type="text" class="form-control"  name="{{ $page_meta_key_repeter_heading }}[]" placeholder="Heading" value="{{json_decode(dsld_page_meta_value_by_meta_key($page_meta_key_repeter_heading, $data->id), true)[$key3] }}">  
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                    <input type="hidden" name="type[]" value="{{ $page_meta_key_repeter_subheading }}"><input type="text" class="form-control"  name="{{ $page_meta_key_repeter_subheading }}[]" placeholder="Sub Heading" value="{{json_decode(dsld_page_meta_value_by_meta_key($page_meta_key_repeter_subheading, $data->id), true)[$key3] }}">  
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                    <input type="hidden" name="type[]" value="{{ $page_meta_key_repeter_content }}"><input type="text" class="form-control"  name="{{ $page_meta_key_repeter_content }}[]" placeholder="Content" value="{{json_decode(dsld_page_meta_value_by_meta_key($page_meta_key_repeter_content, $data->id), true)[$key3] }}">  
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <input type="hidden" name="type[]" value="{{ $page_meta_key_repeter_img }}">
+                                                                        <select class="form-control show-tick ms select2" name="{{ $page_meta_key_repeter_img }}[]" onchange="is_edited()">
+                                                                            <option value="">-- Please select --</option>
+                                                                            @foreach(App\Models\Upload::where("user_id", Auth::user()->id)->orderBy("id", "desc")->get() as $key => $value)
+                                                                                <option value="{{ $value->id }}" @if(json_decode(dsld_page_meta_value_by_meta_key($page_meta_key_repeter_img, $data->id), true)[$key3] == $value->id) selected @endif>({{ $value->id }}) - {{ $value->file_title}} - {{ $value->extension}}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                        @if(json_decode(dsld_page_meta_value_by_meta_key($page_meta_key_repeter_img, $data->id), true)[$key3] != "")
+                                                                        <div class="image mt-2">
+                                                                            <img src="{{ dsld_uploaded_asset(json_decode(dsld_page_meta_value_by_meta_key($page_meta_key_repeter_img, $data->id), true)[$key3]) }}"  alt="{{ dsld_upload_file_title(json_decode(dsld_page_meta_value_by_meta_key($page_meta_key_repeter_img, $data->id), true)[$key3]) }}" class="img-fluid" width="100">
+                                                                        </div> 
+                                                                        @endif 
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                    <input type="hidden" name="type[]" value="{{ $page_meta_key_repeter_btn }}"><input type="text" class="form-control"  name="{{ $page_meta_key_repeter_btn }}[]" placeholder="Button Name" value="{{json_decode(dsld_page_meta_value_by_meta_key($page_meta_key_repeter_btn, $data->id), true)[$key3] }}">  
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                    <input type="hidden" name="type[]" value="{{ $page_meta_key_repeter_link }}"><input type="text" class="form-control"  name="{{ $page_meta_key_repeter_link }}[]" placeholder="Button Link" value="{{json_decode(dsld_page_meta_value_by_meta_key($page_meta_key_repeter_link, $data->id), true)[$key3] }}">  
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <button type="button" class="btn btn-sm btn-danger" data-toggle="remove-parent" data-parent=".row">
+                                                                        <i class="zmdi zmdi-hc-fw"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <small>Meta Key: {{ $page_meta_key }}</small><br>
+                                                <small>
+                                                    {{ $page_meta_key_repeter_heading }}<br>
+                                                    {{ $page_meta_key_repeter_subheading }}<br>
+                                                    {{ $page_meta_key_repeter_content }}<br>
+                                                    {{ $page_meta_key_repeter_img }}<br>
+                                                    {{ $page_meta_key_repeter_btn }}<br>
+                                                    {{ $page_meta_key_repeter_link }}<br>
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="row clearfix">
+                                            <div class="col-lg-2 col-md-2 col-sm-4">
+                                            </div>
+                                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                                <div class="input-group mb-4">
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-primary addMoreBtn"
+                                                        data-toggle="add-more"
+                                                        data-content='<div class="row clearfix">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <input type="hidden" name="type[]" value="{{ $page_meta_key_repeter_heading }}">
+                                                                    <input type="text" class="form-control"  name="{{ $page_meta_key_repeter_heading }}[]" placeholder="Heading">  
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                <input type="hidden" name="type[]" value="{{ $page_meta_key_repeter_subheading }}"><input type="text" class="form-control"  name="{{ $page_meta_key_repeter_subheading }}[]" placeholder="Sub Heading">  
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                <input type="hidden" name="type[]" value="{{ $page_meta_key_repeter_content }}"><input type="text" class="form-control"  name="{{ $page_meta_key_repeter_content }}[]" placeholder="Content">  
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <input type="hidden" name="type[]" value="{{ $page_meta_key_repeter_img }}">
+                                                                    <select class="form-control show-tick ms select2" name="{{ $page_meta_key_repeter_img }}[]" onchange="is_edited()">
+                                                                        <option value="">-- Please select --</option>
+                                                                        @foreach(App\Models\Upload::where("user_id", Auth::user()->id)->orderBy("id", "desc")->get() as $key => $value)
+                                                                            <option value="{{ $value->id }}" @if(dsld_page_meta_value_by_meta_key($page_meta_key_repeter_img, $data->id) == $value->id) selected @endif>({{ $value->id }}) - {{ $value->file_title}} - {{ $value->extension}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    @if(dsld_page_meta_value_by_meta_key($page_meta_key, $data->id) != "")
+                                                                    <div class="image mt-2">
+                                                                        <img src="{{ dsld_uploaded_asset(dsld_page_meta_value_by_meta_key($page_meta_key, $data->id)) }}"  alt="{{ dsld_upload_file_title(dsld_page_meta_value_by_meta_key($page_meta_key, $data->id)) }}" class="img-fluid" width="100">
+                                                                    </div> 
+                                                                    @endif 
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                <input type="hidden" name="type[]" value="{{ $page_meta_key_repeter_btn }}"><input type="text" class="form-control"  name="{{ $page_meta_key_repeter_btn }}[]" placeholder="Button Name">  
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                <input type="hidden" name="type[]" value="{{ $page_meta_key_repeter_link }}"><input type="text" class="form-control"  name="{{ $page_meta_key_repeter_link }}[]" placeholder="Button Link">  
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <button type="button" class="btn btn-sm btn-danger" data-toggle="remove-parent" data-parent=".row">
+                                                                    <i class="zmdi zmdi-hc-fw"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>'
+                                                        data-target=".text_repeter{{ $sec->id }}_{{ $key2 }}">
+                                                        <i class="zmdi zmdi-hc-fw"></i>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
