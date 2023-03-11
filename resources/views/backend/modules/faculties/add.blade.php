@@ -26,10 +26,20 @@
                                             <label class="form-label">User <small class="text-danger">*</small></label>                                 
                                             <select class="form-control w-100  ms select2 mr-2" name="user_id">
                                                 <option value="">-- Please select --</option>
-                                                @foreach(App\Models\user::where('banned', 0)->where('user_type', 'staff')->get() as $key => $value)
+
+                                                @php 
+                                                    $arr[] = '';
+                                                    $faculty = App\Models\Faculty::get();
+                                                    foreach($faculty as $key => $value){
+                                                        $arr[] = $value->user_id;
+                                                    }
+                                                @endphp
+
+                                                @foreach(App\Models\user::where('banned', 0)->where('user_type', 'staff')->whereNotIn('id', $arr)->get() as $key => $value)
                                                     <option value="{{ $value->id }}">{{ $value->name }}
                                                     </option>
                                                 @endforeach
+
                                             </select>                             
                                         </div>
                                     </div>
@@ -62,7 +72,7 @@
                                             <label class="form-label">Department <small class="text-danger">*</small></label>                                 
                                             <select class="form-control w-100  ms select2 mr-2" name="departments_id">
                                                 <option value="">-- Please select --</option>
-                                                @foreach(App\Models\Department::where('status', 1)->get() as $key => $value)
+                                                @foreach(App\Models\Page::where('status', 1)->where('level', 2)->where('type', 'department_page')->get() as $key => $value)
                                                     <option value="{{ $value->id }}">{{ $value->title }}
                                                     </option>
                                                 @endforeach
@@ -89,6 +99,18 @@
                                         <div class="form-group">
                                             <label class="form-label">About </label>                                 
                                             <input type="text" name="about" class="form-control" placeholder="About" />                                   
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="form-label">Designation </label>                                 
+                                            <input type="text" name="designation" class="form-control" placeholder="Designation" />                                   
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="form-label">Qualification </label>                                 
+                                            <input type="text" name="qualification" class="form-control" placeholder="Qualification" />                                   
                                         </div>
                                     </div>
                                 </div>

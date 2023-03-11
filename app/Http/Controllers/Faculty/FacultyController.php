@@ -99,6 +99,8 @@ class FacultyController extends Controller
             $action->created_by =  $request->created_by;
             $action->order = $request->order;
             $action->status = $request->status;
+            $action->designation = $request->designation;
+            $action->qualification = $request->qualification;
 
             if($action->save()){
                 return response()->json(['status' => 'success', 'message'=> 'Data insert success.']);
@@ -155,6 +157,8 @@ class FacultyController extends Controller
         $action->created_by =  $request->created_by;
         $action->order = $request->order;
         $action->status = $request->status;
+        $action->designation = $request->designation;
+        $action->qualification = $request->qualification;
 
         if($action->save()){
             return response()->json(['status' => 'success', 'message'=> 'Data insert success.']);

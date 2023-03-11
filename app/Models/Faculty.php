@@ -14,7 +14,7 @@ class Faculty extends Model
     }
 
     public function department(){
-        return $this->belongsTo(Department::class, 'departments_id');
+        return $this->belongsTo(page::class, 'departments_id');
     }
 
     public function institutes(){

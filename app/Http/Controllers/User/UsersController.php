@@ -23,7 +23,7 @@ class UsersController extends Controller
     }
     public function get_ajax_users(Request $request){
 
-        if($request->page != 1){$start = $request->page * 4;}else{$start = 0;}
+        if($request->page != 1){$start = $request->page * 24;}else{$start = 0;}
         $search = $request->search;
         $sort = $request->sort;
 
@@ -51,7 +51,7 @@ class UsersController extends Controller
                     break;
             }
         }
-        $data = $data->skip($start)->paginate(4);
+        $data = $data->skip($start)->paginate(24);
         return view('backend.modules.users.ajax_users', compact('data'));
     }
     public function store(Request $request){

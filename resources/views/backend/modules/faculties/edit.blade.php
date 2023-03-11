@@ -18,8 +18,16 @@
                         <label class="form-label">User <small class="text-danger">*</small></label>                                 
                         <select class="form-control w-100  ms select2 mr-2" name="user_id">
                             <option value="">-- Please select --</option>
-                            @foreach(App\Models\user::where('banned', 0)->where('user_type', 'staff')->get() as $key => $value)
-                                <option value="{{ $value->id }}" @if($value->id == $data->user_id) Selected @endif >{{ $value->name }}
+                            @php 
+                                $arr[] = '';
+                                $faculty = App\Models\Faculty::whereNot('user_id', $data->user_id)->get();
+                                foreach($faculty as $key => $value){
+                                    $arr[] = $value->user_id;
+                                }
+                            @endphp
+
+                            @foreach(App\Models\user::where('banned', 0)->where('user_type', 'staff')->whereNotIn('id', $arr)->get() as $key => $value)
+                                <option value="{{ $value->id }}" @if($value->id == $data->user_id) Selected @endif > {{ $value->name }}
                                 </option>
                             @endforeach
                         </select>                             
@@ -54,7 +62,7 @@
                         <label class="form-label">Department <small class="text-danger">*</small></label>                                 
                         <select class="form-control w-100  ms select2 mr-2" name="departments_id">
                             <option value="">-- Please select --</option>
-                            @foreach(App\Models\Department::where('status', 1)->get() as $key => $value)
+                            @foreach(App\Models\Page::where('status', 1)->where('level', 2)->where('type', 'department_page')->get() as $key => $value)
                                 <option value="{{ $value->id }}" @if($value->id == $data->departments_id) Selected @endif>{{ $value->title }}
                                 </option>
                             @endforeach
@@ -72,8 +80,8 @@
                         <label class="form-label">Status </label>                                 
                         <select class="form-control w-100  ms select2 mr-2" name="status">
                             <option value="">-- Please select --</option>
-                            <option value="1"  @if($value->id == 1) Selected @endif>Active</option>
-                            <option value="0" @if($value->id == 2) Selected @endif>Deactive</option>
+                            <option value="1"  @if($data->status == 1) Selected @endif>Active</option>
+                            <option value="0" @if($data->status == 0) Selected @endif>Deactive</option>
                         </select>                             
                     </div>
                 </div>
@@ -81,6 +89,18 @@
                     <div class="form-group">
                         <label class="form-label">About </label>                                 
                         <input type="text" name="about" class="form-control" placeholder="About"  value="{{ $data->about }}"/>                                   
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label">Designation </label>                                 
+                        <input type="text" name="designation" class="form-control" placeholder="Designation"  value="{{ $data->designation }}"/>                                   
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label">Qualification </label>                                 
+                        <input type="text" name="qualification" class="form-control" placeholder="Qualification"  value="{{ $data->qualification }}"/>                                   
                     </div>
                 </div>
             </div>

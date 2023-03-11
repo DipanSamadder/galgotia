@@ -16,7 +16,7 @@ $section = App\Models\PageSection::where('page_id', 137)->orderBy('order', 'asc'
                 <h1 class="f48 white  text-center m-auto">
                     {{ $page->title }}
                     @auth()
-                        <a href="{{ route('pages.edit', [$page->id]) }}"><i class="fas fa-edit"></i> </a>
+                        <a href="{{ route('departments.edit', [$page->id]) }}"><i class="fas fa-edit"></i> </a>
                     @endauth
                 </h1>
                 @endif
@@ -166,7 +166,7 @@ $section = App\Models\PageSection::where('page_id', 137)->orderBy('order', 'asc'
                                  $str = array('Mission Message Deen', 'Vision & Mission','USPs & Achievements', 'Value Added Programs', 'Programs', 'Faculty', 'Campus Life', 'Accreditations Approvals')
                                 @endphp
 
-                                <!-- Drean Message-->
+                                <!-- Common-->
                                 @if(!in_array($sec->title, $str))
                                     <div class="aspachiv ">
                                         <div class="mt25rem">
@@ -183,6 +183,25 @@ $section = App\Models\PageSection::where('page_id', 137)->orderBy('order', 'asc'
 
                                 <!-- Drean Message-->
                                 @if('Mission Message Deen'== $sec->title) 
+                                @php
+                                $mission_faculty = dsld_page_meta_value_by_meta_key('missionmessagedeen_faculty_0', $page->id);
+                                @endphp
+
+                                @if($mission_faculty !='')
+
+                                @php
+                                $dean_user = App\Models\User::where('id', $mission_faculty)->first();
+
+                                $dean_faculty = App\Models\Faculty::where('user_id', $mission_faculty)->first();
+
+                                $messagedeen = dsld_page_meta_value_by_meta_key('missionmessagedeen_editor_1', $page->id);
+
+                                $department = App\Models\Page::where('id', $dean_faculty->departments_id)->first();
+
+
+                                $institutes =  App\Models\Institute::where('id', $dean_faculty->institutes_id)->first();
+                                
+                                @endphp
                                     <div class="aspachiv ">
                                         <div class="mt25rem" id="">
                                             <h1 class="f36 gothambold o2o2o mt-4">Message from the Dean</h1>
@@ -190,44 +209,37 @@ $section = App\Models\PageSection::where('page_id', 137)->orderBy('order', 'asc'
                                                 <div class="col-lg-4 pe-lg-4 mb-4">
                                                     <div class="profilecard p-4">
                                                         <div class="imgboxdeen">
-                                                            <img src="">
+                                                            <img src="{{ dsld_uploaded_asset(@$dean_user->avatar_original) }}">
                                                         </div>
-
-                                                        <h2 class="f28 white gothambold mt-3">Dr Munish Sabharwal</h2>
+                                                        
+                                                        
+                                                        <h2 class="f28 white gothambold mt-3">{{ @$dean_user->name }}</h2>
 
                                                         <div class="cntntclgdeen pr2rem">
                                                             <span>
                                                                 <p class="white f20">
-                                                                    PhD (CS) & PhD (Management)<br>
-                                                                    LMIAENG, LMTAEI, LMCSI, LMAIMA, LMYHAI, MACM, SMIEEE, SMIACSIT,
-                                                                    SMIRED, MASI, MAIS<br>
-                                                                    Professor & Dean
+                                                                    {{ @$dean_faculty->qualification }}<br>
+                                                                    {{ @$dean_faculty->designation }}
                                                                 </p>
                                                             </span>
                                                             <span class="mt-4">
                                                                 <p class="white f20">
-                                                                    <span class="gothammedium">School of Computing Science &
-                                                                        Engineering (SCSE)</span><br>
-                                                                    Galgotias University
+                                                                    <span class="gothammedium">{{ $department->parents->title }}</span><br>
+                                                                    {{ @$institutes->title }}
                                                                 </p>
-                                                            </span>
+                                                            </span> 
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-8 ps-lg-4 mb-4">
                                                     <p class="f18 a2a2a2">
-                                                        The mission of School of Computing Science and Engineering (SCSE) is to try
-                                                        obstinately for accomplishing distinction in computing disciplines. It is
-                                                        being pursued through its gamut of academic programmes in computing of
-                                                        contemporary standards. The main objective is to make computing graduates
-                                                        with capability to design and develop systems involving the integration of
-                                                        software and hardware devices through innovative approaches to programming
-                                                        and solving problems of an organization.
+                                                    <?php echo htmlspecialchars_decode($messagedeen); ?>
                                                     </p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                @endif
                                 @endif
 
                                 <!-- ups tab -->
@@ -259,8 +271,8 @@ $section = App\Models\PageSection::where('page_id', 137)->orderBy('order', 'asc'
                                 @endif
 
                                 @php
-                                    $vprograms = json_decode(dsld_page_meta_value_by_meta_key('valueaddedprograms_image_box_repeter_0', $page->id), true);
-                                    $vimage = json_decode(dsld_page_meta_value_by_meta_key($vprograms[4], $page->id), true);
+                                    $vprograms = json_decode(@dsld_page_meta_value_by_meta_key('valueaddedprograms_image_box_repeter_0', $page->id), true);
+                                    $vimage = json_decode(@dsld_page_meta_value_by_meta_key($vprograms[4], $page->id), true);
                                 @endphp
                                 @if(!empty($needsection_multi_select_0))
                                 @if('Value Added Programs'== $sec->title) 
@@ -317,25 +329,38 @@ $section = App\Models\PageSection::where('page_id', 137)->orderBy('order', 'asc'
                                     </div>           
                                 @endif
 
-
+                                
                                 <!-- faculty -->
                                 @if('Faculty'== $sec->title) 
                                     <div class="facltycntnt mb45rem">
                                         <div class="row">
-
+                                            @php 
+                                                $faculty = App\Models\Faculty::where('status', 1)->where('departments_id', $page->id)->orderBy('order', 'asc')->get();
+                                            @endphp
+                                            @if(count($faculty) > 0)
+                                            @foreach($faculty as $key => $value)
                                             <div class="col-lg-4 col-md-6 mb45rem">
                                                 <div class="facultycard">
                                                     <div class="facultyimg text-center pdt25rem">
-                                                        <img src="./assets/images/facultyimg.png">
+                                                        <img src="{{ dsld_uploaded_asset(@$value->faculty->avatar_original) }}" class="img-fluid">
                                                     </div>
                                                     <div class="facultyname my-4">
-                                                        <p class="f23 gothammedium">Faculty Name goes here</p>
+                                                        <p class="f23 gothammedium">{{ @$value->faculty->name }}</p>
                                                     </div>
                                                     <div class="facultyabt">
-                                                        <p class="f18 gothamnarrow325">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                                        <p class="f18 gothamnarrow325">{{ @$value->about }}</p>
                                                     </div>
                                                 </div>
                                             </div>
+                                            @endforeach
+
+                                            @else
+
+                                            <div class="col-lg-12 col-md-12 mb45rem">
+                                                <center><h2>-Nothing found!-</h2></center>
+                                            </div>
+
+                                            @endif
                                             
                                         </div>
                                     </div>   
@@ -344,8 +369,8 @@ $section = App\Models\PageSection::where('page_id', 137)->orderBy('order', 'asc'
 
                                 <!-- campus life -->
                                 @php
-                                    $vcampuslife = json_decode(dsld_page_meta_value_by_meta_key('campuslife_image_box_repeter_0', $page->id), true);
-                                    $vimage = json_decode(dsld_page_meta_value_by_meta_key($vcampuslife[4], $page->id), true);
+                                    $vcampuslife = json_decode(@dsld_page_meta_value_by_meta_key('campuslife_image_box_repeter_0', $page->id), true);
+                                    $vimage = json_decode(@dsld_page_meta_value_by_meta_key($vcampuslife[4], $page->id), true);
                                 @endphp
                                 @if(!empty($needsection_multi_select_0))
                                 @if('Campus Life'== $sec->title) 
@@ -422,8 +447,8 @@ $section = App\Models\PageSection::where('page_id', 137)->orderBy('order', 'asc'
                                     
                                     <!-- campus life -->
                                     @php
-                                        $accreditationsapprovals = json_decode(dsld_page_meta_value_by_meta_key('accreditationsapprovals_image_box_repeter_0', $page->id), true);
-                                        $vimage = json_decode(dsld_page_meta_value_by_meta_key('accreditationsapprovals_image_box_repeter_0_img', $page->id), true);
+                                        $accreditationsapprovals = json_decode(@dsld_page_meta_value_by_meta_key('accreditationsapprovals_image_box_repeter_0', $page->id), true);
+                                        $vimage = json_decode(@dsld_page_meta_value_by_meta_key('accreditationsapprovals_image_box_repeter_0_img', $page->id), true);
                                     @endphp
 
                                     @if(is_array($accreditationsapprovals) && count($accreditationsapprovals) > 0)
@@ -462,8 +487,8 @@ $section = App\Models\PageSection::where('page_id', 137)->orderBy('order', 'asc'
                                     @endif
 
                                     @php
-                                        $accreditationsapprovals1 = json_decode(dsld_page_meta_value_by_meta_key('accreditationsapprovals_image_box_repeter_1', $page->id), true);
-                                        $vimage1 = json_decode(dsld_page_meta_value_by_meta_key('accreditationsapprovals_image_box_repeter_1_img', $page->id), true);
+                                        $accreditationsapprovals1 = json_decode(@dsld_page_meta_value_by_meta_key('accreditationsapprovals_image_box_repeter_1', $page->id), true);
+                                        $vimage1 = json_decode(@dsld_page_meta_value_by_meta_key('accreditationsapprovals_image_box_repeter_1_img', $page->id), true);
                                     @endphp
                                     @if(is_array($accreditationsapprovals1) && count($accreditationsapprovals1) > 0)
 
@@ -497,8 +522,8 @@ $section = App\Models\PageSection::where('page_id', 137)->orderBy('order', 'asc'
                                     </div>
                                     @endif
                                     @php
-                                        $accreditationsapprovals2 = json_decode(dsld_page_meta_value_by_meta_key('accreditationsapprovals_image_box_repeter_2', $page->id), true);
-                                        $vimage2 = json_decode(dsld_page_meta_value_by_meta_key('accreditationsapprovals_image_box_repeter_2_img', $page->id), true);
+                                        $accreditationsapprovals2 = json_decode(@dsld_page_meta_value_by_meta_key('accreditationsapprovals_image_box_repeter_2', $page->id), true);
+                                        $vimage2 = json_decode(@dsld_page_meta_value_by_meta_key('accreditationsapprovals_image_box_repeter_2_img', $page->id), true);
                                     @endphp
                                     @if(is_array($accreditationsapprovals2) && count($accreditationsapprovals2) > 0)
                                     <div class="row">
@@ -515,8 +540,8 @@ $section = App\Models\PageSection::where('page_id', 137)->orderBy('order', 'asc'
                                             
                                             @php 
                                             
-                                            $accimg = json_decode(dsld_page_meta_value_by_meta_key('accreditationsapprovals_image_box_repeter_2_img', $page->id), true)[$key];
-                                            $accheading = json_decode(dsld_page_meta_value_by_meta_key('accreditationsapprovals_image_box_repeter_2_heading', $page->id), true)[$key];
+                                            $accimg = json_decode(@dsld_page_meta_value_by_meta_key('accreditationsapprovals_image_box_repeter_2_img', $page->id), true)[$key];
+                                            $accheading = json_decode(@dsld_page_meta_value_by_meta_key('accreditationsapprovals_image_box_repeter_2_heading', $page->id), true)[$key];
 
                                             @endphp
                                             <div class="col-lg-3 col-md-6">

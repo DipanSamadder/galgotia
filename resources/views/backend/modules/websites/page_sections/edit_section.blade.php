@@ -23,8 +23,8 @@
                     <div id="form_elements">
                         @if($data->meta_fields != '')
                         @foreach (json_decode($data->meta_fields) as $key => $element)
-
-								@if ($element->type == 'text' || $element->type == 'image_box' || $element->type == 'image_box_repeter' ||$element->type == 'button' || $element->type == 'editor' || $element->type == 'file' || $element->type == 'text_repeter' || $element->type == 'file_repeter')
+                        
+								@if ($element->type == 'text' || $element->type == 'image_box' || $element->type == 'faculty' || $element->type == 'image_box_repeter' ||$element->type == 'button' || $element->type == 'editor' || $element->type == 'file' || $element->type == 'text_repeter' || $element->type == 'file_repeter')
 								
 									<div class="row clearfix  mb-2">
 									    <input type="hidden" name="type[]" value="{{ $element->type }}">
@@ -99,6 +99,7 @@
                         <li class="list-group-item btn" style="text-align: left;" onclick="appendToForm('button')">Button</li>
                         <li class="list-group-item btn" style="text-align: left;" onclick="appendToForm('image_box')">Image Box</li>
                         <li class="list-group-item btn" style="text-align: left;" onclick="appendToForm('image_box_repeter')">Image Box Repeter</li>
+                        <li class="list-group-item btn" style="text-align: left;" onclick="appendToForm('faculty')">Faculty</li>
                     </ul>
                 </div>
             </div>
@@ -120,6 +121,20 @@
                             +'<div class="col-sm-3">'
                                 +'<input type="hidden" name="type[]" value="text">'
                                 +'<label class="col-from-label">Text</label>'
+                            +'</div>'
+                            +'<div class="col-sm-7">'
+                                +'<input class="form-control" type="text" name="label[]" placeholder="Label" onchange="is_edited()">'
+                            +'</div>'
+                            +'<div class="col-sm-2">'
+                                +'<button type="button" class="btn btn-sm btn-danger" data-toggle="remove-parent" data-parent=".row"><i class="zmdi zmdi-hc-fw"></i> </button>'
+                            +'</div>'
+                        +'</div>';
+            $('#form_elements').append(str);
+        }if(type == 'faculty'){
+            var str = '<div class="row clearfix mb-2">'
+                            +'<div class="col-sm-3">'
+                                +'<input type="hidden" name="type[]" value="faculty">'
+                                +'<label class="col-from-label">Message</label>'
                             +'</div>'
                             +'<div class="col-sm-7">'
                                 +'<input class="form-control" type="text" name="label[]" placeholder="Label" onchange="is_edited()">'

@@ -84,7 +84,7 @@
                             @endif
                         @endif
                     </td>
-                    <td><b>{{ $value->department->title }}</b><br><small>{{ $value->institutes->title }}</small>
+                    <td><b>{{ @$value->department->title }}</b><br><small>{{ $value->institutes->title }}</small>
                         @if($value->created_at != null) <br><small>Join: {{ date('d m, Y', strtotime($value->created_at)) }}</small> @endif
                     </td>
                     @if(dsld_have_user_permission('student_edit') == 1)

@@ -293,7 +293,28 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    @elseif ($element->type == 'faculty')
+                                    
+                                    <div class="row clearfix">
+                                        <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+                                            <label class="form-label">{{ ucfirst($element->label) }}</label>  
+                                        </div>
+                                        <div class="col-lg-10 col-md-10 col-sm-8">
+                                            <div class="form-group">
+                                                <input type="hidden" name="type[]" value="{{ $page_meta_key }}">
+                                                <select class="form-control w-100  ms select2 mr-2" name="{{ $page_meta_key }}">
+                                                    <option value="">-- Please select --</option>
+                                                    
 
+                                                    @foreach(App\Models\user::where('banned', 0)->where('user_type', 'staff')->get() as $key => $value)
+                                                        <option value="{{ $value->id }}" @if($value->id == dsld_page_meta_value_by_meta_key($page_meta_key, $data->id)) Selected @endif > {{ $value->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select> 
+                                                <small>Meta Key: {{ $page_meta_key }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
                                     @elseif ($element->type == 'image_box')
                                         @php 
                                             $page_meta_key_heading = $page_meta_key."_heading";
