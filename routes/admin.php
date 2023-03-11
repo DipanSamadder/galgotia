@@ -240,6 +240,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function(){
     Route::post('faculty-type/status', [FacultyTypeController::class, 'status'])->name('faculty_type.status');
     Route::post('faculty-type/update', [FacultyTypeController::class, 'update'])->name('faculty_type.update');
 
+    
     //Faculty 
     Route::get('faculty', [FacultyController::class, 'index'])->name('faculty.index');
     Route::post('faculty/edit', [FacultyController::class, 'edit'])->name('faculty.edit');
