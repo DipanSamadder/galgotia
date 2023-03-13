@@ -13,5 +13,7 @@ class Page extends Model
     public function parents(){
         return $this->belongsTo(Page::class, 'parent', 'id');
     }
+
+
   
 }

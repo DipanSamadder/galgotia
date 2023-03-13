@@ -225,11 +225,7 @@
                             <option value="about"  @if($data->template == 'about') selected @endif>About</option>
                             <option value="apply_now"  @if($data->template == 'apply_now') selected @endif>Apply Now</option>
                             <option value="litral_entry_migration"  @if($data->template == 'litral_entry_migration') selected @endif>Litral Entry Migration</option>
-                            <option value="programme_detail"  @if($data->template == 'programme_detail') selected @endif>Programme Detail</option>
                             <option value="research"  @if($data->template == 'research') selected @endif>Research</option>
-                            <option value="school_department"  @if($data->template == 'school_department') selected @endif>School Department</option>
-                            <option value="school_landing"  @if($data->template == 'school_landing') selected @endif>School Landing</option>
-                            <option value="under_graduate"  @if($data->template == 'under_graduate') selected @endif>Under Graduate</option>
                             <option value="page_with_sidebar"  @if($data->template == 'page_with_sidebar') selected @endif>Page With Sidebar</option>
                         </select>                             
                     </div>

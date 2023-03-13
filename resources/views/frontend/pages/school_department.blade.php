@@ -308,25 +308,75 @@ $section = App\Models\PageSection::where('page_id', 137)->orderBy('order', 'asc'
 
                                 <!-- profram tab -->
                                 @if('Programs'== $sec->title) 
+                                
+                                @php
+                                    $aprograms = json_decode(@dsld_page_meta_value_by_meta_key('programs_program_0', $page->id), true);
+                                   
+                                @endphp
+
+                                    @if(is_array($aprograms) && count($aprograms) > 0)
+
+                                    @php 
+
+                                        $data = App\Models\page::where('status', 1)->where('type', 'program_page')->where('level', 1)->get();
+
+                                    @endphp
+
+                                    @foreach($data as $key => $value)
+                                    @php 
+                                        $data2 = App\Models\page::where('status', 1)->where('type', 'program_page')->where('parent', $value->id)->where('level', 2)->get();
+
+                                        $arr[] ='';
+                                        foreach($data2 as $key2 => $value2){
+                                            
+                                            if(!in_array($value2->id, $arr)){
+                                                $arr[] = $value2->id;
+                                            }
+                                        }
+
+                                        $data3 = App\Models\page::where('status', 1)->where('type', 'program_page')->whereIn('parent', $arr )->where('level', 3)->get();
+                                         
+                                        $isHave  = 0;
+                                        foreach($data3 as $key3 => $value3){
+                                            if(in_array($value3->id, $aprograms)){
+                                                $isHave = 1;
+                                            }
+                                        }
+                                        
+                                    @endphp
+
+                                    @if($isHave == 1)
                                     <div class="ugp mb45rem">
-                                        <h2 class="f30 colorred gothammedium">Under Graduate Programs</h2>
+                                        <h2 class="f30 colorred gothammedium">{{ $value->title }}</h2>
                                         <div class="row">
+                                            @foreach($data3 as $key3 => $value3)
+                                            
+                                            @if(in_array($value3->id, $aprograms))
                                             <div class="col-lg-4 col-md-6  mt-4">
                                                 <div class="cardprogram ">
                                                     <div class="cardcontent">
-                                                    <p class="f23 gothammedium">
-                                                        B.Tech CSE with specialization in Geographical Information Systems and Remote Sensing (GIS)
-                                                    </p>
+                                                    <p class="f23 gothammedium">{{ $value3->title }}{{ $value3->id }}</p>
                                                     <div class="knowmore">
-                                                        <a class="f18 gothammedium" href="">Know More <i class="fa-solid fa-arrow-right "></i></a>
+                                                        <a class="f18 gothammedium" href="{{ route('custom-pages.show_custom_page', [$value3->slug]) }}">Know More <i class="fa-solid fa-arrow-right "></i></a>
                                                     </div>
                                                     </div>
                                                     
                                                 </div>
                                                 
                                             </div>
+                                            @endif
+                                            
+                                            @endforeach
+
                                         </div>
-                                    </div>           
+                                    </div> 
+                                    @endif
+
+                                    @php
+                                    unset($arr);
+                                    @endphp
+                                    @endforeach
+                                    @endif          
                                 @endif
 
                                 

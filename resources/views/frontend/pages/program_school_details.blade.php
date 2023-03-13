@@ -189,7 +189,7 @@ $abouttheprogramme_text_3 = dsld_page_meta_value_by_meta_key('abouttheprogramme_
                 <div class="row my-4">
                     <div class="col-lg-8 my-4">
                     
-                    @if(in_array($abouttheprogramme_text_3, json_decode($needsection_multi_select_0)))
+                    @if(is_array($needsection_multi_select_0) && in_array($abouttheprogramme_text_3, json_decode($needsection_multi_select_0)))
                     @if(!empty($abouttheprogramme_text_3))
                         <h2 class="gothambold f30 my-2 pt-5 pb-2">{{ $abouttheprogramme_text_3 }}</h2>
                     @endif

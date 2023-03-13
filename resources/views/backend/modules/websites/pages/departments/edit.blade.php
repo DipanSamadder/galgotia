@@ -244,11 +244,17 @@
     <div class="col-lg-12">
         <div class="card mb-0">
             <div class="body">
-                
+            @php 
+                $needsection_multi_select_0 = dsld_page_meta_value_by_meta_key('needsection_multi_select_0', $data->id);
+            @endphp
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs p-0 mb-3 nav-tabs-success" role="tablist">
                     @foreach($section as $key => $sec)
-                        <li class="nav-item"><a class="nav-link @if($key == 0 ) active @endif" data-toggle="tab" href="#page_section-{{ $key }}-{{ $sec->id }}"> {{ $sec->title }} </a></li>
+                        @if(!empty($needsection_multi_select_0))
+                            @if(in_array($sec->title, json_decode($needsection_multi_select_0)) || $sec->title == 'Need Section')
+                                <li class="nav-item"><a class="nav-link @if($key == 0 ) active @endif" data-toggle="tab" href="#page_section-{{ $key }}-{{ $sec->id }}"> {{ $sec->title }} </a></li>
+                            @endif
+                        @endif
                     @endforeach
                 </ul>
                 
@@ -311,6 +317,26 @@
                                                         </option>
                                                     @endforeach
                                                 </select> 
+                                                <small>Meta Key: {{ $page_meta_key }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @elseif ($element->type == 'program')
+                                    
+                                    <div class="row clearfix">
+                                        <div class="col-lg-2 col-md-2 col-sm-4 form-control-label">
+                                            <label class="form-label">{{ ucfirst($element->label) }}</label>  
+                                        </div>
+                                        <div class="col-lg-10 col-md-10 col-sm-8">
+                                            <div class="form-group">
+                                                <input type="hidden" name="type[]" value="{{ $page_meta_key }}">
+                                                    <select class="form-control show-tick ms select2" name="{{ $page_meta_key }}[]"  multiple>
+                                                        <option value="">-- Please select --</option>
+                                                        @foreach(App\Models\page::where('status', 1)->where('type', 'program_page')->where('level', 3)->get() as $key => $value)
+                                                            <option value="{{ $value->id }}" @if(dsld_page_meta_value_by_meta_key($page_meta_key, $data->id) != '')@if(in_array($value->id, json_decode(@dsld_page_meta_value_by_meta_key($page_meta_key, $data->id), true))) Selected @endif @endif> {{ $value->title }} ({{ $value->level }}) ({{ $value->parent }})
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 <small>Meta Key: {{ $page_meta_key }}</small>
                                             </div>
                                         </div>

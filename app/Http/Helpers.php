@@ -171,6 +171,22 @@ if(!function_exists('dsld_is_slug_active')){
         }
     }
 }
+if(!function_exists('get_children_id')){
+    function get_children_id($id){
+        if($id > 0){
+            $data = Page::where('parent', $id)->where('status', 1)->get();
+            $arr[] ='';
+            foreach($data as $key => $value){
+                $arr[] = $value->id;
+            }
+
+            return $arr;
+
+        }else{
+            return 0;
+        } 
+    }
+}
 
 
 if(!function_exists('include_form_by_id')){
